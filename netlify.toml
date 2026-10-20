@@ -1,0 +1,9 @@
+# Static site, no build step. Publish the repo root as-is.
+[build]
+  publish = "."
+
+# Serve the prototype at the site root so the URL is just https://<site>.netlify.app/
+[[redirects]]
+  from = "/"
+  to = "/El%20Bloque.dc.html"
+  status = 200
