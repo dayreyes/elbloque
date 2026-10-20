@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./react.production.min.js"></script>
+<script src="./react-dom.production.min.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="bloque.css">
+<style>body{margin:0;background:var(--color-neutral-300) radial-gradient(color-mix(in srgb,var(--ink) 9%,transparent) 1px,transparent 1.4px) 0 0/6px 6px}a{color:var(--color-accent-700)}a:hover{color:var(--color-accent-800)}@keyframes pop{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}</style>
+</helmet>
+<div style="min-height:100vh; display:flex; flex-wrap:wrap; gap:48px; justify-content:center; align-items:flex-start; padding:40px 24px; font-family:var(--font-body); color:var(--color-text)">
+
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}">
+<div style="flex:0 1 340px; display:flex; flex-direction:column; gap:20px; padding-top:12px">
+  <div style="display:flex; flex-direction:column; gap:6px">
+    <span class="tag tag-accent" style="align-self:flex-start">Prototipo · v2</span>
+    <h1 style="margin:0; font-size:56px">El Bloque</h1>
+    <p style="margin:0; font-size:15px; color:var(--color-neutral-800); text-wrap:pretty">Life-sim freemium en un caserío de Puerto Rico. BitLife-style event cards, a card-driven hub, full street crime and an equally viable legit path.</p>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; line-height:1.5; color:var(--color-neutral-800)">
+    <h4 style="margin:0; color:var(--color-text)">Locked decisions</h4>
+    <div>· <b>Fictional caseríos, real pueblos.</b></div>
+    <div>· <b>Quests &amp; unlocks:</b> texts give misiones that open new places. Talking to people at places adds contacts, who open more places and jobs.</div>
+    <div>· <b>Story mode:</b> quests are grouped into chapters. Finishing one opens the next area: El bloque → El pueblo → San Juan by tren.</div>
+    <div>· <b>Age gates:</b> Escuela Superior disappears at 18 and you pick La YUPI (public), Sagrada Familia (private), full-time work or la calle. Chinchorro and club are 18+.</div>
+    <div>· <b>Getting to San Juan</b> depends on the pueblo: tren from San Juan and Bayamón, público from Ponce, guagua from Loíza.</div>
+    <div>· <b>Personalidad:</b> repeating things grows traits (Atlético, Coco duro, De la calle, Fiestero…). Once a trait unlocks it adds a bonus to that kind of action. Your starting don begins unlocked.</div>
+    <div>· <b>Romance:</b> pick gender and who you like at creation. Love interests live at places (♥ on the card): la rockera, la yal, la nena del caserío, la religiosa, la de honor, or their male versions. Talk, date, text back, and ask them out at 60 Afecto. Marriage opens at 18. Dating someone else hurts your current partner's Afecto. Each one likes or dislikes certain traits.</div>
+    <div>· <b>Calendario:</b> each night of sleep moves the calendar. Each month brings its own events: Reyes, las SanSe, la huelga at La YUPI, Las Justas, hurricane season and a hurricane, playa, patronales, Grito de Lares, parrandas.</div>
+    <div>· <b>Familia:</b> your partner becomes your heir's other parent and texts them.</div>
+    <div>· <b>Avatar:</b> a flat, outlined bust built from shapes (skin, 6 hair styles, hair color, 4 tops, top color, plus gorra and cadena from the Tienda). Open the clóset by tapping your avatar. It shows in the header and on the map.</div>
+    <div>· <b>Hub:</b> a flat overhead map is the main screen. Tap a building and you walk there and its card opens. Missions like car theft play out as top-down chases (arrow keys or the d-pad). Teen rating: no blood, and deaths happen off-screen.</div>
+    <div>· <b>Real time:</b> one game day lasts 4 real hours. Sleeping ends it early.</div>
+    <div>· <b>Crime:</b> turf control, Calor (police heat), arrests, rival crew Los del 3, weapons, car theft.</div>
+    <div>· <b>Jail:</b> a time-skip of event cards, not a playable state. You lose your turf while inside.</div>
+    <div>· <b>Death:</b> permadeath. You continue as your child, who inherits chavos, part of your Respeto and Calor, and all your enemies.</div>
+    <div>· <b>Legit path:</b> school (Coco), sports (cancha, scouts), music (beats, salón de música).</div>
+    <div>· <b>Minigames:</b> Dominó and Briscola against the old-timers, Pickup at the cancha, Atender el colmado (fill orders, then pick the right total before they walk out), Tunear carros (pick parts to hit each client's specs within budget; noisy builds add Calor), and the car-theft chase.</div>
+    <div>· <b>Money:</b> Ánimo energy, Coquís, rewarded ads, season pass.</div>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; line-height:1.5; color:var(--color-neutral-800)">
+    <h4 style="margin:0; color:var(--color-text)">Try</h4>
+    <div>Cel → Abuela → "Voy, bendición" opens the Panadería. Colmado → Hablar con Wichi opens the Taller. Colmado → Dominó. Cancha → Pickup. El punto → sell until Calor gets you arrested, or pick fights over the Edif. 5 corner until you die and play as your kid.</div>
+  </div>
+</div>
+</sc-if>
+
+<div style="flex:none; width:390px; height:844px; border-radius:52px; background:var(--color-neutral-900); padding:12px; box-shadow:var(--shadow-lg)">
+<div style="position:relative; width:100%; height:100%; border-radius:42px; overflow:hidden; background:var(--color-bg); display:flex; flex-direction:column">
+
+  <div style="flex:none; height:44px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; font-size:14px; font-weight:700">
+    <span>9:41</span>
+    <div style="width:110px; height:30px; border-radius:2px; background:var(--color-neutral-900); margin-top:4px"></div>
+    <span style="font-size:12px; white-space:nowrap">5G ▮▮▮</span>
+  </div>
+
+  <sc-if value="{{ isTitle }}" hint-placeholder-val="{{ true }}">
+  <div style="flex:1; display:flex; flex-direction:column; padding:24px 26px 34px; gap:24px">
+    <div style="position:relative; flex:1; border-radius:var(--radius-lg); background:var(--color-accent-200); overflow:hidden">
+      <div style="position:absolute; width:260px; height:260px; border-radius:50%; background:var(--color-accent-400); right:-70px; top:-60px"></div>
+      <div style="position:absolute; width:180px; height:180px; border-radius:50%; background:var(--color-accent-2-400); left:-50px; bottom:40px"></div>
+      <div style="position:absolute; left:40px; right:40px; bottom:0; height:46%; display:flex; gap:10px; align-items:flex-end">
+        <div style="flex:1; height:70%; background:var(--color-neutral-100); border-radius:4px 4px 0 0"></div>
+        <div style="flex:1; height:100%; background:var(--color-bg); border-radius:4px 4px 0 0"></div>
+        <div style="flex:1; height:58%; background:var(--color-neutral-100); border-radius:4px 4px 0 0"></div>
+      </div>
+      <span style="position:absolute; left:18px; top:16px; font-size:11px; color:var(--color-accent-800)">key art placeholder</span>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <h1 style="margin:0; font-size:52px; line-height:1">El Bloque</h1>
+      <p style="margin:0; font-size:16px; color:var(--color-neutral-800)">Una vida. Un caserío. Tus decisiones.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:10px">
+      <button class="btn btn-primary" style="height:54px; font-size:18px" sc-camel-on-click="{{ goPick }}">Empezar vida nueva</button>
+      <button class="btn btn-secondary" style="height:48px" disabled="{{ true }}">Continuar vida</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isPick }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1; min-height:0; display:flex; flex-direction:column">
+    <div style="padding:12px 22px 14px; display:flex; flex-direction:column; gap:2px">
+      <span style="font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--color-accent-700)">Paso 1 de 2</span>
+      <h2 style="margin:0; font-size:30px">¿De qué caserío eres?</h2>
+    </div>
+    <div style="flex:1; overflow:auto; padding:4px 22px 16px; display:flex; flex-direction:column; gap:14px">
+      <sc-for list="{{ caserios }}" as="c" hint-placeholder-count="3">
+      <div sc-camel-on-click="{{ c.select }}" style="cursor:pointer; border-radius:var(--radius-lg); background:var(--color-surface); border:2.5px solid var(--ink); box-shadow:var(--shadow-sm); padding:10px; border:2.5px solid {{ c.border }}; display:flex; flex-direction:column; gap:10px; transition:border-color .2s">
+        <div style="height:92px; border-radius:4px; background:repeating-linear-gradient(135deg, var(--color-neutral-200) 0 10px, var(--color-neutral-100) 10px 20px); display:flex; align-items:flex-end; padding:10px 12px; font-size:11px; color:var(--color-neutral-700)">foto · {{ c.name }}</div>
+        <div style="padding:0 6px 4px; display:flex; flex-direction:column; gap:8px">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px">
+            <h4 style="margin:0">{{ c.name }}</h4>
+            <span class="tag tag-accent-2" style="flex:none; white-space:nowrap">{{ c.town }}</span>
+          </div>
+          <p style="margin:0; font-size:13px; line-height:1.45; color:var(--color-neutral-800)">{{ c.blurb }}</p>
+          <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px">
+            <sc-for list="{{ c.meters }}" as="m" hint-placeholder-count="3">
+            <div style="display:flex; flex-direction:column; gap:4px">
+              <span style="font-size:11px; color:var(--color-neutral-700)">{{ m.label }}</span>
+              <div style="display:flex; gap:3px">
+                <sc-for list="{{ m.dots }}" as="d" hint-placeholder-count="5"><div style="width:12px; height:12px; border-radius:50%; background:{{ d.bg }}"></div></sc-for>
+              </div>
+            </div>
+            </sc-for>
+          </div>
+          <div style="font-size:12px; font-weight:600; color:var(--color-accent-700)">Ventaja: {{ c.perk }}</div>
+        </div>
+      </div>
+      </sc-for>
+    </div>
+    <div style="padding:12px 22px 30px; display:flex; gap:10px; background:var(--color-bg); box-shadow:0 -8px 16px var(--color-bg)">
+      <button class="btn btn-secondary" style="height:52px; width:52px; padding:0" sc-camel-on-click="{{ goTitle }}">←</button>
+      <button class="btn btn-primary" style="height:52px; flex:1; font-size:16px" sc-camel-on-click="{{ goCreate }}">Este es mi barrio</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isCreate }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1; min-height:0; display:flex; flex-direction:column">
+    <div style="flex:1; overflow:auto; padding:12px 22px 16px; display:flex; flex-direction:column; gap:18px">
+      <div style="display:flex; flex-direction:column; gap:2px">
+        <span style="font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--color-accent-700)">Paso 2 de 2 · {{ casName }}</span>
+        <h2 style="margin:0; font-size:30px">¿Quién eres tú?</h2>
+      </div>
+      <div style="display:flex; align-items:center; gap:16px">
+        <dc-import name="Avatar" size="104" bg="var(--color-accent-2-200)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" hint-size="104px,104px"></dc-import>
+        <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-start"><span style="font-size:13px; line-height:1.4">Piel, pelo y fit. Lo que compres en la Tienda sale en el clóset.</span><button class="btn btn-secondary" style="height:40px" sc-camel-on-click="{{ openCloset }}">Editar look</button></div>
+      </div>
+      <div class="field"><label>Nombre</label><input class="input" style="height:44px" placeholder="Yariel" value="{{ name }}" sc-camel-on-change="{{ setName }}"></div>
+      <div class="field"><label>Apodo en el bloque</label><input class="input" style="height:44px" placeholder="El Flaco" value="{{ apodo }}" sc-camel-on-change="{{ setApodo }}"></div>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Eres</span>
+        <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px">
+          <sc-for list="{{ genders }}" as="g" hint-placeholder-count="3"><div sc-camel-on-click="{{ g.pick }}" style="cursor:pointer; padding:10px 6px; border:2.5px solid var(--ink); border-radius:4px; background:{{ g.bg }}; font-family:var(--font-heading); font-weight:900; font-size:17px; text-transform:uppercase; text-align:center; line-height:1">{{ g.label }}</div></sc-for>
+        </div>
+        <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; margin-top:6px">Te gustan</span>
+        <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px">
+          <sc-for list="{{ likesOpts }}" as="g" hint-placeholder-count="3"><div sc-camel-on-click="{{ g.pick }}" style="cursor:pointer; padding:10px 6px; border:2.5px solid var(--ink); border-radius:4px; background:{{ g.bg }}; font-family:var(--font-heading); font-weight:900; font-size:17px; text-transform:uppercase; text-align:center; line-height:1">{{ g.label }}</div></sc-for>
+        </div>
+        <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; margin-top:6px">¿Cuál es tu don?</span>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+          <sc-for list="{{ traits }}" as="t" hint-placeholder-count="4">
+          <div sc-camel-on-click="{{ t.select }}" style="cursor:pointer; padding:12px 14px; border-radius:4px; background:{{ t.bg }}; color:{{ t.fg }}; display:flex; flex-direction:column; gap:2px; transition:background .2s">
+            <span style="font-family:var(--font-heading); font-size:17px">{{ t.name }}</span>
+            <span style="font-size:12px; opacity:.85">{{ t.bonus }}</span>
+          </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="padding:12px 22px 30px; display:flex; gap:10px">
+      <button class="btn btn-secondary" style="height:52px; width:52px; padding:0" sc-camel-on-click="{{ goPick }}">←</button>
+      <button class="btn btn-primary" style="height:52px; flex:1; font-size:16px" sc-camel-on-click="{{ start }}">Empezar a los 16</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isHub }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1; min-height:0; display:flex; flex-direction:column">
+    <div style="flex:none; padding:6px 18px 10px; display:flex; align-items:center; gap:10px">
+      <div sc-camel-on-click="{{ openCloset }}" style="cursor:pointer; display:flex"><dc-import name="Avatar" size="42" bg="var(--sun)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" hint-size="42px,42px"></dc-import></div>
+      <div style="flex:1; min-width:0; display:flex; flex-direction:column; line-height:1.2">
+        <span style="font-family:var(--font-heading); font-size:17px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ displayName }}</span>
+        <span style="font-size:11px; color:var(--color-neutral-700); white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ age }} años · {{ monthName }} · {{ casShort }}</span>
+      </div>
+      <div style="display:flex; gap:5px">
+        <span style="height:30px; padding:0 10px; border-radius:2px; background:var(--color-surface); display:flex; align-items:center; gap:3px; font-size:13px; font-weight:700">${{ chavos }}</span>
+        <span sc-camel-on-click="{{ goStore }}" style="cursor:pointer; height:30px; padding:0 10px; border-radius:2px; background:var(--color-accent-2-200); color:var(--color-accent-2-800); display:flex; align-items:center; gap:4px; font-size:13px; font-weight:700"><span style="width:10px; height:10px; border-radius:50%; background:var(--color-accent-2-600)"></span>{{ coquis }}</span>
+        <span style="height:30px; padding:0 9px; border-radius:2px; background:var(--color-accent-200); color:var(--color-accent-800); display:flex; align-items:center; gap:3px; font-size:13px; font-weight:700"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>{{ animo }}/{{ animoMax }}</span>
+      </div>
+    </div>
+
+    <div style="flex:1; min-height:0; overflow:auto; position:relative">
+
+    <sc-if value="{{ tabBarrio }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:0 16px 20px; display:flex; flex-direction:column; gap:12px">
+      <div style="display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:6px">
+        <sc-for list="{{ miniStats }}" as="s" hint-placeholder-count="5">
+        <div style="display:flex; flex-direction:column; gap:3px">
+          <div style="display:flex; justify-content:space-between; gap:3px; min-width:0; font-family:var(--font-mono); font-size:9.5px; font-weight:700; text-transform:uppercase"><span>{{ s.short }}</span><span>{{ s.val }}</span></div>
+          <div style="height:7px; background:var(--color-neutral-200); border:1.5px solid var(--ink)"><div style="height:100%; width:{{ s.w }}; background:{{ s.color }}; transition:width .5s"></div></div>
+        </div>
+        </sc-for>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px">
+        <sc-for list="{{ areas }}" as="a" hint-placeholder-count="3">
+        <div sc-camel-on-click="{{ a.go }}" style="cursor:pointer; padding:7px 8px; border:2.5px solid var(--ink); border-radius:4px; background:{{ a.bg }}; color:{{ a.fg }}; opacity:{{ a.op }}; display:flex; flex-direction:column; gap:1px"><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:17px; line-height:1">{{ a.name }}</span><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:9px">{{ a.sub }}</span></div>
+        </sc-for>
+      </div>
+      <div style="position:relative; height:380px; border:3px solid var(--ink); border-radius:4px; background:var(--color-accent-2-200); overflow:hidden; box-shadow:var(--shadow-md)">
+        <div style="position:absolute; left:-4px; right:-4px; top:46%; height:8%; background:var(--color-neutral-800); border:3px solid var(--ink)"><div style="position:absolute; left:0; right:0; top:50%; margin-top:-1.5px; border-top:3px dashed var(--sun)"></div></div>
+        <div style="position:absolute; top:-4px; bottom:-4px; left:40%; width:18%; background:var(--color-neutral-800); border:3px solid var(--ink)"><div style="position:absolute; top:0; bottom:0; left:50%; margin-left:-1.5px; border-left:3px dashed var(--sun)"></div></div>
+        <sc-if value="{{ mapWater }}" hint-placeholder-val="{{ false }}"><div style="position:absolute; left:-4px; right:-4px; bottom:-4px; height:15%; background:var(--color-accent-2); border:3px solid var(--ink)"><span style="position:absolute; left:10px; bottom:8px; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">Bahía</span></div></sc-if>
+        <sc-for list="{{ mapDecor }}" as="b" hint-placeholder-count="0">
+        <div style="position:absolute; left:{{ b.x }}%; top:{{ b.y }}%; width:{{ b.w }}%; height:{{ b.h }}%; background:var(--color-neutral-300); border:3px solid var(--ink); border-radius:3px; box-shadow:4px 4px 0 var(--ink); display:flex; align-items:flex-end; padding:5px"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:9px">{{ b.label }}</span></div>
+        </sc-for>
+        <sc-for list="{{ mapBldg }}" as="b" hint-placeholder-count="0">
+        <div sc-camel-on-click="{{ b.go }}" style="position:absolute; left:{{ b.x }}%; top:{{ b.y }}%; width:{{ b.w }}%; height:{{ b.h }}%; background:{{ b.bg }}; border:3px solid var(--ink); border-radius:3px; box-shadow:4px 4px 0 var(--ink); cursor:pointer; display:flex; align-items:flex-end; padding:5px" style-active="transform:translate(2px,2px); box-shadow:none">
+          <span style="background:var(--paper); border:2px solid var(--ink); padding:3px 5px 2px; font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:12px; line-height:1; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ b.label }}</span>
+          <sc-if value="{{ b.quest }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; top:-9px; right:-9px; width:24px; height:24px; border:2.5px solid var(--ink); background:var(--sun); display:grid; place-items:center; font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:16px">!</span></sc-if>
+          <sc-if value="{{ b.heart }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; top:-9px; left:-9px; width:24px; height:24px; border:2.5px solid var(--ink); background:var(--color-accent); color:var(--paper); display:grid; place-items:center; font-size:13px">♥</span></sc-if>
+        </div>
+        </sc-for>
+        <div style="position:absolute; left:{{ px }}%; top:{{ py }}%; width:36px; height:36px; margin:-18px 0 0 -18px; display:flex; box-shadow:3px 3px 0 var(--ink); transition:left .45s ease, top .45s ease; pointer-events:none"><dc-import name="Avatar" size="36" bg="var(--color-accent)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" hint-size="36px,36px"></dc-import></div>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase"><span>Toca un lugar pa' entrar</span><span>Nuevo día en {{ dayLeft }}</span></div>
+      <div style="border:2.5px solid var(--ink); background:var(--ink); color:var(--paper); padding:12px 14px; display:flex; flex-direction:column; gap:6px; box-shadow:var(--shadow-sm)">
+        <div style="display:flex; justify-content:space-between; gap:8px; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase"><span style="color:var(--sun)">Historia · Capítulo {{ chapter.n }}</span><span>{{ chapter.done }} de {{ chapter.total }}</span></div>
+        <span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:26px; line-height:.95">{{ chapter.title }}</span>
+        <span style="font-size:12.5px; line-height:1.4; text-wrap:pretty">{{ chapter.hint }}</span>
+      </div>
+      <sc-if value="{{ hasQuests }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; gap:6px">
+        <h4 style="margin:0">Misiones</h4>
+        <sc-for list="{{ quests }}" as="q" hint-placeholder-count="1">
+        <div sc-camel-on-click="{{ q.go }}" style="cursor:pointer; display:flex; align-items:center; gap:10px; padding:10px 12px; border:2.5px solid var(--ink); border-radius:4px; background:var(--sun); box-shadow:var(--shadow-sm)" style-active="transform:translate(2px,2px); box-shadow:none">
+          <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px"><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:19px; line-height:1">{{ q.title }}</span><span style="font-size:12px">{{ q.giver }} · Ve a {{ q.where }}</span></div>
+          <span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:24px">→</span>
+        </div>
+        </sc-for>
+      </div>
+      </sc-if>
+      <div style="display:flex; flex-direction:column; gap:6px">
+        <div style="display:flex; justify-content:space-between; align-items:baseline"><h4 style="margin:0">Territorio</h4><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ turfCount }} de 4 tuyo</span></div>
+        <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px">
+          <sc-for list="{{ turf }}" as="z" hint-placeholder-count="4">
+          <div style="border:2px solid var(--ink); background:{{ z.bg }}; color:{{ z.fg }}; padding:6px 7px; display:flex; flex-direction:column; gap:2px"><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:15px; line-height:1">{{ z.name }}</span><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:9px">{{ z.owner }}</span></div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ tabVida }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:4px 18px 20px; display:flex; flex-direction:column; gap:16px">
+      <div style="border-radius:var(--radius-lg); background:var(--color-surface); border:2.5px solid var(--ink); box-shadow:var(--shadow-sm); padding:18px; display:flex; flex-direction:column; gap:12px">
+        <sc-for list="{{ bigStats }}" as="s" hint-placeholder-count="5">
+        <div style="display:flex; flex-direction:column; gap:5px">
+          <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600"><span>{{ s.label }}</span><span>{{ s.val }}%</span></div>
+          <div style="height:12px; border-radius:2px; background:var(--color-neutral-200); border:1.5px solid var(--ink); overflow:hidden"><div style="height:100%; width:{{ s.w }}; background:{{ s.color }}; border-radius:2px; transition:width .5s"></div></div>
+        </div>
+        </sc-for>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px">
+        <div style="border:2px solid var(--ink); padding:8px; display:flex; flex-direction:column; gap:2px"><span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Gen · camino</span><span style="font-family:var(--font-heading); font-weight:900; font-size:20px; line-height:1.05; text-transform:uppercase">{{ gen }} · {{ pathText }}</span></div>
+        <div style="border:2px solid var(--ink); padding:8px; display:flex; flex-direction:column; gap:2px"><span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Arma</span><span style="font-family:var(--font-heading); font-weight:900; font-size:20px; line-height:1.1; text-transform:uppercase">{{ armedText }}</span></div>
+        <div style="border:2px solid var(--ink); padding:8px; display:flex; flex-direction:column; gap:2px"><span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Enemigos</span><span style="font-size:12px; font-weight:700; line-height:1.25">{{ enemyText }}</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px">
+        <div style="display:flex; justify-content:space-between; align-items:baseline"><h4 style="margin:0">Personalidad</h4><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ devCount }} rasgos activos</span></div>
+        <sc-for list="{{ devList }}" as="t" hint-placeholder-count="2">
+        <div style="display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2px 10px; padding:8px 10px; border:2px solid var(--ink); border-radius:4px; background:{{ t.bg }}">
+          <span style="font-family:var(--font-heading); font-weight:900; font-size:18px; text-transform:uppercase; line-height:1">{{ t.name }}</span><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ t.prog }}</span>
+          <span style="grid-column:1 / -1; font-size:12px; line-height:1.35">{{ t.bonus }}</span>
+        </div>
+        </sc-for>
+      </div>
+      <button class="btn btn-primary" style="height:56px; font-size:18px; justify-content:space-between; padding:0 22px" sc-camel-on-click="{{ birthday }}"><span>Cumplir años</span><span style="font-family:var(--font-body); font-size:13px; font-weight:700">{{ age }} → {{ nextAge }}</span></button>
+      <div style="display:flex; flex-direction:column; gap:2px">
+        <h4 style="margin:0 0 6px">Tu historia</h4>
+        <sc-for list="{{ log }}" as="e" hint-placeholder-count="2">
+        <div style="display:grid; grid-template-columns:54px 1fr; gap:10px; padding:9px 0; font-size:13px; line-height:1.45; border-top:1px solid var(--color-divider)">
+          <span style="font-weight:700; color:var(--color-accent-700)">{{ e.d }}</span><span>{{ e.t }}</span>
+        </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ tabChamba }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:4px 18px 20px; display:flex; flex-direction:column; gap:12px">
+      <div style="display:flex; justify-content:space-between; align-items:baseline"><h3 style="margin:0">Chamba</h3><span style="font-size:12px; color:var(--color-neutral-700)">Calor: {{ calor }}%</span></div>
+      <sc-for list="{{ jobs }}" as="j" hint-placeholder-count="4">
+      <div style="border-radius:4px; background:var(--color-surface); border:2.5px solid var(--ink); box-shadow:var(--shadow-sm); padding:14px 16px; display:flex; flex-direction:column; gap:8px; opacity:{{ j.op }}">
+        <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start">
+          <div style="display:flex; flex-direction:column; gap:1px"><span style="font-family:var(--font-heading); font-size:17px; line-height:1.2">{{ j.name }}</span><span style="font-size:12px; color:var(--color-neutral-700)">{{ j.place }}</span></div>
+          <span style="font-family:var(--font-heading); font-size:20px; color:var(--color-accent-2-700)">+${{ j.pay }}</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap">
+          <span class="tag tag-accent">−{{ j.cost }} Ánimo</span>
+          <sc-if value="{{ j.hot }}" hint-placeholder-val="{{ false }}"><span class="tag tag-neutral">+{{ j.calor }} Calor</span></sc-if>
+          <span style="flex:1"></span>
+          <sc-if value="{{ j.open }}" hint-placeholder-val="{{ true }}"><button class="btn btn-primary" style="height:36px; padding:0 18px" sc-camel-on-click="{{ j.work }}">Trabajar</button></sc-if>
+          <sc-if value="{{ j.locked }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px; font-weight:700; color:var(--color-neutral-700)">{{ j.lockText }}</span></sc-if>
+        </div>
+      </div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ tabCel }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:4px 18px 20px; display:flex; flex-direction:column; gap:4px">
+      <sc-if value="{{ noThread }}" hint-placeholder-val="{{ true }}">
+        <sc-if value="{{ hasLove }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:8px; padding-bottom:14px">
+          <h3 style="margin:0">Corazón</h3>
+          <sc-for list="{{ loveList }}" as="p" hint-placeholder-count="1">
+          <div sc-camel-on-click="{{ p.open }}" style="cursor:pointer; display:grid; grid-template-columns:44px minmax(0,1fr) auto; gap:10px; align-items:center; padding:10px; border:2.5px solid var(--ink); border-radius:4px; background:{{ p.bg }}; box-shadow:var(--shadow-sm)">
+            <div style="width:44px; height:44px; border:2px solid var(--ink); background:{{ p.av }}; display:grid; place-items:center; font-family:var(--font-heading); font-weight:900; font-size:22px">{{ p.ini }}</div>
+            <div style="min-width:0; display:flex; flex-direction:column; gap:3px">
+              <span style="font-family:var(--font-heading); font-weight:900; font-size:18px; text-transform:uppercase; line-height:1">{{ p.name }}</span>
+              <span style="font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ p.title }} · {{ p.where }}</span>
+              <div style="height:6px; border:1.5px solid var(--ink); background:var(--color-neutral-200)"><div style="height:100%; width:{{ p.w }}; background:var(--color-accent)"></div></div>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ p.stage }}</span>
+          </div>
+          </sc-for>
+        </div>
+        </sc-if>
+        <h3 style="margin:0 0 8px">Mensajes</h3>
+        <sc-for list="{{ threads }}" as="th" hint-placeholder-count="3">
+        <div sc-camel-on-click="{{ th.open }}" style="cursor:pointer; display:flex; gap:12px; align-items:center; padding:12px 10px; border-radius:4px" style-hover="background:var(--color-surface)">
+          <div style="width:46px; height:46px; flex:none; border-radius:50%; background:{{ th.bg }}; display:grid; place-items:center; font-family:var(--font-heading); font-size:18px">{{ th.ini }}</div>
+          <div style="flex:1; min-width:0; display:flex; flex-direction:column"><span style="font-weight:700; font-size:15px">{{ th.name }}</span><span style="font-size:13px; color:var(--color-neutral-700); white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ th.preview }}</span></div>
+          <sc-if value="{{ th.unread }}" hint-placeholder-val="{{ false }}"><div style="width:10px; height:10px; border-radius:50%; background:var(--color-accent)"></div></sc-if>
+        </div>
+        </sc-for>
+      </sc-if>
+      <sc-if value="{{ hasThread }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; align-items:center; gap:10px; padding-bottom:10px">
+          <button class="btn btn-secondary" style="width:38px; height:38px; padding:0" sc-camel-on-click="{{ closeThread }}">←</button>
+          <span style="font-family:var(--font-heading); font-size:19px">{{ thread.name }}</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px; min-height:360px">
+          <sc-for list="{{ thread.msgs }}" as="m" hint-placeholder-count="2">
+          <div style="align-self:{{ m.align }}; max-width:78%; padding:10px 14px; border-radius:4px; background:{{ m.bg }}; color:{{ m.fg }}; font-size:14px; line-height:1.4; animation:pop .25s ease">{{ m.t }}</div>
+          </sc-for>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px; padding-top:12px">
+          <sc-for list="{{ thread.replies }}" as="r" hint-placeholder-count="0">
+          <button class="btn btn-secondary" style="height:44px; justify-content:flex-start; padding:0 18px; font-family:var(--font-body); font-weight:600" sc-camel-on-click="{{ r.send }}">{{ r.t }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ tabTienda }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:4px 18px 24px; display:flex; flex-direction:column; gap:14px">
+      <div style="position:relative; overflow:hidden; border-radius:var(--radius-lg); background:var(--color-accent); color:var(--color-bg); padding:20px; display:flex; flex-direction:column; gap:8px">
+        <div style="position:absolute; width:160px; height:160px; border-radius:50%; background:var(--color-accent-400); right:-40px; top:-50px"></div>
+        <span style="position:relative; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase">Temporada 1 · 34 días</span>
+        <h3 style="position:relative; margin:0; font-size:26px">Pase de las Fiestas de la Calle</h3>
+        <p style="position:relative; margin:0; font-size:13px; line-height:1.45">30 niveles: vejigante para tu apto, bocina dorada, outfit de pleneros.</p>
+        <div style="position:relative; display:flex; gap:4px; margin-top:4px">
+          <sc-for list="{{ passTrack }}" as="p" hint-placeholder-count="8"><div style="flex:1; height:8px; border-radius:2px; background:{{ p.bg }}"></div></sc-for>
+        </div>
+        <button class="btn" style="position:relative; align-self:flex-start; height:42px; padding:0 18px; margin-top:6px; background:var(--color-bg); color:var(--color-accent-800)" sc-camel-on-click="{{ buyPass }}">{{ passLabel }}</button>
+      </div>
+      <div style="border-radius:4px; background:var(--color-accent-2-200); padding:14px 16px; display:flex; align-items:center; gap:12px">
+        <div style="flex:1; display:flex; flex-direction:column"><span style="font-family:var(--font-heading); font-size:17px">Ánimo gratis</span><span style="font-size:12px; color:var(--color-accent-2-800)">Mira un anuncio de 15s · +2 Ánimo</span></div>
+        <button class="btn" style="height:38px; padding:0 16px; background:var(--color-accent-2-600); color:var(--color-bg)" sc-camel-on-click="{{ watchAd }}">Ver</button>
+      </div>
+      <h4 style="margin:6px 0 0">Coquís</h4>
+      <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px">
+        <sc-for list="{{ packs }}" as="p" hint-placeholder-count="3">
+        <div sc-camel-on-click="{{ p.buy }}" style="cursor:pointer; border-radius:4px; background:var(--color-surface); border:2.5px solid var(--ink); box-shadow:var(--shadow-sm); padding:14px 10px; display:flex; flex-direction:column; align-items:flex-start; gap:6px" style-hover="background:var(--color-neutral-300)">
+          <sc-if value="{{ p.best }}" hint-placeholder-val="{{ false }}"><span class="tag tag-accent" style="font-size:10px; padding:2px 8px">Mejor valor</span></sc-if>
+          <span style="font-family:var(--font-heading); font-size:24px; line-height:1">{{ p.n }}</span>
+          <span style="font-size:13px; font-weight:700; color:var(--color-neutral-800)">{{ p.price }}</span>
+        </div>
+        </sc-for>
+      </div>
+      <h4 style="margin:6px 0 0">Gastar coquís</h4>
+      <sc-for list="{{ items }}" as="it" hint-placeholder-count="3">
+      <div style="display:flex; align-items:center; gap:12px; padding:10px 0; border-top:1px solid var(--color-divider)">
+        <div style="width:44px; height:44px; border-radius:4px; background:{{ it.bg }}"></div>
+        <div style="flex:1; display:flex; flex-direction:column"><span style="font-weight:700; font-size:14px">{{ it.name }}</span><span style="font-size:12px; color:var(--color-neutral-700)">{{ it.sub }}</span></div>
+        <button class="btn btn-secondary" style="height:36px; padding:0 14px; font-family:var(--font-body); font-weight:700" sc-camel-on-click="{{ it.buy }}" disabled="{{ it.owned }}">{{ it.label }}</button>
+      </div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    </div>
+
+    <div style="flex:none; display:grid; grid-template-columns:repeat(5,1fr); padding:8px 8px 26px; background:var(--color-surface)">
+      <div sc-camel-on-click="{{ tBarrio }}" style="cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; font-size:11px; font-weight:700; color:{{ tc.barrio }}"><svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>Barrio</div>
+      <div sc-camel-on-click="{{ tVida }}" style="cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; font-size:11px; font-weight:700; color:{{ tc.vida }}"><svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>Vida</div>
+      <div sc-camel-on-click="{{ tChamba }}" style="cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; font-size:11px; font-weight:700; color:{{ tc.chamba }}"><svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>Chamba</div>
+      <div sc-camel-on-click="{{ tCel }}" style="cursor:pointer; position:relative; display:flex; flex-direction:column; align-items:center; gap:3px; font-size:11px; font-weight:700; color:{{ tc.cel }}"><svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg>Cel<sc-if value="{{ celBadge }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; top:-2px; left:50%; margin-left:8px; min-width:17px; height:17px; border-radius:2px; background:var(--color-accent); color:var(--color-bg); font-size:10px; display:grid; place-items:center">{{ unreadN }}</span></sc-if></div>
+      <div sc-camel-on-click="{{ tTienda }}" style="cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; font-size:11px; font-weight:700; color:{{ tc.tienda }}"><svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>Tienda</div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ hasSheet }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; background:color-mix(in srgb, var(--color-neutral-900) 40%, transparent)">
+    <div sc-camel-on-click="{{ closeSheet }}" style="flex:1"></div>
+    <div style="background:var(--color-bg); border-radius:4px 4px 0 0; padding:12px 20px 34px; display:flex; flex-direction:column; gap:12px; animation:pop .25s ease">
+      <div style="align-self:center; width:40px; height:5px; border-radius:2px; background:var(--color-neutral-400)"></div>
+      <div style="display:flex; flex-direction:column; gap:2px"><h3 style="margin:0">{{ sheet.label }}</h3><span style="font-size:13px; color:var(--color-neutral-700)">{{ sheet.sub }}</span></div>
+      <sc-for list="{{ sheetActions }}" as="a" hint-placeholder-count="2">
+      <div sc-camel-on-click="{{ a.run }}" style="cursor:pointer; display:flex; align-items:center; gap:12px; padding:13px 16px; border-radius:4px; background:var(--color-surface)" style-hover="background:var(--color-neutral-300)" style-active="transform:scale(.98)">
+        <div style="flex:1; display:flex; flex-direction:column"><span style="font-weight:700; font-size:15px">{{ a.label }}</span><span style="font-size:12px; color:var(--color-neutral-700)">{{ a.fx }}</span></div>
+        <span class="tag tag-accent">{{ a.costLabel }}</span>
+      </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ hasEvent }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; display:flex; align-items:center; padding:20px; background:color-mix(in srgb, var(--color-neutral-900) 55%, transparent)">
+    <div style="width:100%; background:var(--color-bg); border-radius:4px; padding:24px 22px 22px; display:flex; flex-direction:column; gap:14px; box-shadow:var(--shadow-lg); animation:pop .3s ease">
+      <span class="tag tag-accent-2" style="align-self:flex-start">{{ ev.kicker }}</span>
+      <h2 style="margin:0; font-size:27px; text-wrap:pretty">{{ ev.title }}</h2>
+      <p style="margin:0; font-size:15px; line-height:1.5; color:var(--color-neutral-800); text-wrap:pretty">{{ ev.body }}</p>
+      <sc-if value="{{ evChoosing }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <sc-for list="{{ evChoices }}" as="c" hint-placeholder-count="3">
+          <button class="btn btn-secondary" style="min-height:50px; justify-content:flex-start; text-align:left; padding:10px 18px; font-family:var(--font-body); font-size:15px; font-weight:600; border-radius:4px" sc-camel-on-click="{{ c.pick }}">{{ c.label }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ evDone }}" hint-placeholder-val="{{ false }}">
+        <div style="border-radius:4px; background:var(--color-surface); border:2.5px solid var(--ink); box-shadow:var(--shadow-sm); padding:14px 16px; display:flex; flex-direction:column; gap:8px; animation:pop .25s ease">
+          <span style="font-size:15px; line-height:1.45">{{ result.text }}</span>
+          <div style="display:flex; flex-wrap:wrap; gap:6px"><sc-for list="{{ result.chips }}" as="d" hint-placeholder-count="2"><span class="tag" style="background:{{ d.bg }}; color:{{ d.fg }}; font-weight:700">{{ d.t }}</span></sc-for></div>
+        </div>
+        <button class="btn btn-primary" style="height:50px; font-size:16px; justify-content:flex-start; padding:0 20px" sc-camel-on-click="{{ closeEvent }}">Seguir</button>
+      </sc-if>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ noAnimo }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; display:flex; align-items:flex-end; background:color-mix(in srgb, var(--color-neutral-900) 50%, transparent)">
+    <div style="width:100%; background:var(--color-bg); border-radius:4px 4px 0 0; padding:24px 22px 34px; display:flex; flex-direction:column; gap:10px; animation:pop .25s ease">
+      <div style="width:64px; height:64px; border-radius:50%; background:var(--color-accent-200); display:grid; place-items:center; color:var(--color-accent-700)"><svg width="30" height="30" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg></div>
+      <h3 style="margin:0">Estás que no puedes más</h3>
+      <p style="margin:0 0 6px; font-size:14px; color:var(--color-neutral-800)">No te queda Ánimo pa' eso. Nuevo día en {{ dayLeft }}, o:</p>
+      <button class="btn" style="height:50px; justify-content:space-between; padding:0 20px; background:var(--color-accent-2-600); color:var(--color-bg)" sc-camel-on-click="{{ watchAd }}"><span>Ver anuncio</span><span style="font-family:var(--font-body); font-weight:700">+2</span></button>
+      <button class="btn btn-primary" style="height:50px; justify-content:space-between; padding:0 20px" sc-camel-on-click="{{ refill }}"><span>Llenar Ánimo</span><span style="font-family:var(--font-body); font-weight:700">15 coquís</span></button>
+      <button class="btn btn-secondary" style="height:50px; justify-content:flex-start; padding:0 20px" sc-camel-on-click="{{ sleepNow }}">Irme a dormir (pasa el día)</button>
+      <button class="btn btn-ghost" style="align-self:flex-start" sc-camel-on-click="{{ closeNoAnimo }}">Ahora no</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ adOn }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; background:var(--color-neutral-900); color:var(--color-neutral-100); display:flex; flex-direction:column; align-items:flex-start; justify-content:center; padding:32px; gap:10px">
+    <span class="tag tag-neutral">Anuncio · {{ adLeft }}s</span>
+    <h2 style="margin:0; color:var(--color-neutral-100)">Ad placeholder</h2>
+    <p style="margin:0; font-size:14px; color:var(--color-neutral-400)">Rewarded video plays here.</p>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ mgHoops }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:56px 22px 34px; gap:16px">
+    <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Pickup</span>
+    <h2 style="margin:0">A 5 tiros contra Yadiel</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; border:2.5px solid var(--ink); box-shadow:var(--shadow-md)">
+      <div style="padding:12px; display:flex; flex-direction:column; background:var(--sun)"><span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Tú</span><span style="font-family:var(--font-heading); font-weight:900; font-size:64px; line-height:.9">{{ hoops.made }}</span></div>
+      <div style="padding:12px; display:flex; flex-direction:column; border-left:2.5px solid var(--ink)"><span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Yadiel</span><span style="font-family:var(--font-heading); font-weight:900; font-size:64px; line-height:.9">{{ hoops.opp }}</span></div>
+    </div>
+    <span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Tiro {{ hoops.shotN }} de 5 · para la raya en lo verde</span>
+    <div style="position:relative; height:60px; border:2.5px solid var(--ink); background:var(--color-surface)">
+      <div style="position:absolute; top:0; bottom:0; left:{{ hoops.zl }}%; width:{{ hoops.zw }}%; background:var(--color-accent-2)"></div>
+      <div style="position:absolute; top:-10px; bottom:-10px; width:6px; margin-left:-3px; left:{{ hoops.x }}%; background:var(--ink)"></div>
+    </div>
+    <div style="flex:1; font-family:var(--font-heading); font-weight:800; font-size:26px; text-transform:uppercase; line-height:1.05; text-wrap:pretty">{{ hoops.msg }}</div>
+    <sc-if value="{{ hoops.playing }}" hint-placeholder-val="{{ true }}"><button class="btn btn-primary" style="height:68px; font-size:28px" sc-camel-on-click="{{ shoot }}">Tirar</button></sc-if>
+    <sc-if value="{{ hoops.over }}" hint-placeholder-val="{{ false }}"><button class="btn btn-primary" style="height:58px; font-size:20px" sc-camel-on-click="{{ endMg }}">Seguir</button></sc-if>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ mgChase }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:52px 18px 26px; gap:10px">
+    <span class="tag tag-accent" style="align-self:flex-start">Misión · Persecución</span>
+    <h2 style="margin:0; font-size:30px">Pa'l taller de Chago</h2>
+    <div style="display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); border:3px solid var(--ink); box-shadow:var(--shadow-md); background:var(--color-neutral-800)">
+      <sc-for list="{{ chase.cells }}" as="k" hint-placeholder-count="63"><div style="aspect-ratio:1; background:{{ k.bg }}; color:{{ k.fg }}; box-shadow:{{ k.bd }}; display:grid; place-items:center; font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:11px">{{ k.t }}</div></sc-for>
+    </div>
+    <div style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:19px; line-height:1.05; min-height:40px; text-wrap:pretty">{{ chase.msg }}</div>
+    <sc-if value="{{ chase.playing }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid; grid-template-columns:repeat(3,64px); gap:6px; justify-content:center">
+      <span></span><button class="btn" style="height:48px; font-size:22px" sc-camel-on-click="{{ mvU }}">↑</button><span></span>
+      <button class="btn" style="height:48px; font-size:22px" sc-camel-on-click="{{ mvL }}">←</button><button class="btn" style="height:48px; font-size:22px" sc-camel-on-click="{{ mvD }}">↓</button><button class="btn" style="height:48px; font-size:22px" sc-camel-on-click="{{ mvR }}">→</button>
+    </div>
+    </sc-if>
+    <sc-if value="{{ chase.over }}" hint-placeholder-val="{{ false }}"><button class="btn btn-primary" style="height:56px; font-size:20px" sc-camel-on-click="{{ endMg }}">{{ chase.endLabel }}</button></sc-if>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ mgColmado }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:52px 18px 26px; gap:10px">
+    <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Atender el colmado</span>
+    <div style="display:flex; justify-content:space-between; align-items:baseline"><h2 style="margin:0; font-size:30px">Cliente {{ col.n }} de 5</h2><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Vendido: {{ col.score }}</span></div>
+    <div style="height:12px; border:2.5px solid var(--ink); background:var(--color-neutral-200)"><div style="height:100%; width:{{ col.left }}%; background:{{ col.barc }}"></div></div>
+    <div style="border:2.5px solid var(--ink); border-radius:4px; background:var(--color-surface); box-shadow:var(--shadow-sm); padding:12px; display:flex; flex-direction:column; gap:4px"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ col.who }} pide:</span><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:24px; line-height:1; text-wrap:pretty">{{ col.orderText }}</span></div>
+    <sc-if value="{{ col.picking }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px">
+      <sc-for list="{{ col.shelf }}" as="it" hint-placeholder-count="6"><div sc-camel-on-click="{{ it.add }}" style="cursor:pointer; border:2.5px solid var(--ink); border-radius:4px; background:{{ it.bg }}; padding:9px 8px; display:flex; flex-direction:column; gap:3px; box-shadow:var(--shadow-sm); min-height:74px" style-active="transform:translate(2px,2px); box-shadow:none"><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:16px; line-height:1">{{ it.name }}</span><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ it.price }}</span><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:20px; line-height:1">{{ it.q }}</span></div></sc-for>
+    </div>
+    <div style="display:flex; gap:8px"><button class="btn btn-secondary" style="height:50px" sc-camel-on-click="{{ colClear }}">Vaciar</button><button class="btn btn-primary" style="flex:1; height:50px; font-size:18px" sc-camel-on-click="{{ colDone }}">Listo · cobrar</button></div>
+    </sc-if>
+    <sc-if value="{{ col.paying }}" hint-placeholder-val="{{ false }}">
+    <span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:22px">¿Cuánto es?</span>
+    <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px"><sc-for list="{{ col.opts }}" as="o" hint-placeholder-count="3"><button class="btn" style="height:58px; font-size:22px" sc-camel-on-click="{{ o.pick }}">{{ o.t }}</button></sc-for></div>
+    </sc-if>
+    <div style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:18px; line-height:1.05; min-height:40px; text-wrap:pretty">{{ col.msg }}</div>
+    <sc-if value="{{ col.over }}" hint-placeholder-val="{{ false }}"><button class="btn btn-primary" style="height:56px; font-size:20px" sc-camel-on-click="{{ endMg }}">Cerrar el colmado</button></sc-if>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ mgTuning }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:52px 18px 26px; gap:10px">
+    <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Taller de Chago</span>
+    <h2 style="margin:0; font-size:30px">{{ tun.title }}</h2>
+    <div style="border:2.5px solid var(--ink); border-radius:4px; background:var(--color-surface); box-shadow:var(--shadow-sm); padding:10px 12px; display:flex; flex-direction:column; gap:4px"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ tun.client }} quiere:</span><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:22px; line-height:1">{{ tun.want }}</span><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:9.5px; text-transform:none">{{ tun.req }}</span></div>
+    <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px"><sc-for list="{{ tun.stats }}" as="s" hint-placeholder-count="4"><div style="border:2px solid var(--ink); padding:5px 7px; background:{{ s.bg }}; display:flex; flex-direction:column"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:9px">{{ s.k }}</span><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:24px; line-height:1">{{ s.v }}</span></div></sc-for></div>
+    <div style="flex:1; min-height:0; overflow:auto; display:flex; flex-direction:column; gap:6px"><sc-for list="{{ tun.parts }}" as="p" hint-placeholder-count="7"><div sc-camel-on-click="{{ p.toggle }}" style="cursor:pointer; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2px 10px; padding:8px 10px; border:2.5px solid var(--ink); border-radius:4px; background:{{ p.bg }}"><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:17px; line-height:1">{{ p.name }}</span><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ p.cost }}</span><span style="grid-column:1 / -1; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:9.5px">{{ p.fx }}</span></div></sc-for></div>
+    <div style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:17px; line-height:1.05; min-height:20px; text-wrap:pretty">{{ tun.msg }}</div>
+    <sc-if value="{{ tun.playing }}" hint-placeholder-val="{{ true }}"><button class="btn btn-primary" style="height:54px; font-size:19px" sc-camel-on-click="{{ tunDeliver }}">Entregar el carro</button></sc-if>
+    <sc-if value="{{ tun.over }}" hint-placeholder-val="{{ false }}"><button class="btn btn-primary" style="height:54px; font-size:19px" sc-camel-on-click="{{ endMg }}">Cobrarle a Chago</button></sc-if>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ mgBriscola }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:52px 18px 26px; gap:10px">
+    <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Briscola</span>
+    <h2 style="margin:0; font-size:30px">Contra Don Tito</h2>
+    <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase"><span>Tú: {{ bri.my }} pts</span><span>Don Tito: {{ bri.opp }} pts</span><span>Mazo: {{ bri.deckN }}</span></div>
+    <div style="flex:1; min-height:0; position:relative; border:3px solid var(--ink); border-radius:4px; background:var(--color-accent-2-700); display:flex; gap:14px; align-items:center; justify-content:center; padding:14px">
+      <div style="position:absolute; left:10px; top:10px; display:flex; flex-direction:column; gap:4px"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">Triunfo</span><div style="width:54px; height:76px; flex:none; box-sizing:border-box; border:3px solid var(--ink); border-radius:6px; background:var(--paper); box-shadow:var(--shadow-sm); display:flex; flex-direction:column; justify-content:space-between; padding:5px">
+          <span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:20px; line-height:1; color:var(--ink)">{{ bri.trump.n }}</span>
+          <div style="height:15px; border:2px solid var(--ink); background:{{ bri.trump.col }}"></div>
+          <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:8.5px; line-height:1.1; color:var(--ink)">{{ bri.trump.name }}</span>
+        </div></div>
+      <span style="position:absolute; right:10px; top:10px; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">Don Tito · {{ bri.oppN }} cartas</span>
+      <sc-for list="{{ bri.table }}" as="c" hint-placeholder-count="0"><div style="display:flex; flex-direction:column; gap:4px; align-items:center"><div style="width:78px; height:110px; flex:none; box-sizing:border-box; border:3px solid var(--ink); border-radius:6px; background:var(--paper); box-shadow:var(--shadow-sm); display:flex; flex-direction:column; justify-content:space-between; padding:5px">
+          <span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:30px; line-height:1; color:var(--ink)">{{ c.n }}</span>
+          <div style="height:22px; border:2px solid var(--ink); background:{{ c.col }}"></div>
+          <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:8.5px; line-height:1.1; color:var(--ink)">{{ c.name }}</span>
+        </div><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">{{ c.who }}</span></div></sc-for>
+    </div>
+    <div style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:18px; line-height:1.05; min-height:38px; text-wrap:pretty">{{ bri.msg }}</div>
+    <div style="display:flex; gap:10px; justify-content:center; min-height:110px"><sc-for list="{{ bri.hand }}" as="c" hint-placeholder-count="3"><div sc-camel-on-click="{{ c.play }}" style="cursor:pointer; opacity:{{ c.op }}" style-active="transform:translateY(-4px)"><div style="width:84px; height:118px; flex:none; box-sizing:border-box; border:3px solid var(--ink); border-radius:6px; background:var(--paper); box-shadow:var(--shadow-sm); display:flex; flex-direction:column; justify-content:space-between; padding:5px">
+          <span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:32px; line-height:1; color:var(--ink)">{{ c.n }}</span>
+          <div style="height:24px; border:2px solid var(--ink); background:{{ c.col }}"></div>
+          <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:8.5px; line-height:1.1; color:var(--ink)">{{ c.name }}</span>
+        </div></div></sc-for></div>
+    <sc-if value="{{ bri.over }}" hint-placeholder-val="{{ false }}"><button class="btn btn-primary" style="height:54px; font-size:19px" sc-camel-on-click="{{ endMg }}">Seguir</button></sc-if>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ mgDomino }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:56px 18px 30px; gap:12px">
+    <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Dominó</span>
+    <h2 style="margin:0">Mano contra Don Pepe</h2>
+    <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase"><span>Don Pepe: {{ dom.oppN }} fichas</span><span>Puntas: {{ dom.ends }}</span></div>
+    <div style="flex:1; min-height:0; overflow:auto; border:2.5px solid var(--ink); background:var(--color-accent-2-700); padding:12px; display:flex; flex-wrap:wrap; gap:5px; align-content:flex-start">
+      <sc-for list="{{ dom.board }}" as="t" hint-placeholder-count="0"><div style="display:flex; border:2px solid var(--ink); background:var(--color-surface); font-family:var(--font-mono); font-size:14px; font-weight:700"><span style="padding:3px 6px">{{ t.a }}</span><span style="padding:3px 6px; border-left:1.5px solid var(--ink)">{{ t.b }}</span></div></sc-for>
+    </div>
+    <div style="font-family:var(--font-heading); font-weight:800; font-size:20px; text-transform:uppercase; line-height:1.05; min-height:42px; text-wrap:pretty">{{ dom.msg }}</div>
+    <div style="display:flex; flex-wrap:wrap; gap:7px">
+      <sc-for list="{{ dom.hand }}" as="t" hint-placeholder-count="7"><div sc-camel-on-click="{{ t.play }}" style="cursor:pointer; width:40px; display:flex; flex-direction:column; align-items:stretch; text-align:center; border:2.5px solid var(--ink); border-radius:4px; background:{{ t.bg }}; opacity:{{ t.op }}; box-shadow:var(--shadow-sm); font-family:var(--font-mono); font-size:17px; font-weight:700"><span style="padding:7px 0">{{ t.a }}</span><span style="padding:7px 0; border-top:2px solid var(--ink)">{{ t.b }}</span></div></sc-for>
+    </div>
+    <sc-if value="{{ dom.canPass }}" hint-placeholder-val="{{ false }}"><button class="btn btn-secondary" style="height:52px" sc-camel-on-click="{{ domPass }}">No llevo · Paso</button></sc-if>
+    <sc-if value="{{ dom.over }}" hint-placeholder-val="{{ false }}"><button class="btn btn-primary" style="height:56px; font-size:20px" sc-camel-on-click="{{ endMg }}">Seguir</button></sc-if>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ inJail }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; background:var(--ink); color:var(--paper); display:flex; flex-direction:column; padding:64px 22px 34px; gap:14px">
+    <span class="tag tag-neutral" style="align-self:flex-start">Preso · {{ jail.years }} años de sentencia</span>
+    <h2 style="margin:0; color:var(--paper); font-size:40px; text-wrap:pretty">{{ jail.title }}</h2>
+    <p style="margin:0; font-size:16px; line-height:1.5; text-wrap:pretty">{{ jail.body }}</p>
+    <div style="flex:1"></div>
+    <sc-for list="{{ jailChoices }}" as="c" hint-placeholder-count="2"><button class="btn btn-secondary" style="min-height:54px; justify-content:flex-start; text-align:left; box-shadow:4px 4px 0 var(--sun)" sc-camel-on-click="{{ c.pick }}">{{ c.label }}</button></sc-for>
+    <span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase; color:var(--color-neutral-400)">Carta {{ jail.n }} de {{ jail.total }} · el tiempo pasa solo</span>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isDead }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; background:var(--ink); color:var(--paper); display:flex; flex-direction:column; padding:64px 22px 34px; gap:16px">
+    <span class="tag tag-accent" style="align-self:flex-start">Q.E.P.D.</span>
+    <h1 style="margin:0; color:var(--paper); font-size:52px; text-wrap:pretty">{{ deadName }}</h1>
+    <p style="margin:0; font-size:16px; line-height:1.5">{{ dead.cause }} Tenía {{ age }} años.</p>
+    <div style="border:2.5px solid var(--paper); padding:14px; display:flex; flex-direction:column; gap:6px">
+      <h4 style="margin:0 0 4px; color:var(--sun)">{{ heirName }} hereda</h4>
+      <sc-for list="{{ inherit }}" as="r" hint-placeholder-count="5"><div style="display:flex; justify-content:space-between; gap:12px; font-family:var(--font-mono); font-size:13px; padding-top:6px; border-top:1px solid var(--color-neutral-700)"><span>{{ r.k }}</span><span style="text-align:right">{{ r.v }}</span></div></sc-for>
+    </div>
+    <div style="flex:1"></div>
+    <button class="btn btn-primary" style="height:58px; font-size:20px" sc-camel-on-click="{{ nextGen }}">Jugar como {{ heirName }}</button>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ closetOn }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; background:color-mix(in srgb, var(--ink) 45%, transparent)">
+    <div sc-camel-on-click="{{ closeCloset }}" style="flex:1; min-height:40px"></div>
+    <div style="background:var(--paper); border-top:3px solid var(--ink); padding:16px 18px 28px; display:flex; flex-direction:column; gap:9px; overflow:auto; max-height:86%">
+      <div style="display:flex; gap:14px; align-items:center; padding-bottom:4px">
+        <dc-import name="Avatar" size="112" bg="var(--color-accent-2-200)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" hint-size="112px,112px"></dc-import>
+        <div style="display:flex; flex-direction:column; gap:4px"><h3 style="margin:0">El clóset</h3><span style="font-size:12.5px; line-height:1.4">Gorra y cadena se desbloquean en la Tienda.</span></div>
+      </div>
+      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Piel</span>
+      <div style="display:flex; flex-wrap:wrap; gap:8px"><sc-for list="{{ skinOpts }}" as="o" hint-placeholder-count="5"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; width:36px; height:36px; border:2.5px solid var(--ink); border-radius:4px; background:{{ o.c }}; box-shadow:{{ o.sh }}; transform:{{ o.tf }}; transition:transform .1s"></div></sc-for></div>
+      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Pelo</span>
+      <div style="display:flex; flex-wrap:wrap; gap:6px"><sc-for list="{{ hairOpts }}" as="o" hint-placeholder-count="4"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; padding:8px 10px; border:2.5px solid var(--ink); border-radius:4px; background:{{ o.bg }}; opacity:{{ o.op }}; font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:15px; line-height:1">{{ o.label }}</div></sc-for></div>
+      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Color de pelo</span>
+      <div style="display:flex; flex-wrap:wrap; gap:8px"><sc-for list="{{ hcOpts }}" as="o" hint-placeholder-count="5"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; width:36px; height:36px; border:2.5px solid var(--ink); border-radius:4px; background:{{ o.c }}; box-shadow:{{ o.sh }}; transform:{{ o.tf }}; transition:transform .1s"></div></sc-for></div>
+      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Ropa</span>
+      <div style="display:flex; flex-wrap:wrap; gap:6px"><sc-for list="{{ topOpts }}" as="o" hint-placeholder-count="4"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; padding:8px 10px; border:2.5px solid var(--ink); border-radius:4px; background:{{ o.bg }}; opacity:{{ o.op }}; font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:15px; line-height:1">{{ o.label }}</div></sc-for></div>
+      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Color de ropa</span>
+      <div style="display:flex; flex-wrap:wrap; gap:8px"><sc-for list="{{ tcOpts }}" as="o" hint-placeholder-count="5"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; width:36px; height:36px; border:2.5px solid var(--ink); border-radius:4px; background:{{ o.c }}; box-shadow:{{ o.sh }}; transform:{{ o.tf }}; transition:transform .1s"></div></sc-for></div>
+      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Extras</span>
+      <div style="display:flex; flex-wrap:wrap; gap:6px"><sc-for list="{{ extraOpts }}" as="o" hint-placeholder-count="4"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; padding:8px 10px; border:2.5px solid var(--ink); border-radius:4px; background:{{ o.bg }}; opacity:{{ o.op }}; font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:15px; line-height:1">{{ o.label }}</div></sc-for></div>
+      <button class="btn btn-primary" style="height:50px; font-size:18px; margin-top:6px" sc-camel-on-click="{{ closeCloset }}">Listo</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; left:18px; right:18px; top:104px; padding:12px 16px; border-radius:4px; background:var(--color-neutral-900); color:var(--color-neutral-100); font-size:13px; font-weight:600; box-shadow:var(--shadow-lg); animation:pop .2s ease; pointer-events:none">{{ toast }}</div>
+  </sc-if>
+
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;title&quot;,&quot;pick&quot;,&quot;create&quot;,&quot;hub&quot;],&quot;default&quot;:&quot;title&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showNotes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;animoMax&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;min&quot;:2,&quot;max&quot;:10,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;}}">
+const CAS=[
+ {id:'cantera',name:'Res. Las Palmas de Oro',short:'Las Palmas de Oro',town:'San Juan',blurb:'Al lado del Expreso, con vista a los rascacielos de Hato Rey. Mucha chamba, mucho movimiento.',m:[5,4,4],perk:'+$20 para empezar',d:{chavos:20}},
+ {id:'flamboyanes',name:'Res. Ceiba Alta',short:'Ceiba Alta',town:'Ponce',blurb:'Calles anchas, orgullo ponceño y la mejor cancha del sur. Aquí todo el mundo se conoce.',m:[3,2,5],perk:'+10 Respeto',d:{resp:10}},
+ {id:'marazul',name:'Res. Arena Negra',short:'Arena Negra',town:'Loíza',blurb:'A cinco minutos de la playa. Bomba los viernes, frituras todos los días.',m:[2,2,5],perk:'+10 Felicidad',d:{feli:10}},
+ {id:'coqui',name:'Res. Quebrada Fría',short:'Quebrada Fría',town:'Bayamón',blurb:'Al lado del tren urbano y del estadio. Si quieres ser pelotero, empieza aquí.',m:[4,3,3],perk:'+10 Salud',d:{salud:10}}];
+const TRAITS=[
+ {id:'pelotero',name:'Pelotero',bonus:'+10 Salud',d:{salud:10}},
+ {id:'rapero',name:'Rapero',bonus:'+8 Felicidad, beats pagan más',d:{feli:8}},
+ {id:'estudioso',name:'Estudioso',bonus:'+15 Coco',d:{coco:15}},
+ {id:'buscon',name:'Buscón',bonus:'+$20, +5 Respeto',d:{chavos:20,resp:5}}];
+const LBL={salud:'Salud',feli:'Felicidad',coco:'Coco',resp:'Respeto',chavos:'$',animo:'Ánimo',coquis:'Coquís',calor:'Calor'};
+const LOCS=[
+ {id:'colmado',label:'Colmado Don Pepe',note:'Hay dominó en la mesa de afuera.',sub:'Malta fría, pan sobao y todos los chismes.',sw:'var(--sun)',tags:['Dominó','Briscola','Vender'],acts:[
+   {label:'Dominó con Don Pepe',fx:'Minijuego · gana $10 y Respeto',cost:1,mg:'domino'},
+   {label:'Briscola con Don Tito',fx:'Minijuego · cartas españolas · llega a más de 60',cost:1,mg:'briscola'},
+   {label:'Atender el colmado',fx:'Minijuego · 5 clientes · cobra bien',cost:2,mg:'colmado'},
+   {label:'Hablar con Wichi',fx:'Conocer gente · nuevo contacto',cost:0,meet:'wichi'},
+   {cat:'familiar',label:'Sentarte a escuchar chismes',fx:'+3 Coco · +2 Felicidad',cost:1,d:{coco:3,feli:2},ev:.6}]},
+ {id:'panaderia',label:'Panadería La Esperanza',note:'Huele a pan sobao desde la parada.',sub:'Abre a las 5am. Los domingos la cola llega a la calle.',sw:'var(--color-accent-200)',tags:['Pan','Gente'],lock:'Alguien te va a mandar pa\' acá.',acts:[
+   {label:'Comprar una mallorca',fx:'−$3 · +5 Felicidad',cost:0,d:{chavos:-3,feli:5}},
+   {label:'Hablar con Doña Lydia',fx:'Conocer gente · nuevo contacto',cost:0,meet:'lydia'}]},
+ {id:'cancha',label:'La cancha',note:'Pickup a las 6. Yadiel busca uno más.',sub:'Aro sin malla, pero el juego está caliente.',sw:'var(--color-accent-2)',tags:['Pickup','Deportes'],acts:[
+   {label:'Pickup contra Yadiel',fx:'Minijuego · a 5 tiros',cost:2,mg:'hoops'},
+   {label:'Hablar con el pana del 3',fx:'Conocer gente · nuevo contacto',cost:0,meet:'kiko'},
+   {label:'Entrenar solo',fx:'+6 Salud · camino de atleta',cost:2,d:{salud:6,resp:1},ev:.4}]},
+ {id:'punto',label:'El punto',note:'Detrás del Edif. 3. Te están buscando.',sub:'Aquí se hacen chavos rápido. Y se pierden vidas rápido.',ink:true,sw:'var(--color-accent)',tags:['Calor','Territorio','Armas'],lock:'En la cancha saben dónde queda.',acts:[
+   {label:'Vender en la esquina',fx:'+$40 · +15 Calor · riesgo de arresto',cost:2,d:{chavos:40,calor:15},crime:true},
+   {label:'Tomar la esquina del Edif. 5',fx:'Territorio · +20 Calor · pelea · 20 Respeto',cost:3,d:{resp:10,calor:20,salud:-15},crime:true,turf:'e5',risk:.15,req:20,deathCause:'Cayó peleando por la esquina del 5.'},
+   {label:'Bronca con Los del 3',fx:'Quitarles el Edif. 3 · muy peligroso · 35 Respeto',cost:3,d:{resp:15,calor:25,salud:-25},crime:true,turf:'e3',risk:.3,req:35,deathCause:'Los del 3 no perdonaron.'},
+   {label:'Comprar un arma',fx:'−$120 · peleas menos mortales · +5 Calor',cost:0,d:{chavos:-120,calor:5},weapon:true}]},
+ {id:'taller',label:'Taller de Chago',note:'Chago tiene un Civic que nadie reclamó.',sub:'Chago arregla todo menos su propio carro.',sw:'var(--color-neutral-400)',tags:['Tuning','Carros'],lock:'Wichi, el del colmado, conoce al mecánico.',acts:[
+   {label:'Tunear carros pa\' clientes',fx:'Minijuego · 3 clientes · respeta el presupuesto',cost:2,mg:'tuning'},
+   {label:'Ayudar a Chago',fx:'+$10 · +2 Coco',cost:2,d:{chavos:10,coco:2}},
+   {label:'Robar un carro pa\' piezas',fx:'Misión · persecución hasta el taller · +$60',cost:2,mg:'chase'}]},
+ {id:'escuela',maxAge:17,label:'Escuela Superior',note:'Examen de química el jueves.',sub:'Hay aire acondicionado en un salón.',sw:'var(--color-surface)',tags:['Coco','Música'],acts:[
+   {label:'Ir a clase',fx:'+6 Coco · −2 Felicidad',cost:2,d:{coco:6,feli:-2},ev:.4},
+   {cat:'artista',label:'Grabar en el salón de música',fx:'+4 Felicidad · +3 Respeto · camino de artista',cost:2,d:{feli:4,resp:3}},
+   {cat:'fiestero',label:'Cortar clase',fx:'+5 Felicidad · −4 Coco',cost:1,d:{feli:5,coco:-4}}]},
+ {id:'apto',label:'Tu apto · Edif. 7',note:'Abuela hizo arroz con gandules.',sub:'Tercer piso. El ascensor lleva roto desde el 2019.',sw:'var(--color-accent-300)',tags:['Dormir','Familia'],acts:[
+   {label:'Dormir',fx:'Llena el Ánimo, baja el Calor',cost:0,sleep:true},
+   {label:'Comer con Abuela',fx:'+6 Salud · +4 Felicidad',cost:1,d:{salud:6,feli:4}}]}];
+LOCS.push(
+ {id:'plaza',zone:'pueblo',label:'La plaza del pueblo',note:'Viejitos jugando dominó y una piragua de frambuesa.',sub:'Frente a la iglesia. Los domingos hay bomba y plena.',sw:'var(--color-accent-2-300)',tags:['Gente','Fiestas'],acts:[
+   {label:'Comerte una piragua',fx:'−$2 · +5 Felicidad',cost:0,d:{chavos:-2,feli:5}},
+   {label:'Bailar plena en la plaza',fx:'+6 Felicidad · +2 Respeto',cost:2,d:{feli:6,resp:2},ev:.4}]},
+ {id:'terminal',zone:'pueblo',label:'La Terminal',note:'Guaguas, públicos y el chisme de todo el pueblo.',sub:'El aire acondicionado sirve a veces.',sw:'var(--color-neutral-300)',tags:['Viajar','San Juan'],acts:[
+   {label:'Esperar la guagua',fx:'+2 Coco · se te va el día',cost:1,d:{coco:2}}]},
+ {id:'estudio',zone:'pueblo',label:'Estudio Casa Bruja',note:'Un cuarto con espuma en las paredes y mucho talento.',sub:'DJ Brujo cobra por hora. A veces fía.',sw:'var(--color-accent-400)',tags:['Música'],acts:[
+   {label:'Grabar un demo',fx:'−$20 · +8 Respeto · camino de artista',cost:2,d:{chavos:-20,resp:8,feli:4}},
+   {label:'Ayudar con los cables',fx:'+$8 · +2 Coco',cost:2,d:{chavos:8,coco:2}}]},
+ {id:'liga',zone:'pueblo',label:'Cancha bajo techo',note:'Tryouts de la Liga Juvenil los sábados.',sub:'Aquí jugó un pana que llegó a la liga profesional.',sw:'var(--color-accent-2)',tags:['Deportes'],acts:[
+   {label:'Tryout de la Liga Juvenil',fx:'Necesitas 70 Salud · +10 Respeto',cost:3,d:{resp:10,salud:-4,feli:5},reqSalud:70}]},
+ {id:'chinchorro',zone:'pueblo',minAge:18,label:'Chinchorro La Última Gota',note:'Salsa vieja, pinchos y billar.',sub:'Abierto hasta que el dueño se canse.',sw:'var(--sun)',tags:['18+','Billar'],acts:[
+   {label:'Bailar salsa',fx:'−$5 · +8 Felicidad',cost:1,d:{chavos:-5,feli:8},ev:.5},
+   {label:'Jugar billar por chavos',fx:'+$15 · +2 Respeto',cost:1,d:{chavos:15,resp:2}}]},
+ {id:'yupi',zone:'sanjuan',path:['yupi'],label:'La YUPI · Recinto Capital',note:'La torre, los gatos y las huelgas.',sub:'La universidad pública. Barata y difícil.',sw:'var(--color-accent-2-300)',tags:['Universidad','Pública'],acts:[
+   {label:'Ir a clase',fx:'+8 Coco',cost:2,d:{coco:8,feli:-1},ev:.3},
+   {label:'Grupo de estudio en la biblioteca',fx:'+5 Coco · +2 Respeto',cost:2,d:{coco:5,resp:2}},
+   {label:'Unirte a la huelga',fx:'+6 Respeto · +5 Calor',cost:2,d:{resp:6,calor:5}}]},
+ {id:'privada',zone:'sanjuan',path:['privada'],label:'Universidad Sagrada Familia',note:'Aire central y estacionamiento con guardia.',sub:'La universidad privada. Contactos que pagan.',sw:'var(--color-accent-300)',tags:['Universidad','Privada'],acts:[
+   {label:'Ir a clase',fx:'+7 Coco',cost:2,d:{coco:7},ev:.3},
+   {label:'Networking en la cafetería',fx:'−$10 · +6 Respeto',cost:1,d:{chavos:-10,resp:6}}]},
+ {id:'muelle',zone:'sanjuan',label:'El muelle',note:'Cruceros, turistas y palomas.',sub:'Los turistas pagan $5 por una foto con un coquí de peluche.',sw:'var(--color-neutral-300)',tags:['Turistas','Chavos'],acts:[
+   {label:'Vender agua a los turistas',fx:'+$18',cost:2,d:{chavos:18}},
+   {label:'Caminar por la muralla',fx:'+6 Felicidad',cost:1,d:{feli:6}}]},
+ {id:'club',zone:'sanjuan',minAge:18,label:'Discoteca Neón',note:'El dembow suena hasta las 4am.',sub:'Hay fila. Siempre hay fila.',sw:'var(--color-accent)',tags:['18+','Fiesta'],acts:[
+   {label:'Salir de fiesta',fx:'−$25 · +12 Felicidad · −4 Salud',cost:2,d:{chavos:-25,feli:12,salud:-4},ev:.5}]});
+const TR={
+ tren:{title:'Pase del tren',act:'Sacarte el pase del tren',fx:'Misión · −$5',cost:5,yad:'Pero sácate el pase del tren en la Terminal del pueblo',reply:'Tamo ready. El sábado cogemos el tren pa\' San Juan.',lock:'Necesitas el pase del tren.',hint:'Yadiel quiere ir a San Juan en tren. Saca el pase en la Terminal del pueblo.'},
+ publico:{title:'Pon pa\' San Juan',act:'Separar dos asientos en el público',fx:'Misión · −$12',cost:12,yad:'El público sale de la Terminal a las 6am. Separa dos asientos.',reply:'Hora y media por la autopista. Lleva música.',lock:'Separa asiento en el público de la Terminal.',hint:'Yadiel quiere ir a San Juan. El público sale de la Terminal del pueblo.'},
+ guagua:{title:'Tarjeta de la guagua',act:'Recargar la tarjeta de la guagua',fx:'Misión · −$5',cost:5,yad:'Recarga la tarjeta de la guagua en la Terminal',reply:'La guagua tarda, pero llega.',lock:'Recarga la tarjeta de la guagua.',hint:'Yadiel quiere ir a San Juan en guagua. Recarga la tarjeta en la Terminal del pueblo.'}};
+const CAS_TR={palmas:'tren',quebrada:'tren',ceiba:'publico',arena:'guagua',cantera:'tren',coqui:'tren',flamboyanes:'publico',marazul:'guagua'};
+let MODE='tren';
+const DEV={
+ atleta:{name:'Atlético',need:4,bonus:'+2 Salud en la cancha · zona de tiro más ancha',d:{salud:2}},
+ jugador:{name:'Dominador',need:3,bonus:'El dominó paga el doble',d:null},
+ estudioso:{name:'Coco duro',need:4,bonus:'+2 Coco extra al estudiar',d:{coco:2}},
+ artista:{name:'Artista',need:3,bonus:'+2 Respeto al hacer música',d:{resp:2}},
+ buscon:{name:'Buscón',need:4,bonus:'+$4 en cada chamba',d:{chavos:4}},
+ calle:{name:'De la calle',need:3,bonus:'+$10 en cada movida · la policía te conoce (+3 Calor)',d:{chavos:10,calor:3}},
+ fiestero:{name:'Fiestero',need:3,bonus:'+2 Felicidad al salir',d:{feli:2}},
+ familiar:{name:'Familiar',need:3,bonus:'+2 Felicidad con la familia',d:{feli:2}},
+ mecanico:{name:'Manos de mecánico',need:3,bonus:'+$4 en el taller',d:{chavos:4}}};
+const PLACECAT={cancha:'atleta',liga:'atleta',escuela:'estudioso',yupi:'estudioso',privada:'estudioso',punto:'calle',taller:'mecanico',estudio:'artista',plaza:'fiestero',chinchorro:'fiestero',club:'fiestero',colmado:'buscon',muelle:'buscon',apto:'familiar',panaderia:'familiar'};
+const LOVE=[
+ {id:'emo',places:['estudio'],likes:'artista',dislikes:null,bg:'var(--color-neutral-400)',f:{n:'Kiara',t:'La rockera'},m:{n:'Iker',t:'El rockero'},
+  first:['¿Tú eras quien estaba mirando el ensayo?','Ok. El viernes tocamos en un garaje en el pueblo. Vente.'],
+  after:['Me gustó que no te fuiste cuando empezó el screamo','Te mandé una playlist. Escúchala completa.'],
+  rep:[{t:'La playlist está brutal',aff:6,d:{},a:'Sabía que tenías buen gusto.'},{t:'¿No tienes algo con más perreo?',aff:-3,d:{},a:'...'}]},
+ {id:'yal',places:['plaza'],likes:'fiestero',dislikes:'estudioso',bg:'var(--color-accent-300)',f:{n:'Yaritza',t:'La yal'},m:{n:'Brayan',t:'El corillero'},
+  first:['Te vi en la plaza mirándome jaja','Si vas a bailar, baila. No te quedes ahí mirando.'],
+  after:['Anoche estuvo cabrón','¿Cuándo salimos otra vez?'],
+  rep:[{t:'Cuando tú quieras',aff:6,d:{},a:'Así me gusta.'},{t:'Tengo examen mañana',aff:-3,d:{},a:'Qué aburrimiento.'}]},
+ {id:'nena',places:['colmado'],likes:'familiar',dislikes:null,bg:'var(--sun)',f:{n:'Génesis',t:'La nena del caserío'},m:{n:'Joel',t:'El nene del caserío'},
+  first:['Yo vivo en el Edif. 5, ¿tú no eres del 7?','Mi mai conoce a tu abuela. Aquí todo el mundo se conoce.'],
+  after:['Mi mai pregunta por ti','Bajé a la cancha y no estabas'],
+  rep:[{t:'Dile que la bendición',aff:6,d:{},a:'Ella dice que eres buena gente.'},{t:'Ando por ahí',aff:1,d:{},a:'Siempre andas por ahí.'}]},
+ {id:'iglesia',places:['panaderia'],likes:'estudioso',dislikes:'calle',bg:'var(--color-accent-2-300)',f:{n:'Damaris',t:'La religiosa'},m:{n:'Josué',t:'El de la iglesia'},
+  first:['Hola, ¿vienes al culto del domingo?','Hay jóvenes como tú. Y hay sopa después.'],
+  after:['Oré por ti hoy','El pastor pregunta si vas a cantar en el coro'],
+  rep:[{t:'Voy el domingo',aff:7,d:{},a:'Gloria a Dios. Te guardo un asiento.'},{t:'No es lo mío',aff:-4,d:{},a:'Dios igual te quiere.'}]},
+ {id:'honor',places:['escuela','yupi','privada'],likes:'estudioso',dislikes:'fiestero',bg:'var(--color-surface)',f:{n:'Valeria',t:'La de honor'},m:{n:'Sebastián',t:'El de honor'},
+  first:['¿Tú entendiste lo de química?','Si quieres estudiamos en la biblioteca.'],
+  after:['Saqué A en el examen. Gracias por estudiar conmigo','¿Ya escogiste universidad?'],
+  rep:[{t:'Contigo voy pa\' donde sea',aff:7,d:{},a:'Qué cursi. Me gusta.'},{t:'Todavía no sé',aff:2,d:{},a:'Hay que pensar en el futuro.'}]}];
+const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const FEST=[
+ {m:0,dm:0,kicker:'6 de enero · Día de Reyes',title:'Los Reyes pasaron por el bloque',body:'Anoche pusiste grama en una caja de zapatos pa\' los camellos. Abuela dice que ya estás grande pa\' eso, pero igual te dejó algo.',ch:[
+   {label:'Abrir el regalo de Abuela',d:{feli:6,chavos:10},out:'Un sobre con $10 y una tarjeta que dice "pa\' tus cositas".'},
+   {label:'Repartir regalos a los nenes del bloque',d:{resp:5,feli:4},out:'Te vestiste de Melchor. Los nenes no se dieron cuenta.'}]},
+ {m:0,dm:2,kicker:'Enero · Las SanSe',title:'Fiestas de la Calle en San Juan',body:'Cabezudos, bomba en cada esquina y medio país en la calle. Yadiel dice que van todos.',ch:[
+   {label:'Irme de fiesta hasta las 3am',d:{feli:12,salud:-5,chavos:-15},out:'Bailaste con un cabezudo. Perdiste una chancleta.'},
+   {label:'Vender agua y piraguas',d:{chavos:35,calor:5},out:'Vendiste todo antes de la medianoche. Un guardia te pidió el permiso.'},
+   {label:'Quedarme, hay demasiada gente',d:{salud:2},out:'Lo viste todo en las historias de IG.'}]},
+ {m:2,dm:1,cond:'yupi',kicker:'Marzo · La YUPI',title:'Huelga en la universidad',body:'Subieron la matrícula. Cerraron los portones con candados y hay asamblea en el teatro.',ch:[
+   {label:'Unirme al piquete',d:{resp:8,calor:8,coco:-3},out:'Saliste en las noticias con una pancarta. Abuela te vio.'},
+   {label:'Estudiar en casa mientras tanto',d:{coco:5,resp:-3},out:'Adelantaste todo. Algunos panas te dicen rompehuelgas.'},
+   {label:'Llevar café al piquete',d:{resp:5,chavos:-5,feli:3},out:'Te volviste parte del piquete sin pancarta.'}]},
+ {m:3,dm:1,kicker:'Abril · Las Justas',title:'Llegaron Las Justas',body:'Las universidades compiten en atletismo en Ponce. La gente va más por la fiesta que por las carreras.',ch:[
+   {label:'Ir con el corillo',d:{feli:10,chavos:-20,salud:-3},out:'Viste una carrera. Bueno, media.'},
+   {label:'Entrenar pa\' competir el año que viene',d:{salud:6,resp:2},out:'Un coach te dio su número.'},
+   {label:'Verlo por TV',d:{feli:2},out:'Abuela preguntó por qué la gente corre tanto.'}]},
+ {m:5,dm:0,kicker:'1 de junio',title:'Empieza la temporada de huracanes',body:'En el colmado ya no queda agua embotellada ni pilas. Don Pepe subió el precio de las velas.',ch:[
+   {label:'Comprar agua, pilas y comida enlatada',d:{chavos:-15,salud:3},out:'Abuela aprobó. Ahora tienes un gabinete lleno de salchichas Vienna.',flag:'prep'},
+   {label:'Ná, eso no pasa nada',d:{feli:2},out:'Ojalá tengas razón.'}]},
+ {m:6,dm:0,kicker:'Julio · Verano',title:'Día de playa',body:'Hace 95 grados. El corillo alquiló una guagua pa\' la playa.',ch:[
+   {label:'Ir a la playa con el corillo',d:{feli:10,salud:4,chavos:-8},out:'Te quemaste la espalda, pero valió la pena.'},
+   {label:'Chinchorrear en el balneario',d:{feli:7,chavos:-5},out:'Te comiste tres alcapurrias y un bacalaíto.'},
+   {label:'Alquilar sillas de playa a turistas',d:{chavos:30,feli:2},out:'Los turistas dejan buena propina.'}]},
+ {m:6,dm:3,kicker:'Julio · Fiestas patronales',title:'Patronales en el pueblo',body:'Machinas, pinchos, una tarima con salsa y la procesión del santo patrón.',ch:[
+   {label:'Montarme en la estrella',d:{feli:6,chavos:-5},out:'Desde arriba se ve todo el caserío.'},
+   {label:'Ir a la procesión con Abuela',d:{feli:4,resp:3},out:'Abuela cantó todas las canciones.'},
+   {label:'Bailar salsa frente a la tarima',d:{feli:9,salud:-2},out:'Una señora de 70 te bailó hasta el piso.'}]},
+ {m:8,dm:1,hurricane:true,kicker:'Septiembre · Huracán',title:'Viene un huracán categoría 4',body:'El gobernador sale en la TV cada hora. Ya se fue la luz en media isla.',ch:[
+   {label:'Ayudar a tapar las ventanas del edificio',d:{resp:8,salud:-3},out:'Pusieron paneles en todo el Edif. 7.'},
+   {label:'Llevar a Abuela al refugio',d:{feli:2,salud:2},out:'Durmieron en una escuela con 200 personas. Abuela hizo amigas.'},
+   {label:'Quedarme en el apto',d:{salud:-10,feli:-6},out:'El agua entró por el balcón. Tres semanas sin luz.'}]},
+ {m:8,dm:3,kicker:'23 de septiembre',title:'El Grito de Lares',body:'Hay acto en la plaza de Lares. Tu tío se pone la boina todos los años.',ch:[
+   {label:'Ir a Lares con tu tío',d:{coco:5,resp:4,feli:3},out:'Te aprendiste la historia completa de 1868.'},
+   {label:'Postear la bandera de Lares',d:{resp:2},out:'Tu post tiene 40 likes.'},
+   {label:'Quedarme durmiendo',d:{salud:2},out:'Tu tío no te habló en una semana.'}]},
+ {m:11,dm:0,kicker:'Diciembre · Navidad',title:'¡Asalto navideño!',body:'A las 2am tocaron la puerta con panderos y un güiro. Es una parranda.',ch:[
+   {label:'Abrir y unirme a la parranda',d:{feli:12,salud:-3},out:'Terminaron en el apto de Doña Carmen comiendo pasteles a las 5am.'},
+   {label:'Darles coquito y que sigan',d:{resp:4,feli:5},out:'Se llevaron la botella completa.'},
+   {label:'Hacerme el dormido',d:{feli:-4},out:'Cantaron más alto.'}]}];
+const DEVG={atleta:['Atlético','Atlética','Atlétique'],jugador:['Dominador','Dominadora','Dominadore'],buscon:['Buscón','Buscona','Buscone'],fiestero:['Fiestero','Fiestera','Fiestere']};
+const TG={pelotero:['Pelotero','Pelotera','Pelotere'],rapero:['Rapero','Rapera','Rapere'],estudioso:['Estudioso','Estudiosa','Estudiose'],buscon:['Buscón','Buscona','Buscone']};
+const MAP={apto:{x:4,y:4,w:32,h:22},punto:{x:4,y:30,w:32,h:13},cancha:{x:4,y:58,w:32,h:22},escuela:{x:4,y:84,w:32,h:12},colmado:{x:62,y:4,w:34,h:16},panaderia:{x:62,y:24,w:34,h:19},taller:{x:62,y:58,w:34,h:18},
+ plaza:{x:4,y:4,w:32,h:39},terminal:{x:62,y:4,w:34,h:18},estudio:{x:62,y:26,w:34,h:17},liga:{x:4,y:58,w:32,h:28},chinchorro:{x:62,y:58,w:34,h:22},
+ yupi:{x:4,y:4,w:32,h:39},privada:{x:62,y:4,w:34,h:39},muelle:{x:4,y:58,w:32,h:24},club:{x:62,y:58,w:34,h:22}};
+const MAPDECOR={bloque:[{x:62,y:80,w:34,h:16,label:'Edif. 5'}],pueblo:[{x:62,y:84,w:34,h:12,label:'Iglesia'}],sanjuan:[]};
+const CH=["...#..G",".#.#.#.",".#...#.","...#...","##.#.##",".......",".##.##.",".....#.","..#...."];
+const DAYMS=4*3600*1000;
+const DON={pelotero:'atleta',rapero:'artista',estudioso:'estudioso',buscon:'buscon'};
+const AREAS=[{id:'bloque',name:'El bloque'},{id:'pueblo',name:'El pueblo',lock:'Termina el Capítulo 1 pa\' salir del bloque.'},{id:'sanjuan',name:'San Juan',get lock(){return TR[MODE].lock}}];
+const CHAPTERS=[
+ {n:1,title:'Nuevo en el bloque',hint:'Ayuda a la gente del bloque. Revisa el Cel y habla con la gente.',q:['pan','caja']},
+ {n:2,title:'Salir del bloque',get hint(){return TR[MODE].hint},q:['pase']},
+ {n:3,title:'Mayor de edad',hint:'Cumple 18 en Vida. Te toca escoger: universidad, trabajo o la calle.',q:['_path']},
+ {n:4,title:'Tu camino',hint:'Historia de tu camino · próximamente.',q:['_never']}];
+const GRAD={kicker:'Graduación · 18 años',title:'¿Y ahora qué?',body:'Te graduaste de Escuela Superior. Abuela lloró en las gradas. Hay que decidir.',ch:[
+ {label:'La YUPI · pública · necesitas 50 Coco',path:'yupi',need:{coco:50},d:{coco:5,feli:4},out:'Entraste a la YUPI. El tren te deja a dos cuadras.',fail:'No te dio el promedio. Puedes volver a solicitar el año que viene.'},
+ {label:'Sagrada Familia · privada · $150, o beca con 70 Coco',path:'privada',need:{chavos:150,orCoco:70},d:{resp:4,feli:3},out:'Entraste a la Sagrada Familia. Tu tía ya lo puso en Facebook.',fail:'No te dan los chavos ni el promedio pa\' la beca.'},
+ {label:'Trabajar full-time',path:'trabajo',d:{chavos:30},out:'Doña Lydia te dio turno completo en la panadería. Los chavos llegan cada viernes.'},
+ {label:'La calle',path:'calle',d:{resp:10,calor:10},out:'Kiko te dio la bienvenida. Abuela no dice nada, pero sabe.'}]};
+const ZONES=[{id:'e7',name:'Edif. 7'},{id:'e5',name:'Edif. 5'},{id:'e3',name:'Edif. 3'},{id:'cancha',name:'Cancha'}];
+const QUESTS={
+ pan:{title:'Pan sobao pa\' Abuela',giver:'Abuela',where:'Panadería La Esperanza',place:'panaderia',thread:'abuela',act:{label:'Comprarle pan sobao a Abuela',fx:'Misión · −$2',cost:1,d:{chavos:-2}},reward:{feli:6,salud:4,resp:1},out:'Abuela te dio la bendición y el primer pedazo.',reply:'Ay gracias {mijo}. Ven a comer que se enfría.'},
+ pase:{get title(){return TR[MODE].title},giver:'Yadiel',where:'La Terminal',place:'terminal',thread:'yadiel',get act(){return {label:TR[MODE].act,fx:TR[MODE].fx,cost:1,d:{chavos:-TR[MODE].cost}}},reward:{feli:4},out:'Ya puedes ir a San Juan cuando quieras.',get reply(){return TR[MODE].reply},area:'sanjuan'},
+ caja:{title:'Bujías pa\' Chago',giver:'Wichi',where:'Taller de Chago',place:'taller',thread:'wichi',act:{label:'Entregarle la caja a Chago',fx:'Misión · +$10',cost:1,d:{}},reward:{chavos:10,resp:2},out:'Chago te pagó y dijo que vuelvas cuando quieras aprender.',reply:'Gracias bro. Te debo una.'}};
+const HEIRS={chico:['Junior','Kevin','Jadiel'],chica:['Yamilet','Naomi','Keishla'],nb:['Alex','Ariel','Dani']};
+const JAIL=[
+ {title:'Te ponen de celda con un viejo del 3',body:'Dice que conoce a tu abuelo. O que le debe algo.',ch:[{label:'Ganarme su confianza',d:{resp:6}},{label:'Mantener distancia',d:{feli:-3}}]},
+ {title:'Ofrecen clases de GED',body:'Martes y jueves en la biblioteca del penal.',ch:[{label:'Apuntarme',d:{coco:12}},{label:'Pa\' qué',d:{feli:2}}]},
+ {title:'Bronca en el comedor',body:'Uno de Los del 3 te tiró la bandeja encima.',ch:[{label:'Devolvérsela',d:{resp:8,salud:-12}},{label:'Tragarme el orgullo',d:{resp:-5}}]},
+ {title:'Abuela vino a visitarte',body:'Trajo pastelillos escondidos en la cartera.',ch:[{label:'Prometerle que voy a cambiar',d:{feli:8,calor:-10}},{label:'No mirarla a los ojos',d:{feli:-6}}]},
+ {title:'Te ofrecen la cocina',body:'Paga casi nada, pero el tiempo pasa más rápido.',ch:[{label:'Dale',d:{chavos:15,salud:3}},{label:'Prefiero el patio',d:{salud:4,resp:2}}]}];
+const EVENTS=[
+ {kicker:'Edificio 7 · 8:12 pm',title:'Se fue la luz. Otra vez.',body:'Hace 90 grados y todo el bloque está a oscuras. Se escuchan las chicharras y a Doña Carmen quejándose.',ch:[
+   {label:'Sacar la bocina y prender el party',d:{feli:8,resp:5,salud:-2},out:'Media cancha terminó bailando. Hasta Doña Carmen.'},
+   {label:'Ayudar a Abuela con las velas',d:{feli:3,resp:2},out:'Abuela te dio la bendición y un pedazo de flan.'},
+   {label:'Bajar a la cancha, que hay brisa',d:{salud:2,feli:2},out:'Te quedaste hasta las 2am hablando con los panas.'}]},
+ {kicker:'Mensaje de tu primo',title:'Yadiel te pide $20 prestaos',body:'"Bro, son pa\' unas Jordans que están en especial. Te pago el viernes, palabra."',ch:[
+   {label:'Prestárselos',d:{chavos:-20,resp:3},out:'Te juró por su madre que te paga. Ya veremos.'},
+   {label:'Ni pa\' tu madre',d:{feli:-2,resp:1},out:'Te dejó en visto. Se le pasa.'},
+   {label:'Dile que corte grama contigo',d:{chavos:5,resp:2},out:'Trabajaron toda la mañana. Al final se compró unas chancletas.'}]},
+ {kicker:'La cancha',title:'Un scout te vio jugando',body:'Un señor con gorra de los Vaqueros te pregunta si tienes 16. Dice que hay tryout el sábado en Bayamón.',ch:[
+   {label:'Ir al tryout',d:{salud:-4,resp:10,feli:6},out:'Te tiraron un slider que nunca habías visto. Te dijeron que vuelvas en marzo.'},
+   {label:'Ahora no, tengo examen',d:{coco:6},out:'Sacaste B+. El scout no volvió.'}]},
+ {kicker:'Frente al colmado',title:'Un pana vende perfumes "sin factura"',body:'Tiene dos cajas llenas. Te ofrece la mitad de lo que vendas.',ch:[
+   {label:'Dale, pero solo en el bloque',d:{chavos:35,calor:15,resp:3},out:'Vendiste todo antes de las 3. La guardia municipal pasó dos veces.'},
+   {label:'Paso, no quiero problemas',d:{coco:3},out:'Abuela no se enteró de nada. Mejor así.'}]},
+ {kicker:'Viral',title:'Te tagearon bailando en la parada',body:'El video tiene 48 mil views y tu tía ya lo compartió en Facebook.',ch:[
+   {label:'Abrir un IG de contenido',d:{resp:6,feli:4},out:'Llegaste a 900 seguidores. Una barbería te ofreció un corte gratis.'},
+   {label:'Pedir que lo bajen',d:{feli:-3,coco:2},out:'Lo bajaron. Ya alguien lo había descargado.'}]},
+ {kicker:'Escuela Superior',title:'La maestra dice que tienes potencial',body:'Quiere que entres al club de debate. Practican los martes después de clase.',ch:[
+   {label:'Unirme al club',d:{coco:8,resp:-2},out:'Ganaste tu primer debate. Los panas te dicen "el abogado".'},
+   {label:'Hacerme el que no oí',d:{feli:2},out:'La maestra suspiró. Te sigue saludando igual.'}]}];
+const JOBS=[
+ {id:'carros',name:'Lavar carros',place:'Estacionamiento del Edif. 3',pay:8,cost:1},
+ {id:'empaque',name:'Empacador en el supermercado',place:'Plaza del pueblo',pay:14,cost:2},
+ {id:'beats',name:'Hacer beats pa\' los del bloque',place:'Tu cuarto, con audífonos',pay:10,cost:2},
+ {id:'tenis',name:'Revender tenis',place:'Marketplace y la cancha',pay:30,cost:2,calor:8,req:{resp:30}},
+ {id:'horno',name:'Ayudante de horno',place:'Panadería La Esperanza',pay:16,cost:2,req:{job:'horno'}},
+ {id:'full',name:'Turno completo',place:'Panadería La Esperanza',pay:40,cost:3,req:{path:'trabajo'}},
+ {id:'delivery',name:'Repartidor de app',place:'Toda el área metro',pay:25,cost:3,req:{age:18}}];
+const THREADS=[
+ {id:'abuela',name:'Abuela',ini:'A',bg:'var(--color-accent-300)',msgs:['{Mijo} hice arroz con gandules','Y no me dejes los platos en el fregadero'],replies:[
+   {t:'Voy, bendición',d:{},a:'Dios te bendiga. Pasa por la panadería y tráeme pan sobao.',quest:'pan'},
+   {t:'Ya comí en el colmado',d:{feli:-2},a:'Ese colmado te va a matar. Ok.'}]},
+ {id:'yadiel',name:'Yadiel (primo)',ini:'Y',bg:'var(--color-accent-2-300)',msgs:['Bro','Hay pickup a las 6 en la cancha, ¿te tiras?'],replies:[
+   {t:'Tamo ahí',d:{resp:2},a:'Así es. Trae agua que la fuente no sirve.'},
+   {t:'Hoy no puedo',d:{},a:'Flojo.'}]},
+ {id:'crew',name:'La Crew del 7',ini:'7',bg:'var(--color-neutral-300)',msgs:['Mañana hay fiesta en la cancha','¿Alguien tiene bocina?'],replies:[
+   {t:'Yo traigo la mía',d:{resp:4},a:'LEYENDA'},
+   {t:'Yo traigo el hielo',d:{chavos:-4,resp:2},a:'Eso es ser buena gente.'}]}];
+THREADS.push(
+ {id:'wichi',hidden:true,name:'Wichi (colmado)',ini:'W',bg:'var(--sun)',msgs:['Ey, ¿tú eres {elnieto} de Doña?','Chago necesita esta caja de bujías en el taller. Te doy $10'],replies:[
+   {t:'Dale, se la llevo',d:{},a:'Eso. El taller está detrás del Edif. 5.',quest:'caja'},
+   {t:'Ahora no',d:{},a:'Avísame.'}]},
+ {id:'kiko',hidden:true,name:'Kiko (Edif. 3)',ini:'K',bg:'var(--color-accent-300)',msgs:['Te vi en la cancha. Tienes cara de que necesitas chavos.','Pasa por el punto detrás del 3. Sin compromiso.'],replies:[
+   {t:'¿Dónde queda?',d:{},a:'Ya te dije. Detrás del 3. Ven solo.',unlock:'punto'},
+   {t:'No estoy en eso',d:{resp:-1},a:'Ok. La oferta sigue.',unlock:'punto'}]},
+ {id:'lydia',hidden:true,name:'Doña Lydia (panadería)',ini:'L',bg:'var(--color-accent-2-300)',msgs:['Tú eres {elnieto} de Doña, ¿verdad?','Los sábados necesito ayuda en el horno.'],replies:[
+   {t:'Cuente conmigo',d:{resp:2},a:'Ven a las 5am. Puntual.',job:'horno'},
+   {t:'Tan temprano no',d:{},a:'Tú te lo pierdes.'}]});
+const PACKS=[{n:80,price:'$0.99'},{n:500,price:'$4.99',best:true},{n:1200,price:'$9.99'}];
+const ITEMS=[
+ {id:'gorra',name:'Gorra Flamboyán',sub:'Cosmético · sale en tu avatar',c:30,bg:'var(--color-accent-400)'},
+ {id:'cadena',name:'Cadena dorada',sub:'Cosmético · sale en tu avatar',c:60,bg:'var(--sun)'},
+ {id:'abanico',name:'Abanico pa\'l apto',sub:'Mejora · dormir da +1 Ánimo',c:90,bg:'var(--color-neutral-400)'}];
+const SKINS=['#f2cfae','#dcab82','#b98660','#8e5d3e','#5f3c28'];
+const HAIRS=[['rapado','Rapado'],['corto','Corto'],['trenzas','Trenzas'],['afro','Afro'],['mono','Moño'],['largo','Largo']];
+const HCS=['var(--ink)','#5b3920','#b88a3e','var(--color-accent)','var(--color-accent-2)'];
+const TOPS=[['tee','Camiseta'],['jersey','Jersey'],['hoodie','Hoodie'],['guaya','Guayabera']];
+const TCS=['var(--color-accent)','var(--color-accent-2)','var(--sun)','var(--ink)','var(--color-surface)'];
+const SHELF=[{id:'malta',name:'Malta',p:1.5},{id:'pan',name:'Pan sobao',p:2},{id:'pastelillo',name:'Pastelillo',p:1.25},{id:'cafe',name:'Café',p:1},{id:'huevos',name:'Huevos',p:3},{id:'hielo',name:'Hielo',p:2.5}];
+const CUST=['Doña Carmen','Wichi','Titi Mayra','Un turista perdido','El cartero','Yadiel','La nena del 5','Don Tito'];
+const PARTS=[{id:'turbo',name:'Turbo',c:40,v:3,e:0,r:1},{id:'escape',name:'Escape',c:25,v:1,e:1,r:3},{id:'aros',name:'Aros cromados',c:30,v:0,e:3,r:0},{id:'susp',name:'Suspensión bajita',c:20,v:1,e:2,r:0},{id:'bocinas',name:'Bocinas',c:35,v:0,e:1,r:3},{id:'tintes',name:'Tintes',c:15,v:0,e:1,r:0},{id:'neon',name:'Luces neón',c:20,v:0,e:2,r:1}];
+const CLIENTS=[{n:'Kevin, el del 5',want:'Rápido pa\' la autopista',min:{v:4},maxR:4,b:70},{n:'Doña Carmen',want:'Bonito pero calladito',min:{e:4},maxR:1,b:60},{n:'DJ Brujo',want:'Que se oiga desde el pueblo',min:{r:6,e:3},maxR:99,b:100}];
+const SUITS=[['oros','Oros','var(--sun)'],['copas','Copas','var(--color-accent)'],['espadas','Espadas','var(--color-accent-2)'],['bastos','Bastos','var(--color-neutral-600)']];
+const BR_RANK=[1,3,12,11,10,7,6,5,4,2],BR_PTS={1:11,3:10,12:4,11:3,10:2};
+const cl=v=>Math.max(0,Math.min(100,v));
+
+class Component extends DCLogic {
+  state={look:{skin:2,hair:'corto',hc:0,top:'tee',tc:0,hat:false,chain:false},closet:false,screen:'title',cas:'cantera',name:'',apodo:'',trait:'pelotero',tab:'barrio',s:{salud:72,feli:65,coco:40,resp:15},chavos:25,animo:5,coquis:40,calor:0,day:1,age:16,turf:{e7:'nadie',e5:'nadie',e3:'rival',cancha:'nadie'},enemies:[],armed:false,pos:{x:49,y:50},dayStart:Date.now(),quests:{},unlocked:{},jobs:{},zone:'bloque',areas:{bloque:true},path:null,dev:{},gender:'chico',likes:'chicas',love:{},partner:null,married:false,gen:1,dead:null,jail:null,mg:null,sheet:null,ev:null,result:null,log:[],toast:null,thread:null,th:{},noAnimo:false,owned:{},pass:false,ad:0,evi:0};
+  componentDidMount(){
+    this.kd=e=>{const m=this.state.mg;if(!m||m.type!=='chase')return;const v={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]}[e.key];if(v){e.preventDefault();this.move(v[0],v[1])}};window.addEventListener('keydown',this.kd);
+    this.ck=setInterval(()=>{if(Date.now()-this.state.dayStart>=DAYMS)this.sleep();else this.forceUpdate()},30000);
+    const th={};THREADS.filter(t=>!t.hidden).forEach(t=>th[t.id]={msgs:t.msgs.map(m=>({me:false,t:m})),replies:t.replies,unread:true});
+    const st=this.props.startScreen;
+    this.setState({th,screen:st||'title',log:[{d:'Día 1',t:'Llegaste al caserío con una mochila y muchas ganas.'}]});
+  }
+  componentWillUnmount(){clearInterval(this.cmi);clearTimeout(this.bt);window.removeEventListener('keydown',this.kd);clearInterval(this.ck);clearInterval(this.ci);clearTimeout(this.tt);clearInterval(this.ai);clearInterval(this.hi);clearTimeout(this.dt);}
+  max(){return this.props.animoMax??5}
+  say(t){clearTimeout(this.tt);this.setState({toast:t});this.tt=setTimeout(()=>this.setState({toast:null}),2000)}
+  fmt(d){return Object.keys(d).filter(k=>d[k]).map(k=>k==='chavos'?(d[k]>0?'+$':'−$')+Math.abs(d[k]):(d[k]>0?'+':'−')+Math.abs(d[k])+' '+LBL[k])}
+  apply(d,extra){
+    this.setState(st=>{
+      const s={...st.s};['salud','feli','coco','resp'].forEach(k=>{if(d[k])s[k]=cl(s[k]+d[k])});
+      return {s,chavos:Math.max(0,st.chavos+(d.chavos||0)),coquis:st.coquis+(d.coquis||0),calor:cl(st.calor+(d.calor||0)),animo:Math.max(0,Math.min(this.max(),st.animo+(d.animo||0))),...(extra||{})};
+    });
+  }
+  addLog(t){this.setState(st=>({log:[{d:st.age+' años',t},...st.log].slice(0,20)}))}
+  fireEvent(){this.setState(st=>({ev:EVENTS[st.evi%EVENTS.length],evi:st.evi+1,result:null,sheet:null}))}
+  run(a){
+    const st=this.state;
+    if(a.sleep)return this.sleep();
+    if(a.soon){this.setState({sheet:null});return this.say('Próximamente: '+a.label)}
+    if(a.meet)return this.meetP(a.meet);
+    if(a.reqSalud&&st.s.salud<a.reqSalud)return this.say('Necesitas '+a.reqSalud+' Salud pa\' eso.');
+    if(a.req&&st.s.resp<a.req)return this.say('Necesitas '+a.req+' Respeto pa\' eso.');
+    if(a.weapon&&st.armed)return this.say('Ya tienes una.');
+    if(st.animo<a.cost){this.setState({noAnimo:true,sheet:null});return}
+    let d=a.d||{};const cat=a.cat||(a.crime?'calle':PLACECAT[st.sheet]);
+    if(cat&&!a.qid&&!a.mg&&this.has(cat)&&DEV[cat].d)d=this.merge(d,DEV[cat].d);
+    if((d.chavos||0)<0&&st.chavos<-d.chavos){this.say('No te dan los chavos pa\' eso.');return}
+    if(a.love)return this.romance(a);
+    if(a.qid){const q=QUESTS[a.qid],d2={...d};Object.keys(q.reward).forEach(k=>d2[k]=(d2[k]||0)+q.reward[k]);this.apply({...d2,animo:-a.cost},{sheet:null,quests:{...st.quests,[a.qid]:'done'}});this.say('Misión cumplida · '+this.fmt(d2).join(' · '));this.addLog(q.title+': '+q.out);if(q.area)this.setState(s=>({areas:{...s.areas,[q.area]:true}}));setTimeout(()=>{this.pushMsg(q.thread,q.reply);this.checkStory()},900);return}
+    if(a.mg){this.apply({animo:-a.cost},{sheet:null});return a.mg==='hoops'?this.startHoops():a.mg==='chase'?this.startChase():a.mg==='colmado'?this.startColmado():a.mg==='tuning'?this.startTuning():a.mg==='briscola'?this.startBriscola():this.startDomino()}
+    const extra={sheet:null};
+    if(a.turf){extra.turf={...st.turf,[a.turf]:'tu'};if(!st.enemies.includes('Los del 3'))extra.enemies=[...st.enemies,'Los del 3']}
+    if(a.weapon)extra.armed=true;
+    this.apply({...d,animo:-a.cost},extra);this.grow(cat);
+    this.say(this.fmt({...d,animo:-a.cost}).join('  ·  '));
+    if(a.turf)this.addLog('Tomaste el '+ZONES.find(z=>z.id===a.turf).name+'. Los del 3 no lo van a olvidar.');
+    clearTimeout(this.rt);
+    this.rt=setTimeout(()=>{const s=this.state;
+      if(s.s.salud<=0)return this.die('Su cuerpo no aguantó más.');
+      if(a.risk&&Math.random()<a.risk*(s.armed?.5:1)*(s.s.salud<30?2:1))return this.die(a.deathCause);
+      if(a.crime&&Math.random()<s.calor/130)return this.arrest();
+      if(a.ev&&Math.random()<a.ev)this.fireEvent();
+    },650);
+  }
+  gx(s){const g=this.state.gender,p=(a,b,c)=>g==='chica'?b:g==='nb'?c:a;return String(s).replace(/\{elnieto\}/g,p('el nieto','la nieta','le niete')).replace(/\{Mijo\}/g,p('Mijo','Mija','Mije')).replace(/\{mijo\}/g,p('mijo','mija','mije')).replace(/\{hijo\}/g,p('hijo','hija','hije')).replace(/\{Bienvenido\}/g,p('Bienvenido','Bienvenida','Bienvenide'))}
+  who(L){const lk=this.state.likes,i=LOVE.indexOf(L),g=lk==='chicas'?'f':lk==='chicos'?'m':(i%2?'m':'f');return {...L[g],g}}
+  loveActs(pid){const st=this.state,out=[];LOVE.filter(L=>L.places.includes(pid)).forEach(L=>{const p=this.who(L),c=st.love[L.id],nov=p.g==='f'?'novia':'novio';
+    if(!c)return out.push({label:'Hablarle a '+p.n,fx:p.t+' · nuevo contacto',cost:1,love:L.id,lv:'meet'});
+    out.push({label:'Salir con '+p.n,fx:'−$8 · sube el Afecto (ahora '+c.aff+')',cost:2,love:L.id,lv:'date',d:{chavos:-8,feli:4}});
+    if(c.aff>=60&&st.partner!==L.id)out.push({label:'Pedirle a '+p.n+' que sea tu '+nov,fx:'Afecto '+c.aff+' · si tienes pareja, terminan',cost:1,love:L.id,lv:'ask'});
+    if(st.partner===L.id&&!st.married&&st.age>=18&&c.aff>=90)out.push({label:'Proponerle matrimonio a '+p.n,fx:'−$50 · anillo del mall',cost:1,love:L.id,lv:'marry',d:{chavos:-50}})});return out}
+  romance(a){const st=this.state,L=LOVE.find(x=>x.id===a.love),p=this.who(L),tid='love_'+L.id,cur=st.love[L.id],nov=p.g==='f'?'novia':'novio';
+    if(a.lv==='meet'){this.apply({animo:-a.cost},{sheet:null,love:{...st.love,[L.id]:{aff:10}},th:{...st.th,[tid]:{meta:{name:p.n+' · '+p.t,ini:p.n[0],bg:L.bg},msgs:L.first.map(t=>({me:false,t})),replies:L.rep,unread:true}}});this.say('Nuevo contacto: '+p.n+', '+p.t.toLowerCase());this.addLog('Conociste a '+p.n+', '+p.t.toLowerCase()+'.');return}
+    if(a.lv==='date'){const g=8+Math.floor(Math.random()*5)+(this.has(L.likes)?6:0)-(L.dislikes&&this.has(L.dislikes)?8:0);
+      const love={...st.love,[L.id]:{...cur,aff:Math.min(100,Math.max(0,cur.aff+g))}};let msg='Saliste con '+p.n+' · '+(g>=0?'+':'')+g+' Afecto';
+      if(st.partner&&st.partner!==L.id){const P=LOVE.find(x=>x.id===st.partner),pn=this.who(P).n;love[P.id]={...love[P.id],aff:Math.max(0,love[P.id].aff-25)};msg+=' · '+pn+' se enteró';this.addLog(pn+' te vio con '+p.n+'. −25 Afecto.')}
+      this.apply({...a.d,animo:-a.cost},{sheet:null,love});this.say(msg);
+      const after=L.after[Math.floor(Math.random()*L.after.length)];
+      clearTimeout(this.lt);this.lt=setTimeout(()=>this.setState(s=>({th:{...s.th,[tid]:{...s.th[tid],msgs:[...s.th[tid].msgs,{me:false,t:after}],replies:L.rep,unread:true}}})),1200);return}
+    if(a.lv==='ask'){const love={...st.love};if(st.partner&&st.partner!==L.id){const P=st.partner;love[P]={...love[P],aff:Math.max(0,love[P].aff-30)};this.addLog('Terminaste con '+this.who(LOVE.find(x=>x.id===P)).n+'.')}
+      this.apply({feli:10,animo:-a.cost},{sheet:null,love,partner:L.id});this.say('¡'+p.n+' dijo que sí! Ahora es tu '+nov+'.');this.addLog(p.n+' es tu '+nov+'.');return}
+    if(a.lv==='marry'){this.apply({feli:15,chavos:-50,animo:-a.cost},{sheet:null,married:true});this.say('Te casaste con '+p.n+'. Abuela no paró de llorar.');this.addLog('Te casaste con '+p.n+'.')}}
+  heir(){const s=this.state,l=HEIRS[s.gender]||HEIRS.chico;return l[(s.gen-1)%l.length]}
+  dispName(){const s=this.state,nm=s.name.trim(),ap=s.apodo.trim();return ap&&nm?nm+' "'+ap+'"':(nm||ap||'Yariel')}
+  dn(c){const g=this.state.gender,a=DEVG[c];return a?a[g==='chica'?1:g==='nb'?2:0]:DEV[c].name}
+  fest(d){const t=d-1+25,m=Math.floor(t/5)%12,dm=t%5,st=this.state;return FEST.find(f=>f.m===m&&f.dm===dm&&(!f.cond||st.path===f.cond))}
+  swatch(c,on,k,i){return {c,sh:on?'4px 4px 0 var(--ink)':'none',tf:on?'translate(-2px,-2px)':'none',pick:()=>this.setLook(k,i)}}
+  setLook(k,v){this.setState(s=>({look:{...s.look,[k]:v}}))}
+  has(c){return (this.state.dev[c]||0)>=DEV[c].need}
+  merge(a,b){const o={...a};Object.keys(b).forEach(k=>o[k]=(o[k]||0)+b[k]);return o}
+  grow(c){if(!c||!DEV[c])return;const n=(this.state.dev[c]||0)+1;this.setState(s=>({dev:{...s.dev,[c]:(s.dev[c]||0)+1}}));
+    if(n===DEV[c].need){clearTimeout(this.gt);this.gt=setTimeout(()=>this.say('Nuevo rasgo: '+this.dn(c)+' · '+DEV[c].bonus),1300);this.addLog('Ahora eres '+this.dn(c).toLowerCase()+'. '+DEV[c].bonus+'.')}}
+  meetP(id){const t=THREADS.find(x=>x.id===id);this.setState(s=>({sheet:null,th:{...s.th,[id]:{msgs:t.msgs.map(m=>({me:false,t:m})),replies:t.replies,unread:true}}}));this.say('Nuevo contacto en el Cel: '+t.name);this.addLog('Conociste a '+t.name+'.')}
+  checkStory(){const s=this.state;
+    if(s.quests.pan==='done'&&s.quests.caja==='done'&&!s.areas.pueblo){
+      this.setState(x=>({areas:{...x.areas,pueblo:true},th:{...x.th,yadiel:{...x.th.yadiel,unread:true,msgs:[...x.th.yadiel.msgs,{me:false,t:'Primo, vámonos pa\' San Juan el sábado'},{me:false,t:TR[MODE].yad}],replies:[{t:'Dale, voy ahora',d:{},a:'Eso. Sin pase no hay viaje.',quest:'pase'}]}}}));
+      this.say('Capítulo 1 completo · se abrió El pueblo');this.addLog('Capítulo 1 completo. Ya conoces el bloque.')}
+    if(s.quests.pase==='done'&&s.areas.sanjuan)this.say('Capítulo 2 completo · se abrió San Juan')}
+  pushMsg(id,t){this.setState(s=>s.th[id]?{th:{...s.th,[id]:{...s.th[id],msgs:[...s.th[id].msgs,{me:false,t}],unread:true}}}:null)}
+  onReply(r,id){
+    if(r.aff!=null&&id&&id.indexOf('love_')===0){const k=id.slice(5);this.setState(s=>({love:{...s.love,[k]:{...s.love[k],aff:Math.min(100,Math.max(0,s.love[k].aff+r.aff))}}}));this.say((r.aff>=0?'+':'')+r.aff+' Afecto');return}
+    if(r.quest){const q=QUESTS[r.quest];this.setState(s=>({quests:{...s.quests,[r.quest]:'active'},unlocked:{...s.unlocked,[q.place]:true}}));this.say('Nueva misión: '+q.title+' · se abrió '+q.where);return}
+    if(r.unlock){this.setState(s=>({unlocked:{...s.unlocked,[r.unlock]:true}}));this.say('Nuevo lugar: '+LOCS.find(l=>l.id===r.unlock).label);if(Object.keys(r.d).length)this.apply(r.d);return}
+    if(r.job){this.setState(s=>({jobs:{...s.jobs,[r.job]:true}}));this.say('Nueva chamba en Chamba: Ayudante de horno');if(Object.keys(r.d).length)this.apply(r.d);return}
+    if(Object.keys(r.d).length){this.apply(r.d);this.say(this.fmt(r.d).join(' · '))}
+  }
+  arrest(){const c=this.state.calor,years=1+Math.floor(c/35);this.setState({jail:{years,cards:[...JAIL].sort(()=>Math.random()-.5).slice(0,3),i:0,done:false},ev:null,sheet:null});this.addLog('Te arrestaron con '+c+' de Calor. '+years+' años.')}
+  jailPick(c){this.apply(c.d);this.setState(s=>{const i=s.jail.i+1;return {jail:{...s.jail,i,done:i>=s.jail.cards.length}}})}
+  release(){const y=this.state.jail.years;this.setState(s=>{const turf={...s.turf};Object.keys(turf).forEach(k=>{if(turf[k]==='tu')turf[k]='rival'});return {jail:null,age:s.age+y,calor:0,turf,animo:this.max()}});this.addLog('Saliste después de '+y+' años. Los del 3 se quedaron con tus esquinas.')}
+  die(cause){clearInterval(this.hi);this.setState({dead:{cause},ev:null,sheet:null,mg:null,jail:null})}
+  nextGen(){const s=this.state,h=this.heir();this.setState({dead:null,name:h,apodo:'',age:16,day:1,gen:s.gen+1,s:{salud:75,feli:55,coco:40,resp:Math.round(s.s.resp*.6)},calor:Math.round(s.calor*.5),animo:this.max(),armed:false,dev:{},love:{},partner:null,married:false,tab:'barrio',log:[{d:'Gen '+(s.gen+1),t:'Eres '+h+(s.partner?', '+this.gx('{hijo}')+' de '+this.dispName()+' y '+this.who(LOVE.find(x=>x.id===s.partner)).n:'')+'. Heredaste los chavos, la fama y los enemigos de tu familia.'}]});
+    if(s.partner){const P=this.who(LOVE.find(x=>x.id===s.partner)),dead=this.dispName();this.setState(x=>({th:{...x.th,padre:{meta:{name:(P.g==='f'?'Mami':'Papi')+' ('+P.n+')',ini:P.n[0],bg:'var(--sun)'},msgs:[{me:false,t:'Te pareces tanto a '+dead+'...'},{me:false,t:'Aquí estoy pa\' lo que necesites, {mijo}'}],replies:[{t:'Bendición',d:{feli:5},a:'Dios te bendiga. Ven a comer el domingo.'},{t:'Estoy bien',d:{},a:'Ok. Te quiero.'}],unread:true}}}))}}
+  startHoops(){const opp=2+Math.floor(Math.random()*3);
+    this.setState({mg:{type:'hoops',shot:0,made:0,opp,x:0,dir:1,zw:30,zl:35,msg:'Yadiel metió '+opp+' de 5. Te toca.',over:false,win:null}});if(this.has('atleta'))this.setState(s=>({mg:{...s.mg,zw:38,zl:31}}));
+    clearInterval(this.hi);this.hi=setInterval(()=>{const m=this.state.mg;if(!m||m.type!=='hoops'||m.over)return;let x=m.x+m.dir*(1.8+m.shot*.55),dir=m.dir;if(x>=100){x=100;dir=-1}if(x<=0){x=0;dir=1}this.setState({mg:{...m,x,dir}})},16)}
+  shoot(){const m=this.state.mg;if(!m||m.over)return;const ok=m.x>=m.zl&&m.x<=m.zl+m.zw,shot=m.shot+1,made=m.made+(ok?1:0),zw=Math.max(12,m.zw-5);
+    let n={...m,shot,made,zw,zl:8+Math.random()*(84-zw),msg:ok?'¡Swish!':'Clank. Le diste al aro.'};
+    if(shot>=5){clearInterval(this.hi);const win=made>m.opp?'win':made<m.opp?'lose':'tie';n={...n,over:true,win,msg:win==='win'?'Le ganaste '+made+'-'+m.opp+'. Yadiel pide revancha.':win==='lose'?'Perdiste '+made+'-'+m.opp+'. Te van a vacilar toa la semana.':'Empate '+made+'-'+m.opp+'.'}}
+    this.setState({mg:n})}
+  startChase(){const cops=[{r:0,c:0},{r:3,c:4}];if(this.state.calor>40)cops.push({r:5,c:6});
+    this.setState({mg:{type:'chase',p:{r:8,c:0},cops,t:0,over:false,win:null,msg:'Llega al taller de Chago sin que te cojan.'}});
+    clearInterval(this.ci);this.ci=setInterval(()=>this.copStep(),700)}
+  open(r,c){return r>=0&&r<9&&c>=0&&c<7&&CH[r][c]!=='#'}
+  move(dr,dc){const m=this.state.mg;if(!m||m.type!=='chase'||m.over)return;const r=m.p.r+dr,c=m.p.c+dc;if(!this.open(r,c))return;this.chaseCheck({...m,p:{r,c}})}
+  copStep(){const m=this.state.mg;if(!m||m.type!=='chase'||m.over){clearInterval(this.ci);return}
+    const cops=m.cops.map(k=>{const o=[[1,0],[-1,0],[0,1],[0,-1]].map(([a,b])=>({r:k.r+a,c:k.c+b})).filter(x=>this.open(x.r,x.c)&&CH[x.r][x.c]!=='G');if(!o.length)return k;if(Math.random()<.3)return o[Math.floor(Math.random()*o.length)];o.sort((x,y)=>(Math.abs(x.r-m.p.r)+Math.abs(x.c-m.p.c))-(Math.abs(y.r-m.p.r)+Math.abs(y.c-m.p.c)));return o[0]});
+    this.chaseCheck({...m,cops,t:m.t+1})}
+  chaseCheck(n){if(n.cops.some(k=>k.r===n.p.r&&k.c===n.p.c)){clearInterval(this.ci);n={...n,over:true,win:'lose',msg:'Te cogieron. Luces azules por todos lados.'}}
+    else if(CH[n.p.r][n.p.c]==='G'){clearInterval(this.ci);n={...n,over:true,win:'win',msg:'Llegaste. Chago cerró el portón detrás de ti.'}}
+    this.setState({mg:n})}
+  startColmado(){this.setState({mg:{type:'colmado',i:0,score:0,tips:0,over:false,msg:'',...this.newCust(0)}});clearInterval(this.cmi);this.cmi=setInterval(()=>this.colTick(),100)}
+  newCust(i){const n=1+Math.floor(Math.random()*Math.min(3,1+i)),order={};[...SHELF].sort(()=>Math.random()-.5).slice(0,n).forEach(it=>order[it.id]=Math.random()<.35?2:1);
+    return {order,bag:{},phase:'pick',left:100,who:CUST[Math.floor(Math.random()*CUST.length)],opts:[],speed:100/((14-i*1.3)*10)}}
+  total(o){return SHELF.reduce((s,it)=>s+(o[it.id]||0)*it.p,0)}
+  colTick(){const m=this.state.mg;if(!m||m.type!=='colmado'||m.over){clearInterval(this.cmi);return}const left=m.left-m.speed*(m.phase==='pay'?.6:1);if(left<=0)return this.colNext(m,false,m.who+' se fue sin comprar.');this.setState({mg:{...m,left}})}
+  colNext(m,ok,msg){const i=m.i+1,score=m.score+(ok?1:0),tips=m.tips+(ok?Math.round(m.left/25):0);
+    if(i>=5){clearInterval(this.cmi);this.setState({mg:{...m,score,tips,over:true,phase:'done',msg:msg+' Vendiste a '+score+' de 5.'}});return}
+    this.setState({mg:{...m,...this.newCust(i),i,score,tips,msg}})}
+  colAdd(id){const m=this.state.mg;if(!m||m.phase!=='pick')return;this.setState({mg:{...m,bag:{...m.bag,[id]:(m.bag[id]||0)+1}}})}
+  colClear(){const m=this.state.mg;this.setState({mg:{...m,bag:{}}})}
+  colDone(){const m=this.state.mg;const ok=SHELF.every(it=>(m.bag[it.id]||0)===(m.order[it.id]||0));if(!ok){this.setState({mg:{...m,bag:{},msg:'Eso no es lo que pidió. Otra vez.'}});return}
+    const t=this.total(m.order),opts=[t,t+.5,Math.max(.5,t-.75)].sort(()=>Math.random()-.5);this.setState({mg:{...m,phase:'pay',opts,msg:''}})}
+  colPay(v){const m=this.state.mg,t=this.total(m.order);if(Math.abs(v-t)<.01)this.colNext(m,true,'"Gracias." Dejó propina.');else this.colNext(m,false,'Le cobraste mal. Se fue molesto.')}
+  startTuning(){this.setState({mg:{type:'tuning',i:0,sel:{},paid:0,ok:0,ruido:0,over:false,msg:''}})}
+  tunStats(sel){return PARTS.filter(p=>sel[p.id]).reduce((s,p)=>({v:s.v+p.v,e:s.e+p.e,r:s.r+p.r,c:s.c+p.c}),{v:0,e:0,r:0,c:0})}
+  tunToggle(id){const m=this.state.mg;if(m.over)return;this.setState({mg:{...m,sel:{...m.sel,[id]:!m.sel[id]}}})}
+  tunDeliver(){const m=this.state.mg,C=CLIENTS[m.i],s=this.tunStats(m.sel);const ok=Object.keys(C.min).every(k=>s[k]>=C.min[k])&&s.r<=C.maxR&&s.c<=C.b;
+    const pay=ok?15+Math.round((C.b-s.c)/5):0,msg=ok?C.n+' quedó feliz. +$'+pay+'.':(s.c>C.b?'Te pasaste del presupuesto. ':'No es lo que pidió. ')+C.n+' no pagó.';
+    const n={...m,paid:m.paid+pay,ok:m.ok+(ok?1:0),ruido:m.ruido+s.r,msg};
+    this.setState({mg:m.i+1>=CLIENTS.length?{...n,over:true}:{...n,i:m.i+1,sel:{}}})}
+  sn(s){return SUITS.find(x=>x[0]===s)[1]}
+  card(c){if(!c||!c.s)return {};return {n:{1:'As',10:'S',11:'C',12:'R'}[c.n]||String(c.n),name:({1:'As',10:'Sota',11:'Caballo',12:'Rey'}[c.n]||c.n)+' de '+this.sn(c.s),col:SUITS.find(x=>x[0]===c.s)[2]}}
+  rk(c){return BR_RANK.indexOf(c.n)}
+  beats(b,a,tr){return b.s===a.s?this.rk(b)<this.rk(a):b.s===tr}
+  pts(c){return BR_PTS[c.n]||0}
+  startBriscola(){const deck=[];SUITS.forEach(([s])=>[1,2,3,4,5,6,7,10,11,12].forEach(n=>deck.push({s,n})));deck.sort(()=>Math.random()-.5);
+    const me=deck.splice(0,3),opp=deck.splice(0,3),trump=deck[deck.length-1];
+    this.setState({mg:{type:'briscola',deck,trump,me,opp,table:[],my:0,op:0,turn:'me',over:false,win:null,msg:'Sales tú. Triunfo: '+this.sn(trump.s)+'.'}})}
+  briPlay(i){const m=this.state.mg;if(!m||m.over||m.turn!=='me')return;const c=m.me[i],table=[...m.table,{c,who:'me'}];
+    this.setState({mg:{...m,me:m.me.filter((_,j)=>j!==i),table,turn:'wait',msg:''}});clearTimeout(this.bt);this.bt=setTimeout(()=>table.length===2?this.briResolve():this.briOpp(),700)}
+  briOppPick(m){const tr=m.trump.s,h=m.opp.map((c,i)=>({c,i}));
+    if(m.table.length){const a=m.table[0].c,w=h.filter(x=>this.beats(x.c,a,tr)).sort((x,y)=>((x.c.s===tr)-(y.c.s===tr))||(this.pts(x.c)-this.pts(y.c)));if(w.length&&(this.pts(a)>=2||w[0].c.s!==tr))return w[0].i}
+    return h.sort((x,y)=>((x.c.s===tr)-(y.c.s===tr))||(this.pts(x.c)-this.pts(y.c))||(this.rk(y.c)-this.rk(x.c)))[0].i}
+  briOpp(){const m=this.state.mg;if(!m||m.over||!m.opp.length)return;const i=this.briOppPick(m),c=m.opp[i],table=[...m.table,{c,who:'opp'}];
+    this.setState({mg:{...m,opp:m.opp.filter((_,j)=>j!==i),table,turn:table.length===2?'wait':'me',msg:table.length===2?'':'Don Tito tiró. Te toca.'}});
+    if(table.length===2){clearTimeout(this.bt);this.bt=setTimeout(()=>this.briResolve(),800)}}
+  briResolve(){const m=this.state.mg;const [a,b]=m.table,w=this.beats(b.c,a.c,m.trump.s)?b.who:a.who,p=this.pts(a.c)+this.pts(b.c);
+    const deck=[...m.deck],me=[...m.me],opp=[...m.opp];
+    if(deck.length){const f=deck.shift(),s=deck.shift();if(w==='me'){me.push(f);if(s)opp.push(s)}else{opp.push(f);if(s)me.push(s)}}
+    const my=m.my+(w==='me'?p:0),op=m.op+(w==='opp'?p:0);
+    let n={...m,deck,me,opp,my,op,table:[],turn:w,msg:(w==='me'?'Te llevaste la mano':'Don Tito se llevó la mano')+(p?' · '+p+' puntos':'')+'.'};
+    if(!me.length&&!opp.length){const win=my>60?'win':op>60?'lose':'tie';n={...n,over:true,win,msg:win==='win'?'Ganaste '+my+' a '+op+'. Don Tito pide otra.':win==='lose'?'Perdiste '+my+' a '+op+'. "Así se juega."':'Empate a 60.'}}
+    this.setState({mg:n});if(!n.over&&w==='opp'){clearTimeout(this.bt);this.bt=setTimeout(()=>this.briOpp(),700)}}
+  startDomino(){const all=[];for(let a=0;a<=6;a++)for(let b=a;b<=6;b++)all.push([a,b]);all.sort(()=>Math.random()-.5);
+    this.setState({mg:{type:'domino',me:all.slice(0,7),opp:all.slice(7,14),board:[],L:null,R:null,turn:'me',passes:0,msg:'Sales tú. Tira cualquier ficha.',over:false,win:null}})}
+  fits(t,m){return !m.board.length||t[0]===m.L||t[1]===m.L||t[0]===m.R||t[1]===m.R}
+  place(m,t){const b=[...m.board];let L=m.L,R=m.R;
+    if(!b.length){b.push(t);L=t[0];R=t[1]}
+    else if(t[0]===R||t[1]===R){const o=t[0]===R?t[1]:t[0];b.push([R,o]);R=o}
+    else{const o=t[0]===L?t[1]:t[0];b.unshift([o,L]);L=o}
+    return {board:b,L,R}}
+  pips(h){return h.reduce((s,t)=>s+t[0]+t[1],0)}
+  domBlock(m){const a=this.pips(m.me),b=this.pips(m.opp);return {...m,over:true,win:a<b?'win':a>b?'lose':'tie',msg:'Tranque. Tú '+a+' puntos, Don Pepe '+b+'.'}}
+  domPlay(i){const m=this.state.mg;if(!m||m.over||m.turn!=='me')return;const t=m.me[i];if(!this.fits(t,m))return;
+    let n={...m,...this.place(m,t),me:m.me.filter((_,j)=>j!==i),passes:0,turn:'opp',msg:'Don Pepe está pensando…'};
+    if(!n.me.length)n={...n,over:true,win:'win',msg:'¡Dominaste! Don Pepe dice que fue suerte.'};
+    this.setState({mg:n});if(!n.over){clearTimeout(this.dt);this.dt=setTimeout(()=>this.domOpp(),900)}}
+  domPass(){const m=this.state.mg;let n={...m,passes:m.passes+1,turn:'opp',msg:'Pasaste.'};if(n.passes>=2)n=this.domBlock(n);
+    this.setState({mg:n});if(!n.over){clearTimeout(this.dt);this.dt=setTimeout(()=>this.domOpp(),900)}}
+  domOpp(){const m=this.state.mg;if(!m||m.over)return;const i=m.opp.findIndex(t=>this.fits(t,m));let n;
+    if(i<0){n={...m,passes:m.passes+1,turn:'me',msg:'Don Pepe pasó. Te toca.'};if(n.passes>=2)n=this.domBlock(n)}
+    else{const t=m.opp[i];n={...m,...this.place(m,t),opp:m.opp.filter((_,j)=>j!==i),passes:0,turn:'me',msg:'Don Pepe tiró '+t[0]+'|'+t[1]+'. Te toca.'};if(!n.opp.length)n={...n,over:true,win:'lose',msg:'Don Pepe dominó. "Pa\' la próxima, nene."'}}
+    this.setState({mg:n})}
+  endMg(){const m=this.state.mg;
+    if(m.type==='colmado'){clearInterval(this.cmi);let d={chavos:m.score*4+m.tips,resp:m.score>=4?2:0};if(this.has('buscon')&&m.score)d=this.merge(d,DEV.buscon.d);this.apply(d,{mg:null});this.say(this.fmt(d).join(' · ')||'Hoy no vendiste nada.');this.addLog('Atendiste el colmado: '+m.score+' de 5 clientes.');this.grow('buscon');return}
+    if(m.type==='tuning'){let d={chavos:m.paid,resp:m.ok>=2?3:0,calor:Math.floor(m.ruido/4)};if(this.has('mecanico')&&m.paid)d=this.merge(d,DEV.mecanico.d);this.apply(d,{mg:null});this.say(this.fmt(d).join(' · ')||'Chago no te pagó hoy.');this.addLog('Tuneaste carros: '+m.ok+' de 3 clientes felices.');this.grow('mecanico');return}
+    if(m.type==='briscola'){clearTimeout(this.bt);const d={win:{chavos:10,resp:3,feli:3},lose:{feli:-1},tie:{resp:1}}[m.win];this.apply(d,{mg:null});this.say(this.fmt(d).join(' · '));this.addLog('Briscola: '+m.msg);this.grow('jugador');return}
+    if(m.type==='chase'){clearInterval(this.ci);if(m.win==='win'){const d=this.merge({chavos:60,calor:25},this.has('calle')?DEV.calle.d:{});this.apply(d,{mg:null});this.say(this.fmt(d).join(' · '));this.addLog('Robaste un carro y llegaste al taller de Chago.');this.grow('calle')}else{this.apply({calor:10},{mg:null});setTimeout(()=>this.arrest(),300)}return}const R={hoops:{win:{resp:6,salud:4,feli:4},lose:{salud:3,resp:-1},tie:{salud:3,resp:2}},domino:{win:{chavos:this.has('jugador')?20:10,resp:3},lose:{chavos:-5},tie:{resp:1}}};
+    const d=R[m.type][m.win];clearInterval(this.hi);clearTimeout(this.dt);this.apply(d,{mg:null});this.say(this.fmt(d).join(' · '));this.addLog((m.type==='hoops'?'Pickup: ':'Dominó: ')+m.msg);this.grow(m.type==='hoops'?'atleta':'jugador')}
+  sleep(){
+    const bonus=this.state.owned.abanico?1:0;
+    this.setState(st=>({animo:this.max()+bonus>this.max()?this.max():this.max(),day:st.day+1,sheet:null,noAnimo:false,calor:Math.max(0,st.calor-5)}));
+    this.say('Dormiste como un bebé. Ánimo lleno.');this.setState({dayStart:Date.now()});
+    const nd=this.state.day+1,f=this.fest(nd);if(f)setTimeout(()=>this.setState({ev:f,result:null}),800);else if(Math.random()<.5)setTimeout(()=>this.fireEvent(),800);
+  }
+  pick(c){let d=c.d||{},out=c.out;const extra={},st=this.state;
+    if(c.flag)extra[c.flag]=true;
+    if(st.ev&&st.ev.hurricane&&st.prep){d={...d,salud:(d.salud||0)+6};out+=' Los suministros que compraste salvaron la semana.'}
+    if(c.path){const n=c.need||{},beca=n.orCoco&&st.s.coco>=n.orCoco;let ok=true;
+      if(n.coco&&st.s.coco<n.coco)ok=false;
+      if(n.chavos&&st.chavos<n.chavos&&!beca)ok=false;
+      if(!ok){d={feli:-5};out=c.fail}
+      else{extra.path=c.path;if(n.chavos&&!beca)d={...d,chavos:-n.chavos};if(beca)out+=' Con beca completa.';
+        if(c.path==='yupi'||c.path==='privada')extra.areas={...st.areas,pueblo:true,sanjuan:true};
+        if(c.path==='calle')extra.unlocked={...st.unlocked,punto:true};
+        if(c.path==='trabajo')extra.jobs={...st.jobs,horno:true}}}
+    this.apply(d,{...extra,result:{text:out,d}});this.addLog(st.ev.title+' — '+out)}
+  watchAd(){
+    this.setState({ad:3,noAnimo:false});clearInterval(this.ai);
+    this.ai=setInterval(()=>{const n=this.state.ad-1;if(n<=0){clearInterval(this.ai);this.setState({ad:0});this.apply({animo:2});this.say('+2 Ánimo. Gracias por mirar.')}else this.setState({ad:n})},1000);
+  }
+  renderVals(){
+    const st=this.state,max=this.max(),cas=CAS.find(c=>c.id===st.cas)||CAS[0];
+    const nm=st.name.trim(),ap=st.apodo.trim();
+    const display=ap&&nm?nm+' "'+ap+'"':(nm||ap||'Yariel');
+    const tab=k=>st.screen==='hub'&&st.tab===k;
+    const col=k=>st.tab===k?'var(--color-accent-700)':'var(--color-neutral-600)';
+    const statColor={salud:'var(--color-accent-2-600)',feli:'var(--color-accent-500)',coco:'var(--color-neutral-700)',resp:'var(--color-accent-700)'};
+    const statsArr=['salud','feli','coco','resp'].map(k=>({label:LBL[k],val:st.s[k],w:st.s[k]+'%',color:statColor[k]}));
+    const sheet=LOCS.find(l=>l.id===st.sheet);
+    const th=st.thread&&st.th[st.thread];const thMeta=THREADS.find(t=>t.id===st.thread)||(st.th[st.thread]&&st.th[st.thread].meta);
+    const unreadN=Object.values(st.th).filter(t=>t.unread).length;
+    const ev=st.ev||{};const mg=st.mg||{};const jl=st.jail;const jc=jl&&!jl.done?jl.cards[jl.i]:null;
+    return {
+      showNotes:this.props.showNotes??true,
+      isTitle:st.screen==='title',isPick:st.screen==='pick',isCreate:st.screen==='create',isHub:st.screen==='hub',
+      goTitle:()=>this.setState({screen:'title'}),goPick:()=>this.setState({screen:'pick'}),goCreate:()=>this.setState({screen:'create'}),
+      caserios:CAS.map(c=>({...c,border:c.id===st.cas?'var(--color-accent)':'transparent',select:()=>this.setState({cas:c.id}),
+        meters:['Chamba','Calor','Vibra'].map((label,i)=>({label,dots:[0,1,2,3,4].map(n=>({bg:n<c.m[i]?(i===1?'var(--color-accent-600)':'var(--color-accent-2-600)'):'var(--color-neutral-300)'}))}))})),
+      casName:cas.name,casShort:cas.short,
+      name:st.name,apodo:st.apodo,setName:e=>this.setState({name:e.target.value}),setApodo:e=>this.setState({apodo:e.target.value}),
+      initial:(nm||ap||'Y')[0].toUpperCase(),
+      av:{skin:SKINS[st.look.skin],hair:st.look.hair,hc:HCS[st.look.hc],top:st.look.top,tc:TCS[st.look.tc],hat:!!st.look.hat,chain:!!st.look.chain},
+      closetOn:st.closet,openCloset:()=>this.setState({closet:true}),closeCloset:()=>this.setState({closet:false}),
+      skinOpts:SKINS.map((c,i)=>this.swatch(c,st.look.skin===i,'skin',i)),
+      hcOpts:HCS.map((c,i)=>this.swatch(c,st.look.hc===i,'hc',i)),
+      tcOpts:TCS.map((c,i)=>this.swatch(c,st.look.tc===i,'tc',i)),
+      hairOpts:HAIRS.map(([id,label])=>({label,op:1,bg:st.look.hair===id?'var(--sun)':'var(--color-surface)',pick:()=>this.setLook('hair',id)})),
+      topOpts:TOPS.map(([id,label])=>({label,op:1,bg:st.look.top===id?'var(--sun)':'var(--color-surface)',pick:()=>this.setLook('top',id)})),
+      extraOpts:[['hat','gorra','Gorra'],['chain','cadena','Cadena']].map(([k,it,label])=>{const own=!!st.owned[it];return {label:own?label:label+' · Tienda',op:own?1:.5,bg:st.look[k]?'var(--sun)':'var(--color-surface)',pick:()=>own?this.setLook(k,!st.look[k]):this.say('Cómprala en la Tienda primero.')}}),displayName:display,
+      traits:TRAITS.map(t=>({...t,name:TG[t.id]?TG[t.id][st.gender==='chica'?1:st.gender==='nb'?2:0]:t.name,bg:t.id===st.trait?'var(--color-accent)':'var(--color-surface)',fg:t.id===st.trait?'var(--color-bg)':'var(--color-text)',select:()=>this.setState({trait:t.id})})),
+      start:()=>{const tr=TRAITS.find(t=>t.id===st.trait);const d={...cas.d};Object.keys(tr.d).forEach(k=>d[k]=(d[k]||0)+tr.d[k]);MODE=CAS_TR[cas.id]||'tren';const dc=DON[tr.id];this.apply(d,{screen:'hub',tab:'barrio',dev:{[dc]:DEV[dc].need}});this.say(this.gx('{Bienvenido}')+' a '+cas.short+'. '+this.fmt(d).join(' · '))},
+      age:st.age,nextAge:st.age+1,day:st.day,chavos:st.chavos,coquis:st.coquis,animo:st.animo,animoMax:max,calor:st.calor,
+      tabBarrio:tab('barrio'),tabVida:tab('vida'),tabChamba:tab('chamba'),tabCel:tab('cel'),tabTienda:tab('tienda'),
+      tc:{barrio:col('barrio'),vida:col('vida'),chamba:col('chamba'),cel:col('cel'),tienda:col('tienda')},
+      tBarrio:()=>this.setState({tab:'barrio'}),tVida:()=>this.setState({tab:'vida'}),tChamba:()=>this.setState({tab:'chamba'}),tCel:()=>this.setState({tab:'cel'}),tTienda:()=>this.setState({tab:'tienda'}),goStore:()=>this.setState({tab:'tienda'}),
+      miniStats:[...statsArr,{label:'Calor',val:st.calor,w:st.calor+'%',color:'var(--color-accent)'}].map(s=>({...s,short:{Salud:'Salud',Felicidad:'Feli',Coco:'Coco',Respeto:'Resp',Calor:'Calor'}[s.label]})),
+      bigStats:[...statsArr,{label:'Calor',val:st.calor,w:st.calor+'%',color:'var(--color-accent-800)'}],
+      places:LOCS.filter(l=>(l.zone||'bloque')===st.zone&&!(l.maxAge&&st.age>l.maxAge)&&!(l.path&&!l.path.includes(st.path))).map(l=>{const ag=l.minAge&&st.age<l.minAge;if(ag)return {label:l.label,note:'Vuelve a los '+l.minAge+'.',tags:['Bloqueado · '+l.minAge+'+'],swatch:'transparent',bg:'var(--color-neutral-200)',fg:'var(--ink)',go:()=>this.say('Tienes '+st.age+'. Vuelve a los '+l.minAge+'.')};const lk=l.lock&&!st.unlocked[l.id];return lk?{label:'???',note:l.lock,tags:['Bloqueado'],swatch:'transparent',bg:'var(--color-neutral-200)',fg:'var(--ink)',go:()=>this.say(l.lock)}:{label:l.label,note:l.note,tags:[...l.tags,...LOVE.filter(L=>L.places.includes(l.id)).map(L=>'♥ '+this.who(L).n)],swatch:l.sw,bg:l.ink?'var(--ink)':'var(--color-surface)',fg:l.ink?'var(--paper)':'var(--ink)',go:()=>this.setState({sheet:l.id})}}),
+      hasQuests:Object.values(st.quests).includes('active'),
+      quests:Object.keys(QUESTS).filter(k=>st.quests[k]==='active').map(k=>({...QUESTS[k],go:()=>this.setState({sheet:QUESTS[k].place,zone:(LOCS.find(l=>l.id===QUESTS[k].place).zone||'bloque')})})),
+      areas:AREAS.map(a=>{const open=st.areas[a.id],on=st.zone===a.id;return {name:a.name,sub:on?'Aquí':open?'Ir':'Bloqueado',bg:on?'var(--sun)':open?'var(--color-surface)':'var(--color-neutral-200)',fg:'var(--ink)',op:open?1:.55,go:()=>open?this.setState({zone:a.id,pos:{x:49,y:50}}):this.say(a.lock)}}),
+      areaTitle:AREAS.find(a=>a.id===st.zone).name,
+      chapter:(()=>{const isDone=k=>k==='_path'?!!st.path:k==='_never'?false:st.quests[k]==='done';const c=CHAPTERS.find(c=>!c.q.every(isDone))||CHAPTERS[CHAPTERS.length-1];return {n:c.n,title:c.title,hint:c.hint,done:c.q.filter(isDone).length,total:c.q.length}})(),
+      devList:Object.keys(DEV).filter(k=>st.dev[k]).sort((a,b)=>(st.dev[b]>=DEV[b].need)-(st.dev[a]>=DEV[a].need)).map(k=>{const n=st.dev[k],ok=n>=DEV[k].need;return {name:this.dn(k),bonus:ok?DEV[k].bonus:'Sigue así pa\' desbloquearlo',prog:ok?'Activo':n+' de '+DEV[k].need,bg:ok?'var(--sun)':'var(--color-surface)'}}),
+      devCount:Object.keys(DEV).filter(k=>(st.dev[k]||0)>=DEV[k].need).length,
+      genders:[['chico','Chico'],['chica','Chica'],['nb','No binarie']].map(([id,label])=>({label,bg:st.gender===id?'var(--sun)':'var(--color-surface)',pick:()=>this.setState({gender:id})})),
+      likesOpts:[['chicas','Chicas'],['chicos','Chicos'],['todos','Todes']].map(([id,label])=>({label,bg:st.likes===id?'var(--sun)':'var(--color-surface)',pick:()=>this.setState({likes:id})})),
+      hasLove:Object.keys(st.love).length>0,
+      loveList:Object.keys(st.love).map(k=>{const L=LOVE.find(x=>x.id===k),p=this.who(L),c=st.love[k],mine=st.partner===k;
+        const stage=mine?(st.married?'Casados':(p.g==='f'?'Novia':'Novio')):c.aff>=60?'Le gustas':c.aff>=30?'Saliendo':'Conocidos';
+        const pl=LOCS.find(l=>l.id===L.places[0]);
+        return {name:p.n,title:p.t,where:pl.label,ini:p.n[0],av:L.bg,w:c.aff+'%',stage,bg:mine?'var(--sun)':'var(--color-surface)',open:()=>this.setState(x=>({thread:'love_'+k,th:{...x.th,['love_'+k]:{...x.th['love_'+k],unread:false}}}))}}),
+      mapBldg:LOCS.filter(l=>(l.zone||'bloque')===st.zone&&!(l.maxAge&&st.age>l.maxAge)&&!(l.path&&!l.path.includes(st.path))&&MAP[l.id]).map(l=>{const P=MAP[l.id],ag=l.minAge&&st.age<l.minAge,lk=l.lock&&!st.unlocked[l.id];
+        const q=Object.keys(QUESTS).some(k=>st.quests[k]==='active'&&QUESTS[k].place===l.id),hr=!lk&&!ag&&LOVE.some(L=>L.places.includes(l.id));
+        return {...P,label:lk?'???':ag?l.label.split(' ')[0]+' · '+l.minAge+'+':l.label,bg:lk?'repeating-linear-gradient(135deg, var(--color-neutral-200) 0 8px, var(--color-neutral-300) 8px 16px)':ag?'var(--color-neutral-300)':l.ink?'var(--ink)':l.sw,quest:q&&!lk,heart:hr,
+          go:()=>{if(lk)return this.say(l.lock);if(ag)return this.say('Tienes '+st.age+'. Vuelve a los '+l.minAge+'.');this.setState({pos:{x:P.x+P.w/2,y:P.y+P.h/2}});clearTimeout(this.mt);this.mt=setTimeout(()=>this.setState({sheet:l.id}),460)}}}),
+      mapDecor:MAPDECOR[st.zone]||[],mapWater:st.zone==='sanjuan',px:st.pos.x,py:st.pos.y,
+      dayLeft:(()=>{const ms=Math.max(0,DAYMS-(Date.now()-st.dayStart));return Math.floor(ms/3600000)+'h '+Math.floor(ms%3600000/60000)+'m'})(),
+      mgChase:mg.type==='chase',
+      chase:mg.type==='chase'?{msg:mg.msg,playing:!mg.over,over:!!mg.over,endLabel:mg.win==='win'?'Cobrar $60':'Ir preso',
+        cells:CH.join('').split('').map((ch,i)=>{const r=Math.floor(i/7),c=i%7,P=mg.p.r===r&&mg.p.c===c,K=mg.cops.some(k=>k.r===r&&k.c===c),pal=['var(--sun)','var(--color-accent-300)','var(--color-accent-2-300)','var(--color-surface)'];
+          if(P)return {bg:'var(--color-accent)',fg:'var(--paper)',bd:'inset 0 0 0 3px var(--ink)',t:'Tú'};
+          if(K)return {bg:mg.t%2?'var(--color-accent-2)':'var(--ink)',fg:'var(--paper)',bd:'inset 0 0 0 3px var(--ink)',t:'Pol'};
+          if(ch==='#')return {bg:pal[(r*3+c)%4],fg:'var(--ink)',bd:'inset 0 0 0 2px var(--ink)',t:''};
+          if(ch==='G')return {bg:'var(--sun)',fg:'var(--ink)',bd:'inset 0 0 0 3px var(--ink)',t:'Taller'};
+          return {bg:'var(--color-neutral-800)',fg:'var(--paper)',bd:'none',t:''}})}:{cells:[]},
+      mvU:()=>this.move(-1,0),mvD:()=>this.move(1,0),mvL:()=>this.move(0,-1),mvR:()=>this.move(0,1),
+      mgColmado:mg.type==='colmado',mgTuning:mg.type==='tuning',mgBriscola:mg.type==='briscola',
+      col:mg.type==='colmado'?{n:mg.i+1,score:mg.score,left:mg.left,barc:mg.left<30?'var(--color-accent)':'var(--color-accent-2)',who:mg.who,orderText:SHELF.filter(it=>mg.order[it.id]).map(it=>mg.order[it.id]+' '+it.name).join(' + '),picking:mg.phase==='pick'&&!mg.over,paying:mg.phase==='pay'&&!mg.over,over:!!mg.over,msg:mg.msg,
+        shelf:SHELF.map(it=>({name:it.name,price:'$'+it.p.toFixed(2),q:mg.bag[it.id]?'×'+mg.bag[it.id]:'',bg:mg.bag[it.id]?'var(--sun)':'var(--color-surface)',add:()=>this.colAdd(it.id)})),
+        opts:mg.opts.map(v=>({t:'$'+v.toFixed(2),pick:()=>this.colPay(v)}))}:{shelf:[],opts:[]},
+      colClear:()=>this.colClear(),colDone:()=>this.colDone(),tunDeliver:()=>this.tunDeliver(),
+      tun:mg.type==='tuning'?(()=>{const C=CLIENTS[mg.i],s=this.tunStats(mg.sel),N={v:'Velocidad',e:'Estilo',r:'Ruido'};return {title:'Cliente '+(mg.i+1)+' de '+CLIENTS.length,client:C.n,want:C.want,
+        req:[...Object.keys(C.min).map(k=>N[k]+' '+C.min[k]+'+'),...(C.maxR<99?['Ruido máx. '+C.maxR]:[]),'Presupuesto $'+C.b].join(' · '),
+        stats:[{k:'Velocidad',v:s.v,bg:'var(--color-surface)'},{k:'Estilo',v:s.e,bg:'var(--color-surface)'},{k:'Ruido',v:s.r,bg:s.r>C.maxR?'var(--color-accent-300)':'var(--color-surface)'},{k:'Costo',v:'$'+s.c,bg:s.c>C.b?'var(--color-accent-300)':'var(--color-surface)'}],
+        parts:PARTS.map(p=>({name:p.name,cost:'$'+p.c,fx:[p.v?'+'+p.v+' Vel':'',p.e?'+'+p.e+' Estilo':'',p.r?'+'+p.r+' Ruido':''].filter(Boolean).join(' · '),bg:mg.sel[p.id]?'var(--sun)':'var(--color-surface)',toggle:()=>this.tunToggle(p.id)})),
+        msg:mg.msg,playing:!mg.over,over:!!mg.over}})():{stats:[],parts:[]},
+      bri:mg.type==='briscola'?{my:mg.my,opp:mg.op,deckN:mg.deck.length,oppN:mg.opp.length,trump:this.card(mg.trump),table:mg.table.map(t=>({...this.card(t.c),who:t.who==='me'?'Tú':'Don Tito'})),hand:mg.me.map((c,i)=>({...this.card(c),op:mg.turn==='me'&&!mg.over?1:.55,play:()=>this.briPlay(i)})),msg:mg.msg,over:!!mg.over}:{table:[],hand:[],trump:{}},
+      monthName:MONTHS[Math.floor((st.day-1+25)/5)%12],
+      pathText:{yupi:'La YUPI',privada:'Sagrada Familia',trabajo:'Trabajo',calle:'La calle'}[st.path]||'Escuela',
+      turf:ZONES.map(z=>{const o=st.turf[z.id];return {name:z.name,owner:o==='tu'?'Tuyo':o==='rival'?'Los del 3':'Libre',bg:o==='tu'?'var(--color-accent)':o==='rival'?'var(--ink)':'var(--color-surface)',fg:o==='tu'||o==='rival'?'var(--paper)':'var(--ink)'}}),
+      turfCount:Object.values(st.turf).filter(v=>v==='tu').length,
+      gen:st.gen,armedText:st.armed?'Sí':'No',enemyText:st.enemies.length?st.enemies.join(', '):'Ninguno',
+      mgHoops:mg.type==='hoops',mgDomino:mg.type==='domino',
+      hoops:{made:mg.made,opp:mg.opp,shotN:Math.min(5,(mg.shot||0)+1),x:mg.x,zl:mg.zl,zw:mg.zw,msg:mg.msg,playing:mg.type==='hoops'&&!mg.over,over:!!mg.over},
+      shoot:()=>this.shoot(),endMg:()=>this.endMg(),domPass:()=>this.domPass(),
+      dom:mg.type==='domino'?{oppN:mg.opp.length,ends:mg.board.length?mg.L+' · '+mg.R:'—',board:mg.board.map(t=>({a:t[0],b:t[1]})),msg:mg.msg,
+        hand:mg.me.map((t,i)=>{const ok=!mg.over&&mg.turn==='me'&&this.fits(t,mg);return {a:t[0],b:t[1],bg:ok?'var(--sun)':'var(--color-surface)',op:ok?1:.45,play:()=>this.domPlay(i)}}),
+        canPass:!mg.over&&mg.turn==='me'&&!mg.me.some(t=>this.fits(t,mg)),over:!!mg.over}:{board:[],hand:[]},
+      inJail:!!jl,jail:jl?{years:jl.years,title:jc?jc.title:'Sales libre',body:jc?jc.body:'Pasaron '+jl.years+' años. El bloque no es el mismo.',n:Math.min(jl.i+1,jl.cards.length),total:jl.cards.length}:{},
+      jailChoices:jl?(jc?jc.ch.map(c=>({label:c.label,pick:()=>this.jailPick(c)})):[{label:'Volver al bloque',pick:()=>this.release()}]):[],
+      isDead:!!st.dead,dead:st.dead||{},deadName:display,heirName:this.heir(),nextGen:()=>this.nextGen(),
+      inherit:[{k:'Chavos',v:'$'+st.chavos},{k:'Respeto (60%)',v:Math.round(st.s.resp*.6)},{k:'Calor (50%)',v:Math.round(st.calor*.5)},{k:'Territorio',v:Object.values(st.turf).filter(v=>v==='tu').length+' zonas'},{k:'Enemigos',v:st.enemies.length?st.enemies.join(', '):'Ninguno'},{k:'Tu otra mitad',v:st.partner?this.who(LOVE.find(x=>x.id===st.partner)).n+(st.married?' · casados':' · novios'):'Sin pareja'}],
+      hasSheet:!!sheet,sheet:sheet||{},closeSheet:()=>this.setState({sheet:null}),
+      sheetActions:(sheet?[...Object.keys(QUESTS).filter(k=>st.quests[k]==='active'&&QUESTS[k].place===sheet.id).map(k=>({...QUESTS[k].act,qid:k})),...sheet.acts.filter(a=>!(a.meet&&st.th[a.meet])),...this.loveActs(sheet.id)]:[]).map(a=>({...a,costLabel:a.qid?'Misión':a.soon?'Pronto':a.cost?'−'+a.cost+' Ánimo':'Gratis',run:()=>this.run(a)})),
+      birthday:()=>{this.setState(st=>({age:st.age+1,animo:max,day:st.day+1}));this.addLog('Cumpliste '+(st.age+1)+'. Abuela hizo bizcocho.');setTimeout(()=>(st.age+1>=18&&!this.state.path)?this.setState({ev:GRAD,result:null,sheet:null}):this.fireEvent(),300)},
+      log:st.log,
+      jobs:JOBS.map(j=>{const r=j.req||{};const lock=(r.path&&st.path!==r.path)?'Escoge trabajar al graduarte':(r.job&&!st.jobs[r.job])?'Habla con Doña Lydia':(r.age&&st.age<r.age)?'Necesitas '+r.age+' años':(r.resp&&st.s.resp<r.resp)?'Necesitas '+r.resp+' Respeto':'';
+        const pay=j.id==='beats'&&st.trait==='rapero'?j.pay*2:j.pay;
+        return {...j,pay,hot:!!j.calor,open:!lock,locked:!!lock,lockText:lock,op:lock?.6:1,work:()=>this.run({cat:j.id==='beats'?'artista':'buscon',cost:j.cost,d:{chavos:pay,calor:j.calor||0},ev:.25})}}),
+      threads:[...THREADS.filter(t=>st.th[t.id]),...Object.keys(st.th).filter(k=>st.th[k].meta).map(k=>({id:k,...st.th[k].meta}))].map(t=>{const s=st.th[t.id]||{msgs:[],unread:false};return {...t,preview:this.gx((s.msgs[s.msgs.length-1]||{}).t||''),unread:s.unread,open:()=>this.setState(x=>({thread:t.id,th:{...x.th,[t.id]:{...x.th[t.id],unread:false}}}))}}),
+      noThread:!th,hasThread:!!th,closeThread:()=>this.setState({thread:null}),
+      thread:th?{name:thMeta.name,msgs:th.msgs.map(m=>({t:this.gx(m.t),align:m.me?'flex-end':'flex-start',bg:m.me?'var(--color-accent)':'var(--color-surface)',fg:m.me?'var(--color-bg)':'var(--color-text)'})),
+        replies:th.replies.map(r=>({t:r.t,send:()=>{const id=st.thread;
+          this.setState(x=>({th:{...x.th,[id]:{...x.th[id],replies:[],msgs:[...x.th[id].msgs,{me:true,t:r.t}]}}}));
+          setTimeout(()=>{this.setState(x=>({th:{...x.th,[id]:{...x.th[id],msgs:[...x.th[id].msgs,{me:false,t:r.a}]}}}));this.onReply(r,id)},800)}}))}:{msgs:[],replies:[]},
+      celBadge:unreadN>0,unreadN,
+      passTrack:[0,1,2,3,4,5,6,7,8,9].map(i=>({bg:i<(st.pass?3:1)?'var(--color-bg)':'var(--color-accent-400)'})),
+      passLabel:st.pass?'Pase premium activo':'Desbloquear · 250 coquís',
+      buyPass:()=>{if(st.pass)return;if(st.coquis<250)return this.say('Te faltan '+(250-st.coquis)+' coquís.');this.setState({pass:true,coquis:st.coquis-250});this.say('Pase activo. ¡Wepa!')},
+      packs:PACKS.map(p=>({...p,best:!!p.best,buy:()=>{this.apply({coquis:p.n});this.say('Compra simulada: +'+p.n+' coquís')}})),
+      items:ITEMS.map(it=>({...it,owned:!!st.owned[it.id],label:st.owned[it.id]?'Tuyo':it.c+' coquís',buy:()=>{if(st.coquis<it.c)return this.say('Te faltan '+(it.c-st.coquis)+' coquís.');this.setState({coquis:st.coquis-it.c,owned:{...st.owned,[it.id]:true},look:{...st.look,...(it.id==='gorra'?{hat:true}:it.id==='cadena'?{chain:true}:{})}});this.say(it.name+' es tuyo.')}})),
+      hasEvent:!!st.ev,ev,evChoosing:!!st.ev&&!st.result,evDone:!!st.result,
+      evChoices:(ev.ch||[]).map(c=>({label:c.label,pick:()=>this.pick(c)})),
+      result:st.result?{text:st.result.text,chips:Object.keys(st.result.d).filter(k=>st.result.d[k]).map(k=>{const v=st.result.d[k],good=k==='calor'?v<0:v>0;return {t:this.fmt({[k]:v})[0],bg:good?'var(--color-accent-2-200)':'var(--color-accent-200)',fg:good?'var(--color-accent-2-800)':'var(--color-accent-800)'}})}:{chips:[]},
+      closeEvent:()=>this.setState({ev:null,result:null}),
+      noAnimo:st.noAnimo,closeNoAnimo:()=>this.setState({noAnimo:false}),
+      refill:()=>{if(st.coquis<15)return this.say('Te faltan coquís.');this.setState({coquis:st.coquis-15,animo:max,noAnimo:false});this.say('Ánimo lleno. −15 coquís')},
+      sleepNow:()=>this.sleep(),watchAd:()=>this.watchAd(),adOn:st.ad>0,adLeft:st.ad,
+      hasToast:!!st.toast,toast:st.toast
+    };
+  }
+}
+</script>
+</body></html>

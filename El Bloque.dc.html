@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html><head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El Bloque</title>
+<meta name="theme-color" content="#efe8da">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="El Bloque">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
 <script src="./react.production.min.js"></script>
 <script src="./react-dom.production.min.js"></script>
 <script src="./support.js"></script>
@@ -10,53 +19,14 @@
 <x-dc>
 <helmet>
 <link rel="stylesheet" href="bloque.css">
-<style>body{margin:0;background:var(--color-neutral-300) radial-gradient(color-mix(in srgb,var(--ink) 9%,transparent) 1px,transparent 1.4px) 0 0/6px 6px}a{color:var(--color-accent-700)}a:hover{color:var(--color-accent-800)}@keyframes pop{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}</style>
+<style>body{margin:0;background:var(--color-neutral-300) radial-gradient(color-mix(in srgb,var(--ink) 9%,transparent) 1px,transparent 1.4px) 0 0/6px 6px}a{color:var(--color-accent-700)}a:hover{color:var(--color-accent-800)}@keyframes pop{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}.stage{min-height:100vh;min-height:100dvh;display:flex;justify-content:center;align-items:center;padding:24px;box-sizing:border-box;font-family:var(--font-body);color:var(--color-text)}.device{flex:none;width:min(430px,100%);height:min(900px,calc(100dvh - 48px));border-radius:44px;background:var(--color-neutral-900);padding:10px;box-sizing:border-box;box-shadow:var(--shadow-lg)}.screen{--sat:12px;position:relative;width:100%;height:100%;border-radius:34px;overflow:hidden;background:var(--color-bg);display:flex;flex-direction:column;padding-top:var(--sat);box-sizing:border-box}@media (max-width:540px),(max-height:640px){body{background:var(--color-bg)}.stage{padding:0;align-items:stretch}.device{width:100%;height:100vh;height:100dvh;border-radius:0;padding:0;box-shadow:none;background:none}.screen{--sat:max(env(safe-area-inset-top),12px);border-radius:0;padding-bottom:env(safe-area-inset-bottom)}}</style>
 </helmet>
-<div style="min-height:100vh; display:flex; flex-wrap:wrap; gap:48px; justify-content:center; align-items:flex-start; padding:40px 24px; font-family:var(--font-body); color:var(--color-text)">
+<div class="stage">
 
-<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}">
-<div style="flex:0 1 340px; display:flex; flex-direction:column; gap:20px; padding-top:12px">
-  <div style="display:flex; flex-direction:column; gap:6px">
-    <span class="tag tag-accent" style="align-self:flex-start">Prototipo · v2</span>
-    <h1 style="margin:0; font-size:56px">El Bloque</h1>
-    <p style="margin:0; font-size:15px; color:var(--color-neutral-800); text-wrap:pretty">Life-sim freemium en un caserío de Puerto Rico. BitLife-style event cards, a card-driven hub, full street crime and an equally viable legit path.</p>
-  </div>
-  <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; line-height:1.5; color:var(--color-neutral-800)">
-    <h4 style="margin:0; color:var(--color-text)">Locked decisions</h4>
-    <div>· <b>Fictional caseríos, real pueblos.</b></div>
-    <div>· <b>Quests &amp; unlocks:</b> texts give misiones that open new places. Talking to people at places adds contacts, who open more places and jobs.</div>
-    <div>· <b>Story mode:</b> quests are grouped into chapters. Finishing one opens the next area: El bloque → El pueblo → San Juan by tren.</div>
-    <div>· <b>Age gates:</b> Escuela Superior disappears at 18 and you pick La YUPI (public), Sagrada Familia (private), full-time work or la calle. Chinchorro and club are 18+.</div>
-    <div>· <b>Getting to San Juan</b> depends on the pueblo: tren from San Juan and Bayamón, público from Ponce, guagua from Loíza.</div>
-    <div>· <b>Personalidad:</b> repeating things grows traits (Atlético, Coco duro, De la calle, Fiestero…). Once a trait unlocks it adds a bonus to that kind of action. Your starting don begins unlocked.</div>
-    <div>· <b>Romance:</b> pick gender and who you like at creation. Love interests live at places (♥ on the card): la rockera, la yal, la nena del caserío, la religiosa, la de honor, or their male versions. Talk, date, text back, and ask them out at 60 Afecto. Marriage opens at 18. Dating someone else hurts your current partner's Afecto. Each one likes or dislikes certain traits.</div>
-    <div>· <b>Calendario:</b> each night of sleep moves the calendar. Each month brings its own events: Reyes, las SanSe, la huelga at La YUPI, Las Justas, hurricane season and a hurricane, playa, patronales, Grito de Lares, parrandas.</div>
-    <div>· <b>Familia:</b> your partner becomes your heir's other parent and texts them.</div>
-    <div>· <b>Avatar:</b> a flat, outlined bust built from shapes (skin, 6 hair styles, hair color, 4 tops, top color, plus gorra and cadena from the Tienda). Open the clóset by tapping your avatar. It shows in the header and on the map.</div>
-    <div>· <b>Hub:</b> a flat overhead map is the main screen. Tap a building and you walk there and its card opens. Missions like car theft play out as top-down chases (arrow keys or the d-pad). Teen rating: no blood, and deaths happen off-screen.</div>
-    <div>· <b>Real time:</b> one game day lasts 4 real hours. Sleeping ends it early.</div>
-    <div>· <b>Crime:</b> turf control, Calor (police heat), arrests, rival crew Los del 3, weapons, car theft.</div>
-    <div>· <b>Jail:</b> a time-skip of event cards, not a playable state. You lose your turf while inside.</div>
-    <div>· <b>Death:</b> permadeath. You continue as your child, who inherits chavos, part of your Respeto and Calor, and all your enemies.</div>
-    <div>· <b>Legit path:</b> school (Coco), sports (cancha, scouts), music (beats, salón de música).</div>
-    <div>· <b>Minigames:</b> Dominó and Briscola against the old-timers, Pickup at the cancha, Atender el colmado (fill orders, then pick the right total before they walk out), Tunear carros (pick parts to hit each client's specs within budget; noisy builds add Calor), and the car-theft chase.</div>
-    <div>· <b>Money:</b> Ánimo energy, Coquís, rewarded ads, season pass.</div>
-  </div>
-  <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; line-height:1.5; color:var(--color-neutral-800)">
-    <h4 style="margin:0; color:var(--color-text)">Try</h4>
-    <div>Cel → Abuela → "Voy, bendición" opens the Panadería. Colmado → Hablar con Wichi opens the Taller. Colmado → Dominó. Cancha → Pickup. El punto → sell until Calor gets you arrested, or pick fights over the Edif. 5 corner until you die and play as your kid.</div>
-  </div>
-</div>
-</sc-if>
 
-<div style="flex:none; width:390px; height:844px; border-radius:52px; background:var(--color-neutral-900); padding:12px; box-shadow:var(--shadow-lg)">
-<div style="position:relative; width:100%; height:100%; border-radius:42px; overflow:hidden; background:var(--color-bg); display:flex; flex-direction:column">
+<div class="device">
+<div class="screen">
 
-  <div style="flex:none; height:44px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; font-size:14px; font-weight:700">
-    <span>9:41</span>
-    <div style="width:110px; height:30px; border-radius:2px; background:var(--color-neutral-900); margin-top:4px"></div>
-    <span style="font-size:12px; white-space:nowrap">5G ▮▮▮</span>
-  </div>
 
   <sc-if value="{{ isTitle }}" hint-placeholder-val="{{ true }}">
   <div style="flex:1; display:flex; flex-direction:column; padding:24px 26px 34px; gap:24px">
@@ -76,7 +46,7 @@
     </div>
     <div style="display:flex; flex-direction:column; gap:10px">
       <button class="btn btn-primary" style="height:54px; font-size:18px" sc-camel-on-click="{{ goPick }}">Empezar vida nueva</button>
-      <button class="btn btn-secondary" style="height:48px" disabled="{{ true }}">Continuar vida</button>
+      <button class="btn btn-secondary" style="height:48px" disabled="{{ noSave }}" sc-camel-on-click="{{ continueLife }}">Continuar vida</button>
     </div>
   </div>
   </sc-if>
@@ -451,7 +421,7 @@
   </sc-if>
 
   <sc-if value="{{ mgHoops }}" hint-placeholder-val="{{ false }}">
-  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:56px 22px 34px; gap:16px">
+  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 12px) 22px 34px; gap:16px">
     <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Pickup</span>
     <h2 style="margin:0">A 5 tiros contra Yadiel</h2>
     <div style="display:grid; grid-template-columns:1fr 1fr; border:2.5px solid var(--ink); box-shadow:var(--shadow-md)">
@@ -470,7 +440,7 @@
   </sc-if>
 
   <sc-if value="{{ mgChase }}" hint-placeholder-val="{{ false }}">
-  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:52px 18px 26px; gap:10px">
+  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 8px) 18px 26px; gap:10px">
     <span class="tag tag-accent" style="align-self:flex-start">Misión · Persecución</span>
     <h2 style="margin:0; font-size:30px">Pa'l taller de Chago</h2>
     <div style="display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); border:3px solid var(--ink); box-shadow:var(--shadow-md); background:var(--color-neutral-800)">
@@ -488,7 +458,7 @@
   </sc-if>
 
   <sc-if value="{{ mgColmado }}" hint-placeholder-val="{{ false }}">
-  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:52px 18px 26px; gap:10px">
+  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 8px) 18px 26px; gap:10px">
     <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Atender el colmado</span>
     <div style="display:flex; justify-content:space-between; align-items:baseline"><h2 style="margin:0; font-size:30px">Cliente {{ col.n }} de 5</h2><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Vendido: {{ col.score }}</span></div>
     <div style="height:12px; border:2.5px solid var(--ink); background:var(--color-neutral-200)"><div style="height:100%; width:{{ col.left }}%; background:{{ col.barc }}"></div></div>
@@ -509,7 +479,7 @@
   </sc-if>
 
   <sc-if value="{{ mgTuning }}" hint-placeholder-val="{{ false }}">
-  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:52px 18px 26px; gap:10px">
+  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 8px) 18px 26px; gap:10px">
     <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Taller de Chago</span>
     <h2 style="margin:0; font-size:30px">{{ tun.title }}</h2>
     <div style="border:2.5px solid var(--ink); border-radius:4px; background:var(--color-surface); box-shadow:var(--shadow-sm); padding:10px 12px; display:flex; flex-direction:column; gap:4px"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ tun.client }} quiere:</span><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:22px; line-height:1">{{ tun.want }}</span><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:9.5px; text-transform:none">{{ tun.req }}</span></div>
@@ -522,7 +492,7 @@
   </sc-if>
 
   <sc-if value="{{ mgBriscola }}" hint-placeholder-val="{{ false }}">
-  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:52px 18px 26px; gap:10px">
+  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 8px) 18px 26px; gap:10px">
     <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Briscola</span>
     <h2 style="margin:0; font-size:30px">Contra Don Tito</h2>
     <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase"><span>Tú: {{ bri.my }} pts</span><span>Don Tito: {{ bri.opp }} pts</span><span>Mazo: {{ bri.deckN }}</span></div>
@@ -550,7 +520,7 @@
   </sc-if>
 
   <sc-if value="{{ mgDomino }}" hint-placeholder-val="{{ false }}">
-  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:56px 18px 30px; gap:12px">
+  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 12px) 18px 30px; gap:12px">
     <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Dominó</span>
     <h2 style="margin:0">Mano contra Don Pepe</h2>
     <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase"><span>Don Pepe: {{ dom.oppN }} fichas</span><span>Puntas: {{ dom.ends }}</span></div>
@@ -567,7 +537,7 @@
   </sc-if>
 
   <sc-if value="{{ inJail }}" hint-placeholder-val="{{ false }}">
-  <div style="position:absolute; inset:0; background:var(--ink); color:var(--paper); display:flex; flex-direction:column; padding:64px 22px 34px; gap:14px">
+  <div style="position:absolute; inset:0; background:var(--ink); color:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 20px) 22px 34px; gap:14px">
     <span class="tag tag-neutral" style="align-self:flex-start">Preso · {{ jail.years }} años de sentencia</span>
     <h2 style="margin:0; color:var(--paper); font-size:40px; text-wrap:pretty">{{ jail.title }}</h2>
     <p style="margin:0; font-size:16px; line-height:1.5; text-wrap:pretty">{{ jail.body }}</p>
@@ -578,7 +548,7 @@
   </sc-if>
 
   <sc-if value="{{ isDead }}" hint-placeholder-val="{{ false }}">
-  <div style="position:absolute; inset:0; background:var(--ink); color:var(--paper); display:flex; flex-direction:column; padding:64px 22px 34px; gap:16px">
+  <div style="position:absolute; inset:0; background:var(--ink); color:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 20px) 22px 34px; gap:16px">
     <span class="tag tag-accent" style="align-self:flex-start">Q.E.P.D.</span>
     <h1 style="margin:0; color:var(--paper); font-size:52px; text-wrap:pretty">{{ deadName }}</h1>
     <p style="margin:0; font-size:16px; line-height:1.5">{{ dead.cause }} Tenía {{ age }} años.</p>
@@ -617,7 +587,7 @@
   </sc-if>
 
   <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
-  <div style="position:absolute; left:18px; right:18px; top:104px; padding:12px 16px; border-radius:4px; background:var(--color-neutral-900); color:var(--color-neutral-100); font-size:13px; font-weight:600; box-shadow:var(--shadow-lg); animation:pop .2s ease; pointer-events:none">{{ toast }}</div>
+  <div style="position:absolute; left:18px; right:18px; top:calc(var(--sat) + 60px); padding:12px 16px; border-radius:4px; background:var(--color-neutral-900); color:var(--color-neutral-100); font-size:13px; font-weight:600; box-shadow:var(--shadow-lg); animation:pop .2s ease; pointer-events:none">{{ toast }}</div>
   </sc-if>
 
 </div>
@@ -698,6 +668,12 @@ const TR={
  guagua:{title:'Tarjeta de la guagua',act:'Recargar la tarjeta de la guagua',fx:'Misión · −$5',cost:5,yad:'Recarga la tarjeta de la guagua en la Terminal',reply:'La guagua tarda, pero llega.',lock:'Recarga la tarjeta de la guagua.',hint:'Yadiel quiere ir a San Juan en guagua. Recarga la tarjeta en la Terminal del pueblo.'}};
 const CAS_TR={palmas:'tren',quebrada:'tren',ceiba:'publico',arena:'guagua',cantera:'tren',coqui:'tren',flamboyanes:'publico',marazul:'guagua'};
 let MODE='tren';
+// Save game: one life in localStorage. Transient UI (open sheets, minigames, toasts) is not saved.
+const SAVE_KEY='elbloque.save.v1';
+const NO_SAVE=['closet','mg','sheet','ev','result','toast','thread','noAnimo','ad','hasSave'];
+const IN_GAME=s=>!['title','pick','create'].includes(s.screen);
+function readSave(){try{const v=JSON.parse(localStorage.getItem(SAVE_KEY));return v&&v.screen?v:null}catch(e){return null}}
+function writeSave(st){try{const o={};Object.keys(st).forEach(k=>{if(!NO_SAVE.includes(k))o[k]=st[k]});localStorage.setItem(SAVE_KEY,JSON.stringify(o))}catch(e){}}
 const DEV={
  atleta:{name:'Atlético',need:4,bonus:'+2 Salud en la cancha · zona de tiro más ancha',d:{salud:2}},
  jugador:{name:'Dominador',need:3,bonus:'El dominó paga el doble',d:null},
@@ -876,9 +852,17 @@ class Component extends DCLogic {
     this.ck=setInterval(()=>{if(Date.now()-this.state.dayStart>=DAYMS)this.sleep();else this.forceUpdate()},30000);
     const th={};THREADS.filter(t=>!t.hidden).forEach(t=>th[t.id]={msgs:t.msgs.map(m=>({me:false,t:m})),replies:t.replies,unread:true});
     const st=this.props.startScreen;
-    this.setState({th,screen:st||'title',log:[{d:'Día 1',t:'Llegaste al caserío con una mochila y muchas ganas.'}]});
+    const log=[{d:'Día 1',t:'Llegaste al caserío con una mochila y muchas ganas.'}];
+    this.fresh={...this.state,th,log,screen:'pick'};
+    this.setState({th,screen:st||'title',log,hasSave:!!readSave()});
+    this.save=()=>{if(IN_GAME(this.state))writeSave(this.state)};
+    this.onHide=()=>{if(document.visibilityState==='hidden')this.save()};
+    document.addEventListener('visibilitychange',this.onHide);window.addEventListener('pagehide',this.save);
   }
-  componentWillUnmount(){clearInterval(this.cmi);clearTimeout(this.bt);window.removeEventListener('keydown',this.kd);clearInterval(this.ck);clearInterval(this.ci);clearTimeout(this.tt);clearInterval(this.ai);clearInterval(this.hi);clearTimeout(this.dt);}
+  componentDidUpdate(){clearTimeout(this.svt);this.svt=setTimeout(this.save,400)}
+  continueLife(){const v=readSave();if(!v)return this.setState({hasSave:false});MODE=CAS_TR[v.cas]||'tren';this.setState({...v,screen:'hub',hasSave:true})}
+  newLife(){this.setState({...this.fresh,dayStart:Date.now(),hasSave:this.state.hasSave})}
+  componentWillUnmount(){this.save();clearTimeout(this.svt);document.removeEventListener('visibilitychange',this.onHide);window.removeEventListener('pagehide',this.save);clearInterval(this.cmi);clearTimeout(this.bt);window.removeEventListener('keydown',this.kd);clearInterval(this.ck);clearInterval(this.ci);clearTimeout(this.tt);clearInterval(this.ai);clearInterval(this.hi);clearTimeout(this.dt);}
   max(){return this.props.animoMax??5}
   say(t){clearTimeout(this.tt);this.setState({toast:t});this.tt=setTimeout(()=>this.setState({toast:null}),2000)}
   fmt(d){return Object.keys(d).filter(k=>d[k]).map(k=>k==='chavos'?(d[k]>0?'+$':'−$')+Math.abs(d[k]):(d[k]>0?'+':'−')+Math.abs(d[k])+' '+LBL[k])}
@@ -1089,9 +1073,9 @@ class Component extends DCLogic {
     const unreadN=Object.values(st.th).filter(t=>t.unread).length;
     const ev=st.ev||{};const mg=st.mg||{};const jl=st.jail;const jc=jl&&!jl.done?jl.cards[jl.i]:null;
     return {
-      showNotes:this.props.showNotes??true,
+      
       isTitle:st.screen==='title',isPick:st.screen==='pick',isCreate:st.screen==='create',isHub:st.screen==='hub',
-      goTitle:()=>this.setState({screen:'title'}),goPick:()=>this.setState({screen:'pick'}),goCreate:()=>this.setState({screen:'create'}),
+      goTitle:()=>this.setState({screen:'title'}),goPick:()=>this.state.screen==='title'?this.newLife():this.setState({screen:'pick'}),noSave:!st.hasSave,continueLife:()=>this.continueLife(),goCreate:()=>this.setState({screen:'create'}),
       caserios:CAS.map(c=>({...c,border:c.id===st.cas?'var(--color-accent)':'transparent',select:()=>this.setState({cas:c.id}),
         meters:['Chamba','Calor','Vibra'].map((label,i)=>({label,dots:[0,1,2,3,4].map(n=>({bg:n<c.m[i]?(i===1?'var(--color-accent-600)':'var(--color-accent-2-600)'):'var(--color-neutral-300)'}))}))})),
       casName:cas.name,casShort:cas.short,

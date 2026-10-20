@@ -6,7 +6,9 @@ Imported from the Claude Design project (`El Bloque.dc.html`, published as the "
 
 ## Files
 
-- `El Bloque.dc.html` — the prototype (title → caserío pick → create → hub)
+- `El Bloque.dc.html` — the app (title → caserío pick → create → hub). Full screen on phones, phone-sized column on desktop. Saves your life in the browser (`localStorage`) so "Continuar vida" picks up where you left off.
+- `El Bloque Prototype.dc.html` — the original Claude Design prototype with the design notes and phone mockup, kept for reference
+- `manifest.webmanifest`, `icon-*.png` — lets people add it to their home screen as an app
 - `Avatar.dc.html` — avatar component, pulled in via `<dc-import name="Avatar">`
 - `bloque.css` — shared tokens, type, buttons/tags/cards + `@font-face` rules
 - `support.js` — Claude Design runtime that renders `.dc.html` files
@@ -22,3 +24,6 @@ cd elbloque
 python3 -m http.server 8000
 # open http://localhost:8000/El%20Bloque.dc.html
 ```
+
+On Netlify, `netlify.toml` serves the app at `/`.
+
