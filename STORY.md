@@ -175,7 +175,23 @@ Flags like `gringoDebt` and `rosadoCase` are saved for later seasons to pay off.
 - **Pase de las Fiestas de la Calle**: XP = Ánimo spent (8 per level), 10 levels, free and premium rewards you claim in the Tienda.
 - **Coquís**: earned from story missions, birthdays and the pass. Spent on upgrades, Café grande, Abuela's gifts and medicine, and an abogado (−20 Calor).
 
-## 10. Next up
+## 10. Travel **(in game)**
+
+**Viajar** (4th tab on the map, or *Coger la guagua* at La parada / *Coger un público* at the Terminal) opens a list of pueblos. Each trip costs the fare and 1 Ánimo; the first ride to each pueblo has its own story card with a choice. Going back to El bloque is free.
+
+| Pueblo | How | Places |
+|---|---|---|
+| Bayamón | Guagua · $2 | Cárcel de Bayamón (visit Papi), El coliseo (BSN, tryouts), La chicharronera, Plaza Río Hondo (buy tenis with $) |
+| Loíza | Guagua · $3 | Kioskos de Piñones, La playa (surf), Escuela de bomba, Taller de caretas |
+| Arecibo | Público · $8 (after Capítulo 1) | Hospital de Arecibo, El Observatorio (post-2020), Cueva del Indio, El malecón |
+| Utuado | Público · $10 | Casa de Abuela Toña (secreto only), Lago Caonillas, Río Tanamá, Hacienda cafetalera |
+| Ponce | Público · $12 | Plaza Las Delicias, Castillo Serrallés, La Guancha, Res. Ceiba Alta |
+
+Side-story trips (Papi in Bayamón, the Arecibo records, Abuela Toña in Utuado) happen at the real place.
+
+## 11. Next up
+- People in each pueblo (contacts, mini-stories per place), not just activities.
+- Orlando as a far trip for the Mami story (flight from the airport).
 - Pay off the saved flags (El Gringo's favor, Agente Rosado's case) in Season 2.
 - Characters for the new places (Doña Fela at the lavandería, the gym regulars).
 - Childhood stage (0–15) before the current 16+ start.

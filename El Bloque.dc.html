@@ -157,15 +157,15 @@
         </div>
         </sc-for>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px">
-        <sc-for list="{{ areas }}" as="a" hint-placeholder-count="3">
-        <div sc-camel-on-click="{{ a.go }}" style="cursor:pointer; padding:7px 8px; border:2.5px solid var(--ink); border-radius:4px; background:{{ a.bg }}; color:{{ a.fg }}; opacity:{{ a.op }}; display:flex; flex-direction:column; gap:1px"><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:17px; line-height:1">{{ a.name }}</span><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:9px">{{ a.sub }}</span></div>
+      <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px">
+        <sc-for list="{{ areas }}" as="a" hint-placeholder-count="4">
+        <div sc-camel-on-click="{{ a.go }}" style="cursor:pointer; padding:7px 8px; border:2.5px solid var(--ink); border-radius:4px; background:{{ a.bg }}; color:{{ a.fg }}; opacity:{{ a.op }}; display:flex; flex-direction:column; gap:1px"><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:15px; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ a.name }}</span><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:9px">{{ a.sub }}</span></div>
         </sc-for>
       </div>
       <div style="position:relative; height:{{ mapH }}px; border:3px solid var(--ink); border-radius:4px; background:var(--color-accent-2-200); overflow:hidden; box-shadow:var(--shadow-md)">
         <div style="position:absolute; left:-4px; right:-4px; top:46%; height:8%; background:var(--color-neutral-800); border:3px solid var(--ink)"><div style="position:absolute; left:0; right:0; top:50%; margin-top:-1.5px; border-top:3px dashed var(--sun)"></div></div>
         <div style="position:absolute; top:-4px; bottom:-4px; left:40%; width:18%; background:var(--color-neutral-800); border:3px solid var(--ink)"><div style="position:absolute; top:0; bottom:0; left:50%; margin-left:-1.5px; border-left:3px dashed var(--sun)"></div></div>
-        <sc-if value="{{ mapWater }}" hint-placeholder-val="{{ false }}"><div style="position:absolute; left:-4px; right:-4px; bottom:-4px; height:15%; background:var(--color-accent-2); border:3px solid var(--ink)"><span style="position:absolute; left:10px; bottom:8px; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">Bahía</span></div></sc-if>
+        <sc-if value="{{ mapWater }}" hint-placeholder-val="{{ false }}"><div style="position:absolute; left:-4px; right:-4px; bottom:-4px; height:15%; background:var(--color-accent-2); border:3px solid var(--ink)"><span style="position:absolute; left:10px; bottom:8px; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">{{ waterLabel }}</span></div></sc-if>
         <sc-for list="{{ mapDecor }}" as="b" hint-placeholder-count="0">
         <div style="position:absolute; left:{{ b.x }}%; top:{{ b.y }}%; width:{{ b.w }}%; height:{{ b.h }}%; background:var(--color-neutral-300); border:3px solid var(--ink); border-radius:3px; box-shadow:4px 4px 0 var(--ink); display:flex; align-items:flex-end; padding:5px"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:9px">{{ b.label }}</span></div>
         </sc-for>
@@ -613,6 +613,26 @@
   </div>
   </sc-if>
 
+  <sc-if value="{{ hasTravel }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; background:color-mix(in srgb, var(--color-neutral-900) 45%, transparent)">
+    <div sc-camel-on-click="{{ closeTravel }}" style="flex:1; min-height:40px"></div>
+    <div style="max-height:82%; overflow:auto; background:var(--color-bg); border-radius:4px 4px 0 0; padding:12px 20px 30px; display:flex; flex-direction:column; gap:10px; animation:pop .25s ease">
+      <div style="align-self:center; width:40px; height:5px; border-radius:2px; background:var(--color-neutral-400)"></div>
+      <div style="display:flex; flex-direction:column; gap:2px"><h3 style="margin:0">¿Pa' dónde vas?</h3><span style="font-size:13px; color:var(--color-neutral-700)">Las guaguas salen de La parada. Los públicos, de la Terminal del pueblo.</span></div>
+      <sc-for list="{{ trips }}" as="t" hint-placeholder-count="5">
+      <div sc-camel-on-click="{{ t.go }}" style="cursor:pointer; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:center; padding:12px 14px; border:2.5px solid var(--ink); border-radius:4px; background:{{ t.bg }}; box-shadow:var(--shadow-sm)">
+        <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <div style="display:flex; align-items:center; gap:6px"><span style="font-family:var(--font-heading); font-weight:900; font-size:20px; text-transform:uppercase; line-height:1">{{ t.name }}</span><sc-if value="{{ t.hasTag }}" hint-placeholder-val="{{ false }}"><span class="tag tag-accent" style="font-size:9px; padding:1px 5px">{{ t.tag }}</span></sc-if></div>
+          <span style="font-size:12.5px; line-height:1.35">{{ t.blurb }}</span>
+          <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--color-neutral-700)">{{ t.how }}</span>
+        </div>
+        <span class="tag tag-neutral">{{ t.btn }}</span>
+      </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
   <sc-if value="{{ hasNamePrompt }}" hint-placeholder-val="{{ false }}">
   <div style="position:absolute; inset:0; display:flex; align-items:center; padding:20px; background:color-mix(in srgb, var(--color-neutral-900) 55%, transparent)">
     <div style="width:100%; display:flex; flex-direction:column; gap:14px; padding:22px; border:3px solid var(--ink); border-radius:4px; background:var(--color-bg); box-shadow:var(--shadow-lg); animation:pop .2s ease">
@@ -673,6 +693,7 @@ const LOCS=[
    {cat:'artista',label:'Grabar en el salón de música',fx:'+4 Felicidad · +3 Respeto · camino de artista',cost:2,d:{feli:4,resp:3}},
    {cat:'fiestero',label:'Cortar clase',fx:'+5 Felicidad · −4 Coco',cost:1,d:{feli:5,coco:-4}}]},
  {id:'parada',label:'La parada',note:'La guagua pasa "ahorita". Nadie sabe cuándo es ahorita.',sub:'La parada de guagua a la entrada del caserío. Aquí se sabe quién llega y quién se va.',sw:'var(--color-neutral-200)',tags:['Guagua','Chismes'],acts:[
+   {label:'Coger la guagua',fx:'Viajar a otro pueblo',cost:0,travel:true},
    {label:'Esperar la guagua y escuchar',fx:'+3 Coco · +2 Felicidad · chismes',cost:1,d:{coco:3,feli:2},ev:.5},
    {cat:'buscon',label:'Vender agua fría en el tapón',fx:'+$8 · camino de buscón',cost:2,d:{chavos:8}},
    {label:'Hablar con Mrs. Cintrón',fx:'Conocer gente · nuevo contacto',cost:0,meet:'cintron'},
@@ -700,10 +721,77 @@ const LOCS=[
    {abu:true,label:'Comer con Abuela',fx:'+6 Salud · +4 Felicidad · Abuela se alegra',cost:1,d:{salud:6,feli:4,abuAff:3}},
    {abuDead:true,label:'Mirar las fotos de Abuela',fx:'+4 Felicidad',cost:1,d:{feli:4}}]}];
 LOCS.push(
+ // ---- Bayamón ----
+ {id:'carcel',zone:'bayamon',label:'Cárcel de Bayamón',note:'Visitas los sábados. Trae ID y paciencia.',sub:'Institución Correccional. Las paredes son grises por dentro y por fuera.',ink:true,sw:'var(--color-neutral-700)',tags:['Visitas'],acts:[
+   {fam:'papi',needQ:'p1',label:'Visitar a {papa}',fx:'+5 Felicidad · +2 Coco',cost:2,d:{feli:5,coco:2}},
+   {label:'Llevar cartas pa\' los del bloque',fx:'+3 Respeto · +1 Coco',cost:1,d:{resp:3,coco:1}}]},
+ {id:'coliseo',zone:'bayamon',label:'El coliseo',note:'Esta noche hay juego del BSN.',sub:'El coliseo de Bayamón. Cuando la fanaticada brinca, tiembla el parking.',sw:'var(--color-accent-2)',tags:['Baloncesto','Deportes'],acts:[
+   {label:'Ver un juego del BSN',fx:'−$8 · +7 Felicidad',cost:1,d:{chavos:-8,feli:7}},
+   {cat:'atleta',label:'Tryout de la liga juvenil',fx:'Minijuego · a 5 tiros',cost:2,mg:'hoops'},
+   {cat:'buscon',label:'Vender agua en el parking',fx:'+$10',cost:2,d:{chavos:10}}]},
+ {id:'chicharron',zone:'bayamon',label:'La chicharronera',note:'La fila llega a la carretera.',sub:'Chicharronera El Gordo, en la Carretera 2. Chicharrón, morcilla y una Medalla fría.',sw:'var(--sun)',tags:['Comida','Chamba'],acts:[
+   {label:'Comerte una libra de chicharrón',fx:'−$6 · +6 Felicidad · −2 Salud',cost:0,d:{chavos:-6,feli:6,salud:-2}},
+   {cat:'buscon',label:'Trabajar en el caldero',fx:'+$14 · −2 Salud',cost:2,d:{chavos:14,salud:-2}}]},
+ {id:'riohondo',zone:'bayamon',label:'Plaza Río Hondo',note:'Aire acondicionado gratis.',sub:'El mall. Tiendas de tenis, el cine y el food court.',sw:'var(--color-accent-300)',tags:['Mall','Compras'],acts:[
+   {label:'Janguear en el mall',fx:'+4 Felicidad',cost:1,d:{feli:4}},
+   {label:'Ver una película',fx:'−$8 · +6 Felicidad',cost:1,d:{chavos:-8,feli:6}},
+   {label:'Comprar tenis nuevos',fx:'−$90 · +1 Ánimo máximo',cost:0,d:{chavos:-90},grant:'tenis'}]},
+ // ---- Loíza ----
+ {id:'pinones',zone:'loiza',label:'Kioskos de Piñones',note:'El aceite está caliente desde las 10am.',sub:'Bacalaítos, alcapurrias y coco frío frente al mar.',sw:'var(--sun)',tags:['Frituras','Chamba'],acts:[
+   {label:'Bacalaíto y alcapurria',fx:'−$4 · +5 Felicidad',cost:0,d:{chavos:-4,feli:5}},
+   {cat:'buscon',label:'Freír en un kiosko',fx:'+$12',cost:2,d:{chavos:12}}]},
+ {id:'playa',zone:'loiza',label:'La playa',note:'Bandera amarilla. Corriente fuerte.',sub:'Playa de Piñones. Arena, almendros y el sonido de la bomba de lejos.',sw:'var(--color-accent-2-300)',tags:['Playa','Surf'],acts:[
+   {label:'Tirarte al agua',fx:'+6 Felicidad · +2 Salud',cost:1,d:{feli:6,salud:2}},
+   {cat:'atleta',label:'Aprender a surfear',fx:'+4 Salud · +3 Respeto · camino de atleta',cost:2,d:{salud:4,resp:3}}]},
+ {id:'bomba',zone:'loiza',label:'Escuela de bomba',note:'El barril primo llama. Tú contestas.',sub:'Los sábados enseñan a tocar y a bailar. El que baila le habla al tambor.',sw:'var(--color-accent)',tags:['Bomba','Música'],acts:[
+   {cat:'artista',label:'Clase de baile de bomba',fx:'+5 Felicidad · +3 Respeto · camino de artista',cost:2,d:{feli:5,resp:3}},
+   {cat:'artista',label:'Tocar el barril',fx:'+4 Respeto · +2 Coco',cost:1,d:{resp:4,coco:2}}]},
+ {id:'caretas',zone:'loiza',label:'Taller de caretas',note:'Cuernos, colores y cocos tallados.',sub:'Aquí hacen las caretas de vejigante pa\' las Fiestas de Santiago Apóstol.',sw:'var(--color-accent-400)',tags:['Arte','Tradición'],acts:[
+   {cat:'artista',label:'Ayudar a pintar caretas',fx:'+$8 · +3 Coco',cost:2,d:{chavos:8,coco:3}},
+   {label:'Comprar una careta pa\'l apto',fx:'−$25 · +6 Felicidad · Abuela se alegra',cost:0,d:{chavos:-25,feli:6,abuAff:3}}]},
+ // ---- Arecibo ----
+ {id:'hospital',zone:'arecibo',label:'Hospital de Arecibo',note:'La sala de emergencia nunca está vacía.',sub:'El hospital donde naciste, si es que naciste aquí.',sw:'var(--color-surface)',tags:['Voluntario'],acts:[
+   {cat:'estudioso',label:'Ser voluntario',fx:'+3 Coco · +2 Respeto · camino de estudioso',cost:2,d:{coco:3,resp:2}}]},
+ {id:'observatorio',zone:'arecibo',label:'El Observatorio',note:'El radiotelescopio colapsó en 2020.',sub:'Lo que queda del Observatorio de Arecibo. El centro de ciencias sigue abierto.',sw:'var(--color-neutral-300)',tags:['Ciencia'],acts:[
+   {cat:'estudioso',label:'Tour del centro de ciencias',fx:'−$10 · +8 Coco · +3 Felicidad',cost:2,d:{chavos:-10,coco:8,feli:3}},
+   {label:'Mirar las estrellas desde el parking',fx:'+5 Felicidad',cost:1,d:{feli:5}}]},
+ {id:'cueva',zone:'arecibo',label:'Cueva del Indio',note:'Petroglifos taínos frente al mar.',sub:'Se baja por una escalera de soga. Mucho cuidado.',sw:'var(--color-accent-2-200)',tags:['Taíno','Aventura'],acts:[
+   {label:'Ver los petroglifos',fx:'+4 Coco · +3 Felicidad',cost:1,d:{coco:4,feli:3}},
+   {label:'Tirarte de la piedra al charco',fx:'+7 Felicidad · −3 Salud · +2 Respeto',cost:1,d:{feli:7,salud:-3,resp:2}}]},
+ {id:'malecon',zone:'arecibo',label:'El malecón',note:'El faro de Arecibo al fondo.',sub:'Kioskos, pescadores y viento del norte.',sw:'var(--sun)',tags:['Comida','Pesca'],acts:[
+   {label:'Comer en los kioskos',fx:'−$5 · +5 Felicidad',cost:0,d:{chavos:-5,feli:5}},
+   {cat:'buscon',label:'Pescar en el rompeolas',fx:'+$6 · +2 Felicidad',cost:2,d:{chavos:6,feli:2}}]},
+ // ---- Utuado ----
+ {id:'casatona',zone:'utuado',fam:'secreto',label:'Casa de Abuela Toña',note:'Una casa de madera entre montañas.',sub:'Barrio Caonillas. Siempre hay café colao y una silla pa\' ti.',sw:'var(--color-accent-300)',tags:['Familia'],lock:'Todavía no conoces a nadie en Utuado.',acts:[
+   {needQ:'s3',label:'Café con Abuela Toña',fx:'+5 Felicidad · +3 Salud',cost:1,d:{feli:5,salud:3}},
+   {needQ:'s3',cat:'buscon',label:'Ayudar a Nayeli en el cafetal',fx:'+$10',cost:2,d:{chavos:10}}]},
+ {id:'lago',zone:'utuado',label:'Lago Caonillas',note:'El agua está tan quieta que parece un espejo.',sub:'Una iglesia vieja se asoma del agua cuando hay sequía.',sw:'var(--color-accent-2)',tags:['Pesca','Kayak'],acts:[
+   {cat:'buscon',label:'Pescar chopas',fx:'+$8 · +2 Felicidad',cost:2,d:{chavos:8,feli:2}},
+   {label:'Alquilar un kayak',fx:'−$10 · +8 Felicidad · +2 Salud',cost:2,d:{chavos:-10,feli:8,salud:2}}]},
+ {id:'tanama',zone:'utuado',label:'Río Tanamá',note:'El río entra por una cueva y sale por otra.',sub:'Tubing, cuevas y agua fría de montaña.',sw:'var(--color-accent-2-300)',tags:['Aventura'],acts:[
+   {label:'Tubing por las cuevas',fx:'−$15 · +10 Felicidad · −2 Salud',cost:2,d:{chavos:-15,feli:10,salud:-2}},
+   {label:'Caminar el sendero',fx:'+5 Salud · +2 Felicidad',cost:1,d:{salud:5,feli:2}}]},
+ {id:'cafetal',zone:'utuado',label:'Hacienda cafetalera',note:'El grano rojo se recoge a mano.',sub:'Café de altura. Pagan por almud recogido.',sw:'var(--color-neutral-500)',tags:['Café','Chamba'],acts:[
+   {cat:'buscon',label:'Recoger café',fx:'+$12 · −2 Salud',cost:3,d:{chavos:12,salud:-2}},
+   {abu:true,label:'Comprarle café de la montaña a Abuela',fx:'−$8 · +6 Afecto de Abuela',cost:0,d:{chavos:-8,abuAff:6}}]},
+ // ---- Ponce ----
+ {id:'delicias',zone:'ponce',label:'Plaza Las Delicias',note:'El Parque de Bombas, rojo y negro.',sub:'La plaza más bonita de la isla, según cualquier ponceño.',sw:'var(--color-accent)',tags:['Plaza','Fotos'],acts:[
+   {label:'Helado de parcha en la plaza',fx:'−$3 · +5 Felicidad',cost:0,d:{chavos:-3,feli:5}},
+   {label:'Foto frente al Parque de Bombas',fx:'+3 Felicidad · +1 Respeto',cost:1,d:{feli:3,resp:1}}]},
+ {id:'serralles',zone:'ponce',label:'Castillo Serrallés',note:'Arriba, en El Vigía, al lado de la Cruceta.',sub:'La casa de los dueños del ron. Desde la Cruceta se ve todo Ponce.',sw:'var(--color-surface)',tags:['Historia'],acts:[
+   {cat:'estudioso',label:'Tour del castillo',fx:'−$6 · +5 Coco · +3 Felicidad',cost:2,d:{chavos:-6,coco:5,feli:3}},
+   {label:'Subir a la Cruceta del Vigía',fx:'+5 Felicidad',cost:1,d:{feli:5}}]},
+ {id:'guancha',zone:'ponce',label:'La Guancha',note:'El boardwalk y los pinchos.',sub:'Hay peces enormes esperando que les tires pan.',sw:'var(--sun)',tags:['Comida','Mar'],acts:[
+   {label:'Pinchos en el boardwalk',fx:'−$5 · +5 Felicidad',cost:0,d:{chavos:-5,feli:5}},
+   {label:'Tirarle pan a los peces',fx:'+3 Felicidad',cost:1,d:{feli:3}}]},
+ {id:'ceibalta',zone:'ponce',label:'Res. Ceiba Alta',note:'La mejor cancha del sur. Tú eres visita.',sub:'Otro caserío, otras reglas. Aquí mandan tres familias.',sw:'var(--color-accent-2)',tags:['Cancha','Calor'],acts:[
+   {cat:'atleta',label:'Jugar en la mejor cancha del sur',fx:'Minijuego · a 5 tiros',cost:2,mg:'hoops'},
+   {label:'Conocer al corillo de Ceiba Alta',fx:'+3 Respeto · +2 Calor',cost:1,d:{resp:3,calor:2}}]},
  {id:'plaza',zone:'pueblo',label:'La plaza del pueblo',note:'Viejitos jugando dominó y una piragua de frambuesa.',sub:'Frente a la iglesia. Los domingos hay bomba y plena.',sw:'var(--color-accent-2-300)',tags:['Gente','Fiestas'],acts:[
    {label:'Comerte una piragua',fx:'−$2 · +5 Felicidad',cost:0,d:{chavos:-2,feli:5}},
    {label:'Bailar plena en la plaza',fx:'+6 Felicidad · +2 Respeto',cost:2,d:{feli:6,resp:2},ev:.4}]},
  {id:'terminal',zone:'pueblo',label:'La Terminal',note:'Guaguas, públicos y el chisme de todo el pueblo.',sub:'El aire acondicionado sirve a veces.',sw:'var(--color-neutral-300)',tags:['Viajar','San Juan'],acts:[
+   {label:'Coger un público',fx:'Viajar a otro pueblo',cost:0,travel:true},
    {label:'Esperar la guagua',fx:'+2 Coco · se te va el día',cost:1,d:{coco:2}}]},
  {id:'estudio',zone:'pueblo',label:'Estudio Casa Bruja',note:'Un cuarto con espuma en las paredes y mucho talento.',sub:'DJ Brujo cobra por hora. A veces fía.',sw:'var(--color-accent-400)',tags:['Música'],acts:[
    {label:'Grabar un demo',fx:'−$20 · +8 Respeto · camino de artista',cost:2,d:{chavos:-20,resp:8,feli:4}},
@@ -783,7 +871,7 @@ const ABU_HOSP={kicker:'Centro Médico · Río Piedras',title:'Abuela en el hosp
    {label:'Seguir con lo tuyo',d:{abuSalud:-5,abuAff:-8,chavos:15},out:'Trabajaste toda la semana. Ella preguntó por ti cada día.'}]};
 // Save game: one life in localStorage. Transient UI (open sheets, minigames, toasts) is not saved.
 const SAVE_KEY='elbloque.save.v1';
-const NO_SAVE=['closet','mg','sheet','ev','result','toast','thread','noAnimo','ad','hasSave','namePrompt','nameDraft'];
+const NO_SAVE=['travel','closet','mg','sheet','ev','result','toast','thread','noAnimo','ad','hasSave','namePrompt','nameDraft'];
 const IN_GAME=s=>!['title','pick','create'].includes(s.screen);
 function readSave(){try{const v=JSON.parse(localStorage.getItem(SAVE_KEY));return v&&v.screen?v:null}catch(e){return null}}
 function writeSave(st){try{const o={};Object.keys(st).forEach(k=>{if(!NO_SAVE.includes(k))o[k]=st[k]});localStorage.setItem(SAVE_KEY,JSON.stringify(o))}catch(e){}}
@@ -864,11 +952,39 @@ const TG={pelotero:['Pelotero','Pelotera','Pelotere'],rapero:['Rapero','Rapera',
 const MAP={techo:{x:4,y:2,w:32,h:9},apto:{x:4,y:13,w:32,h:17},punto:{x:4,y:32,w:32,h:12},colmado:{x:62,y:2,w:34,h:12},panaderia:{x:62,y:16,w:34,h:12},lavanderia:{x:62,y:30,w:34,h:14},
  cancha:{x:4,y:57,w:32,h:16},gimnasio:{x:4,y:75,w:32,h:9},escuela:{x:4,y:86,w:32,h:11},parada:{x:62,y:57,w:34,h:10},taller:{x:62,y:69,w:34,h:13},iglesia:{x:62,y:84,w:34,h:13},
  plaza:{x:4,y:4,w:32,h:39},terminal:{x:62,y:4,w:34,h:18},estudio:{x:62,y:26,w:34,h:17},liga:{x:4,y:58,w:32,h:28},chinchorro:{x:62,y:58,w:34,h:22},
+ carcel:{x:4,y:4,w:32,h:39},coliseo:{x:62,y:4,w:34,h:39},chicharron:{x:4,y:58,w:32,h:38},riohondo:{x:62,y:58,w:34,h:38},
+ pinones:{x:4,y:4,w:32,h:39},bomba:{x:62,y:4,w:34,h:20},caretas:{x:62,y:27,w:34,h:16},playa:{x:4,y:58,w:92,h:20},
+ hospital:{x:4,y:4,w:32,h:39},observatorio:{x:62,y:4,w:34,h:39},cueva:{x:4,y:58,w:32,h:22},malecon:{x:62,y:58,w:34,h:22},
+ casatona:{x:4,y:4,w:32,h:39},cafetal:{x:62,y:4,w:34,h:39},lago:{x:4,y:58,w:32,h:38},tanama:{x:62,y:58,w:34,h:38},
+ delicias:{x:4,y:4,w:32,h:39},serralles:{x:62,y:4,w:34,h:39},ceibalta:{x:4,y:58,w:32,h:22},guancha:{x:62,y:58,w:34,h:22},
  yupi:{x:4,y:4,w:32,h:39},privada:{x:62,y:4,w:34,h:39},muelle:{x:4,y:58,w:32,h:24},club:{x:62,y:58,w:34,h:22}};
-const MAPDECOR={bloque:[],pueblo:[{x:62,y:84,w:34,h:12,label:'Iglesia'}],sanjuan:[]};
+const MAPDECOR={bloque:[],pueblo:[{x:62,y:84,w:34,h:12,label:'Iglesia'}],sanjuan:[],bayamon:[],loiza:[],arecibo:[],utuado:[],ponce:[]};
 const CH=["...#..G",".#.#.#.",".#...#.","...#...","##.#.##",".......",".##.##.",".....#.","..#...."];
 const DAYMS=4*3600*1000;
 const DON={pelotero:'atleta',rapero:'artista',estudioso:'estudioso',buscon:'buscon'};
+// Pueblos you can travel to. Guaguas leave from La parada; públicos need the Terminal del pueblo (Capítulo 1).
+const TRIPS=[
+ {id:'bayamon',name:'Bayamón',how:'Guagua',fare:2,blurb:'La ciudad del chicharrón. El coliseo, el mall y la cárcel.',
+  arrive:{kicker:'Guagua · 45 minutos',title:'Bayamón',body:'La guagua se dañó en la Avenida Comerío y el chofer siguió como si nada, con el bonete amarrado con un cordón. Al lado tuyo, una señora con una jaula de gallos te contó toda su vida.',ch:[
+   {label:'Ayudarla a bajar la jaula',d:{resp:2,feli:2},out:'Te regaló $3 "pa\' un chicharrón". Bienvenido a Bayamón.'},
+   {label:'Ponerte los audífonos',d:{coco:1},out:'Llegaste con una canción nueva pegada y el olor a chicharrón entrando por la ventana.'}]}},
+ {id:'loiza',name:'Loíza',how:'Guagua',fare:3,blurb:'Piñones, bomba y frituras. La capital de la tradición.',
+  arrive:{kicker:'Guagua · 1 hora',title:'Loíza',body:'Después de Isla Verde, la carretera se llena de palmas y kioskos. Huele a sal y a bacalaíto. En la guagua alguien empezó a tocar un ritmo en el asiento y medio mundo le siguió.',ch:[
+   {label:'Seguir el ritmo',d:{feli:4},out:'"Eso es sicá", te dijo el señor. "Si te gusta, la escuela de bomba está abierta los sábados."'},
+   {label:'Mirar el mar por la ventana',d:{feli:2,salud:1},out:'Por un rato te olvidaste del bloque entero.'}]}},
+ {id:'arecibo',name:'Arecibo',how:'Público',fare:8,publico:true,blurb:'El hospital, el faro, la cueva y lo que queda del Observatorio.',
+  arrive:{kicker:'Público · 1 hora y media',title:'Arecibo',body:'El público salió de la Terminal cuando se llenó, ni un minuto antes. El chofer puso salsa vieja todo el camino y paró a echar gasolina y a comprar un pastelillo de chapín.',ch:[
+   {label:'Comprarte uno también',d:{chavos:-2,feli:3},out:'El mejor pastelillo de tu vida. El chofer te guiñó el ojo.'},
+   {label:'Dormir el viaje',d:{salud:2},out:'Te despertaste con la cara pegada al cristal y el faro de Arecibo enfrente.'}]}},
+ {id:'utuado',name:'Utuado',how:'Público',fare:10,publico:true,blurb:'Montaña adentro. Lagos, ríos, café y el corazón taíno de la isla.',
+  arrive:{kicker:'Público · 2 horas',title:'Utuado',body:'La carretera sube y sube con curvas que no se acaban. En una, el público tuvo que parar porque un caballo suelto no se quería mover. Hace fresco. Fresco de verdad.',ch:[
+   {label:'Bajarte a empujar el caballo',d:{resp:2,salud:-1},out:'El caballo te miró como si el loco fueras tú. Pero se movió.'},
+   {label:'Respirar el aire de la montaña',d:{feli:4},out:'Huele a café y a tierra mojada. Nada que ver con el Expreso.'}]}},
+ {id:'ponce',name:'Ponce',how:'Público',fare:12,publico:true,blurb:'La Perla del Sur. La plaza, el castillo, La Guancha y Ceiba Alta.',
+  arrive:{kicker:'Público · 2 horas por la 52',title:'Ponce',body:'Bajando la cuesta de la 52 se ve el sur entero, seco y brillante. El chofer, ponceño de cepa, te explicó por qué Ponce es Ponce y San Juan es solo San Juan.',ch:[
+   {label:'Darle la razón',d:{feli:2,resp:1},out:'"¡Así se habla!" Te recomendó los pinchos de La Guancha.'},
+   {label:'Defender a San Juan',d:{resp:3,feli:-1},out:'Discutieron hasta la plaza. Te bajaste como amigos.'}]}}];
+const TRIP_IDS=TRIPS.map(t=>t.id);
 const AREAS=[{id:'bloque',name:'El bloque'},{id:'pueblo',name:'El pueblo',lock:'Termina el Capítulo 1 pa\' salir del bloque.'},{id:'sanjuan',name:'San Juan',get lock(){return TR[MODE].lock}}];
 const CHAPTERS=[
  {n:1,title:'Nuevo en el bloque',hint:'Ayuda a la gente del bloque. Revisa el Cel y habla con la gente.',q:['pan','caja']},
@@ -904,7 +1020,7 @@ const QUESTS={
  m3:{title:'Abuela tiene que saber',where:'Tu apto · Edif. 7',place:'apto',get act(){return {label:ABU_DEAD?'Contarle a la foto de Abuela':'Contarle a Abuela de la llamada',fx:'Historia de tu mamá · final',cost:1,d:{}}},reward:{coquis:10},out:'Historia de tu mamá: encontraste a {mama} y a {hermano}.',
   get card(){return {kicker:'Tu apto · Edif. 7',title:'Abuela tiene que saber',body:ABU_DEAD?'Le hablaste a la foto de Abuela un buen rato. Esa semana llegó un giro de {mama} desde Kissimmee: $50 y una nota que dice "Pa\' que le pongas flores."':'Abuela se quedó callada un rato. Después agarró el teléfono: "Dame el número de {mama}." Hablaron una hora. Esa semana llegó un giro de $50 desde Kissimmee.',ch:[
    {label:'Seguir',d:{chavos:50,feli:6,abuAff:6},out:'Por primera vez en años, en el apto se habla de {mama} sin bajar la voz. {hermano} te manda audios todos los días.'}]}}},
- p1:{title:'Visita en Bayamón',where:'La parada de guagua',place:'parada',act:{label:'Coger la guagua pa\' la cárcel de Bayamón',fx:'Historia de tu papá · −$5',cost:2,d:{chavos:-5}},reward:{coquis:5},out:'Visitaste a {papa} en la cárcel.',next:'p2',
+ p1:{title:'Visita en Bayamón',where:'Cárcel de Bayamón · coge la guagua',place:'carcel',act:{label:'Pedir visita con {papa}',fx:'Historia de tu papá',cost:1,d:{}},reward:{coquis:5},out:'Visitaste a {papa} en la cárcel.',next:'p2',
   card:{kicker:'Institución Correccional · Bayamón',title:'Cuarenta minutos',body:'Te revisaron hasta los tenis. {papa} entró con uniforme marrón y se sentó sin saber qué hacer con las manos. "Estás grande." Hablaron de pelota, de Abuela, de todo menos de aquella noche. Al final te dijo bajito: "Busca a Ángel. El de la foto. Él sabe."',ch:[
    {label:'"Vuelvo el mes que viene"',d:{feli:4,coco:1},out:'{papa} sonrió por primera vez en toda la visita.'}]}},
  p2:{title:'Buscar a Ángel',where:'La cancha',place:'cancha',act:{label:'Preguntarles a los viejos de la cancha por Ángel',fx:'Historia de tu papá',cost:1,d:{}},reward:{coquis:5},out:'Ángel ahora es El Gringo.',next:'p3',
@@ -942,13 +1058,13 @@ const QUESTS={
  k3:{title:'Una mesa',where:'Tu apto · Edif. 7',place:'apto',get act(){return {label:ABU_DEAD?'Cenar con {mama} en el apto':'Cena: Abuela y {mama} en la misma mesa',fx:'Historia de tu mamá · final',cost:1,d:{}}},reward:{coquis:10},out:'Historia de tu mamá: ahora tienes una mamá en el Edif. 5.',
   get card(){return {kicker:'Tu apto · Edif. 7',title:'Una mesa',body:ABU_DEAD?'{mama} cocinó la receta de arroz con gandules de Abuela. Le quedó salado. Se rieron hasta llorar.':'Abuela hizo pasteles en junio, que eso no se hace. {mama} trajo el refresco. Nadie habló de los años perdidos. Hablaron de la novela, de los precios, de ti.',ch:[
    {label:'Seguir',d:{feli:10,abuAff:6},out:'Desde hoy tienes una mamá en el Edif. 5.'}]}}},
- s1:{title:'Guagua pa\' Arecibo',where:'La parada de guagua',place:'parada',act:{label:'Coger la guagua pa\' Arecibo',fx:'Tu familia de sangre · −$8',cost:2,d:{chavos:-8}},reward:{coquis:5},out:'{sangre} era de Utuado.',next:'s2',
+ s1:{title:'Récords en Arecibo',where:'Hospital de Arecibo · coge un público',place:'hospital',act:{label:'Preguntar en récords médicos',fx:'Tu familia de sangre',cost:1,d:{}},reward:{coquis:5},out:'{sangre} era de Utuado.',next:'s2',
   card:{kicker:'Hospital de Arecibo · Récords médicos',title:'Récords médicos',body:'La señora de récords no te iba a decir nada. Después vio el apellido en el certificado y se quitó los espejuelos. "Yo conocí a {sangre}. Era de Utuado, del barrio Caonillas. Su familia todavía está allá."',ch:[
    {label:'Anotar todo',d:{coco:2},out:'Volviste en la guagua con el corazón en la boca.'}]}},
  s2:{title:'El apellido',where:'El techo del 7',place:'techo',act:{label:'Buscar el apellido en Facebook desde el techo',fx:'Tu familia de sangre',cost:1,d:{}},reward:{coquis:5},out:'Encontraste a tu prima Nayeli.',next:'s3',
   card:{kicker:'El techo del 7',title:'Nayeli',body:'Hay una tal Nayeli con el mismo apellido, de Utuado, con tu misma nariz. Le escribiste. Contestó en diez minutos: "¿Tú eres el bebé de Titi {sangre}? Abuela Toña siempre dice que algún día ibas a aparecer."',ch:[
-   {label:'"¿Puedo ir a verlos?"',d:{feli:4},out:'"¡Claro! Coge un público en la parada. Te esperamos con café."'}]}},
- s3:{title:'Utuado',where:'La parada de guagua',place:'parada',act:{label:'Coger el carro público pa\' Utuado',fx:'Tu familia de sangre · final · −$10',cost:2,d:{chavos:-10}},reward:{coquis:10},out:'Tu familia de sangre: conociste a Abuela Toña.',
+   {label:'"¿Puedo ir a verlos?"',d:{feli:4},out:'"¡Claro! Coge un público en la Terminal del pueblo. Te esperamos con café."'}]}},
+ s3:{title:'Utuado',where:'Casa de Abuela Toña · coge un público',place:'casatona',act:{label:'Tocar la puerta',fx:'Tu familia de sangre · final',cost:1,d:{}},reward:{coquis:10},out:'Tu familia de sangre: conociste a Abuela Toña.',
   card:{kicker:'Barrio Caonillas · Utuado',title:'Abuela Toña',body:'Una casa de madera entre montañas. Abuela Toña, de 90 años, te tocó la cara con las dos manos. "Tienes los ojos de {sangre}." Te enseñó la única foto que tienen de ella. Te dieron café, guineítos y una familia entera.',ch:[
    {label:'Prometer volver',d:{feli:10,coco:2},out:'Tienes dos abuelas ahora. Cuando le contaste a la tuya, dijo: "Mejor. Más gente que te quiera."',outDead:'Tienes otra abuela ahora. Le llevaste a Abuela Toña la foto de tu abuela. Se pusieron las dos en la misma repisa.'}]}},
  caja:{title:'Bujías pa\' Chago',giver:'Wichi',where:'Taller de Chago',place:'taller',thread:'wichi',act:{label:'Entregarle la caja a Chago',fx:'Misión · +$10',cost:1,d:{}},reward:{chavos:10,resp:2},out:'Chago te pagó y dijo que vuelvas cuando quieras aprender.',reply:'Gracias bro. Te debo una.'}};
@@ -1063,7 +1179,7 @@ const BR_RANK=[1,3,12,11,10,7,6,5,4,2],BR_PTS={1:11,3:10,12:4,11:3,10:2};
 const cl=v=>Math.max(0,Math.min(100,v));
 
 class Component extends DCLogic {
-  state={look:{skin:2,hair:'corto',hc:0,top:'tee',tc:0,hat:false,chain:false},closet:false,screen:'title',cas:'cantera',name:'',apodo:'',abuName:'',names:{},passXP:0,claimed:{},daily:{},fam:'mami',abu:{aff:30,salud:70,dead:false,hosp:false},trait:'pelotero',tab:'barrio',s:{salud:72,feli:65,coco:40,resp:15},chavos:25,animo:5,coquis:40,calor:0,day:1,age:16,turf:{e7:'nadie',e5:'nadie',e3:'rival',cancha:'nadie'},enemies:[],armed:false,pos:{x:49,y:50},dayStart:Date.now(),quests:{},unlocked:{},jobs:{},zone:'bloque',areas:{bloque:true},path:null,dev:{},gender:'chico',likes:'chicas',love:{},partner:null,married:false,gen:1,dead:null,jail:null,mg:null,sheet:null,ev:null,result:null,log:[],toast:null,thread:null,th:{},noAnimo:false,owned:{},pass:false,ad:0,evi:0};
+  state={look:{skin:2,hair:'corto',hc:0,top:'tee',tc:0,hat:false,chain:false},closet:false,screen:'title',cas:'cantera',name:'',apodo:'',abuName:'',names:{},visited:{},passXP:0,claimed:{},daily:{},fam:'mami',abu:{aff:30,salud:70,dead:false,hosp:false},trait:'pelotero',tab:'barrio',s:{salud:72,feli:65,coco:40,resp:15},chavos:25,animo:5,coquis:40,calor:0,day:1,age:16,turf:{e7:'nadie',e5:'nadie',e3:'rival',cancha:'nadie'},enemies:[],armed:false,pos:{x:49,y:50},dayStart:Date.now(),quests:{},unlocked:{},jobs:{},zone:'bloque',areas:{bloque:true},path:null,dev:{},gender:'chico',likes:'chicas',love:{},partner:null,married:false,gen:1,dead:null,jail:null,mg:null,sheet:null,ev:null,result:null,log:[],toast:null,thread:null,th:{},noAnimo:false,owned:{},pass:false,ad:0,evi:0};
   componentDidMount(){
     this.kd=e=>{const m=this.state.mg;if(!m||m.type!=='chase')return;const v={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]}[e.key];if(v){e.preventDefault();this.move(v[0],v[1])}};window.addEventListener('keydown',this.kd);
     this.ck=setInterval(()=>{if(Date.now()-this.state.dayStart>=DAYMS)this.sleep();else this.forceUpdate()},30000);
@@ -1077,7 +1193,7 @@ class Component extends DCLogic {
     document.addEventListener('visibilitychange',this.onHide);window.addEventListener('pagehide',this.save);
   }
   componentDidUpdate(){clearTimeout(this.svt);this.svt=setTimeout(this.save,400)}
-  continueLife(){const v=readSave();if(!v)return this.setState({hasSave:false});MODE=CAS_TR[v.cas]||'tren';FAM=v.fam||'mami';const abu=v.abu||this.fresh.abu;ABU_DEAD=!!abu.dead;this.setState({...v,abuName:v.abuName||'',names:v.names||{},passXP:v.passXP||0,claimed:v.claimed||{},daily:v.daily||{},abu,screen:'hub',hasSave:true});
+  continueLife(){const v=readSave();if(!v)return this.setState({hasSave:false});MODE=CAS_TR[v.cas]||'tren';FAM=v.fam||'mami';const abu=v.abu||this.fresh.abu;ABU_DEAD=!!abu.dead;this.setState({...v,visited:v.visited||{},abuName:v.abuName||'',names:v.names||{},passXP:v.passXP||0,claimed:v.claimed||{},daily:v.daily||{},abu,screen:'hub',hasSave:true});
     if(v.quests&&v.quests.pan==='done'&&v.quests.caja==='done'&&!v.quests.foto)setTimeout(()=>this.startQuest('foto'),3000)}
   newLife(){ABU_DEAD=false;this.setState({...this.fresh,dayStart:Date.now(),hasSave:this.state.hasSave})}
   componentWillUnmount(){this.save();clearTimeout(this.svt);document.removeEventListener('visibilitychange',this.onHide);window.removeEventListener('pagehide',this.save);clearInterval(this.cmi);clearTimeout(this.bt);window.removeEventListener('keydown',this.kd);clearInterval(this.ck);clearInterval(this.ci);clearTimeout(this.tt);clearInterval(this.ai);clearInterval(this.hi);clearTimeout(this.dt);}
@@ -1097,6 +1213,15 @@ class Component extends DCLogic {
     this.setState({namePrompt:{key:k,q:NAME_Q[k],ph:FAMS[FAM].names[k]||''},nameDraft:'',pendingNames:list.slice(1)})}
   saveName(){const s=this.state,np=s.namePrompt;if(!np)return;const v=(s.nameDraft||'').trim()||np.ph;
     this.setState({names:{...s.names,[np.key]:v},namePrompt:null});this.addLog('Ahora sabes su nombre: '+v+'.');setTimeout(()=>this.nextName(),250)}
+  goTrip(t){const st=this.state;
+    if(st.zone===t.id)return this.setState({travel:false});
+    if(t.publico&&!st.areas.pueblo)return this.say('Los públicos salen de la Terminal del pueblo. Termina el Capítulo 1.');
+    if(st.chavos<t.fare)return this.say('No te da pa\' el pasaje. Son $'+t.fare+'.');
+    if(st.animo<1){this.setState({travel:false,noAnimo:true});return}
+    const first=!(st.visited||{})[t.id];
+    this.apply({chavos:-t.fare,animo:-1},{travel:false,sheet:null,zone:t.id,pos:{x:49,y:50},visited:{...(st.visited||{}),[t.id]:true}});
+    this.say(t.how+' a '+t.name+' · −$'+t.fare);
+    if(first){this.addLog('Primera vez en '+t.name+'.');setTimeout(()=>this.setState({ev:t.arrive,result:null}),500)}}
   startQuest(k){const q=QUESTS[k];if(this.state.quests[k])return;
     this.setState(s=>({quests:{...s.quests,[k]:'active'},unlocked:{...s.unlocked,[q.place]:true}}));
     if(q.intro&&q.thread&&!(q.thread==='abuela'&&ABU_DEAD))this.pushMsg(q.thread,q.intro);
@@ -1110,6 +1235,7 @@ class Component extends DCLogic {
     if(a.sleep)return this.sleep();
     if(a.soon){this.setState({sheet:null});return this.say('Próximamente: '+a.label)}
     if(a.meet)return this.meetP(a.meet);
+    if(a.travel){this.setState({sheet:null,travel:true});return}
     if(a.reqSalud&&st.s.salud<a.reqSalud)return this.say('Necesitas '+a.reqSalud+' Salud pa\' eso.');
     if(a.req&&st.s.resp<a.req)return this.say('Necesitas '+a.req+' Respeto pa\' eso.');
     if(a.weapon&&st.armed)return this.say('Ya tienes una.');
@@ -1129,6 +1255,7 @@ class Component extends DCLogic {
       setTimeout(()=>{if(q.reply&&!(q.thread==='abuela'&&ABU_DEAD))this.pushMsg(q.thread,q.reply);this.checkStory();if(q.next)setTimeout(()=>this.startQuest(q.next),q.card?2500:600)},900);return}
     if(a.mg){this.apply({animo:-a.cost},{sheet:null});return a.mg==='hoops'?this.startHoops():a.mg==='chase'?this.startChase():a.mg==='colmado'?this.startColmado():a.mg==='tuning'?this.startTuning():a.mg==='briscola'?this.startBriscola():this.startDomino()}
     const extra={sheet:null};
+    if(a.grant){if(st.owned[a.grant]){this.setState({sheet:null});return this.say('Ya los tienes.')}extra.owned={...st.owned,[a.grant]:true}}
     if(a.turf){extra.turf={...st.turf,[a.turf]:'tu'};if(!st.enemies.includes('Los del 3'))extra.enemies=[...st.enemies,'Los del 3']}
     if(a.weapon)extra.armed=true;
     this.apply({...d,animo:-a.cost},extra);this.grow(cat);
@@ -1352,9 +1479,13 @@ class Component extends DCLogic {
       bigStats:[...statsArr,{label:'Calor',val:st.calor,w:st.calor+'%',color:'var(--color-accent-800)'}],
       places:LOCS.filter(l=>(l.zone||'bloque')===st.zone&&!(l.maxAge&&st.age>l.maxAge)&&!(l.path&&!l.path.includes(st.path))).map(l=>{const ag=l.minAge&&st.age<l.minAge;if(ag)return {label:l.label,note:'Vuelve a los '+l.minAge+'.',tags:['Bloqueado · '+l.minAge+'+'],swatch:'transparent',bg:'var(--color-neutral-200)',fg:'var(--ink)',go:()=>this.say('Tienes '+st.age+'. Vuelve a los '+l.minAge+'.')};const lk=l.lock&&!st.unlocked[l.id];return lk?{label:'???',note:l.lock,tags:['Bloqueado'],swatch:'transparent',bg:'var(--color-neutral-200)',fg:'var(--ink)',go:()=>this.say(l.lock)}:{label:l.label,note:l.note,tags:[...l.tags,...LOVE.filter(L=>L.places.includes(l.id)).map(L=>'♥ '+this.who(L).n)],swatch:l.sw,bg:l.ink?'var(--ink)':'var(--color-surface)',fg:l.ink?'var(--paper)':'var(--ink)',go:()=>this.setState({sheet:l.id})}}),
       hasQuests:Object.values(st.quests).includes('active'),
-      quests:Object.keys(QUESTS).filter(k=>st.quests[k]==='active').map(k=>({...QUESTS[k],title:this.gx(QUESTS[k].title),where:this.gx(QUESTS[k].where),go:()=>this.setState({sheet:QUESTS[k].place,zone:(LOCS.find(l=>l.id===QUESTS[k].place).zone||'bloque')})})),
-      areas:AREAS.map(a=>{const open=st.areas[a.id],on=st.zone===a.id;return {name:a.name,sub:on?'Aquí':open?'Ir':'Bloqueado',bg:on?'var(--sun)':open?'var(--color-surface)':'var(--color-neutral-200)',fg:'var(--ink)',op:open?1:.55,go:()=>open?this.setState({zone:a.id,pos:{x:49,y:50}}):this.say(a.lock)}}),
-      areaTitle:AREAS.find(a=>a.id===st.zone).name,
+      quests:Object.keys(QUESTS).filter(k=>st.quests[k]==='active').map(k=>({...QUESTS[k],title:this.gx(QUESTS[k].title),where:this.gx(QUESTS[k].where),go:()=>{const z=LOCS.find(l=>l.id===QUESTS[k].place).zone||'bloque';if(TRIP_IDS.includes(z)&&st.zone!==z)return this.setState({travel:true});this.setState({sheet:QUESTS[k].place,zone:z})}})),
+      areas:[...AREAS.map(a=>{const open=st.areas[a.id],on=st.zone===a.id,away=TRIP_IDS.includes(st.zone);return {name:a.name,sub:on?'Aquí':open?(away&&a.id==='bloque'?'Volver':'Ir'):'Bloqueado',bg:on?'var(--sun)':open?'var(--color-surface)':'var(--color-neutral-200)',fg:'var(--ink)',op:open?1:.55,go:()=>{if(!open)return this.say(a.lock);if(away&&!on)this.say('Cogiste la guagua de vuelta.');this.setState({zone:a.id,pos:{x:49,y:50}})}}}),
+        (()=>{const t=TRIPS.find(x=>x.id===st.zone);return t?{name:t.name,sub:'Aquí · viajar',bg:'var(--sun)',fg:'var(--ink)',op:1,go:()=>this.setState({travel:true})}:{name:'Viajar',sub:'Guagua · público',bg:'var(--color-accent-2-200)',fg:'var(--ink)',op:1,go:()=>this.setState({travel:true})}})()],
+      hasTravel:!!st.travel,closeTravel:()=>this.setState({travel:false}),
+      trips:TRIPS.map(t=>{const here=st.zone===t.id,lk=t.publico&&!st.areas.pueblo;return {name:t.name,blurb:t.blurb,how:t.how+' · $'+t.fare+' · −1 Ánimo',btn:here?'Aquí':lk?'Capítulo 1':'Ir',bg:here?'var(--sun)':lk?'var(--color-neutral-200)':'var(--color-surface)',go:()=>this.goTrip(t),
+        tag:(st.visited||{})[t.id]?'':'Nuevo',hasTag:!(st.visited||{})[t.id]&&!lk}}),
+      areaTitle:([...AREAS,...TRIPS].find(a=>a.id===st.zone)||AREAS[0]).name,
       chapter:(()=>{const isDone=k=>k==='_path'?!!st.path:k==='_never'?false:st.quests[k]==='done';const c=CHAPTERS.find(c=>!c.q.every(isDone))||CHAPTERS[CHAPTERS.length-1];return {n:c.n,title:c.title,hint:c.hint,done:c.q.filter(isDone).length,total:c.q.length}})(),
       devList:Object.keys(DEV).filter(k=>st.dev[k]).sort((a,b)=>(st.dev[b]>=DEV[b].need)-(st.dev[a]>=DEV[a].need)).map(k=>{const n=st.dev[k],ok=n>=DEV[k].need;return {name:this.dn(k),bonus:ok?DEV[k].bonus:'Sigue así pa\' desbloquearlo',prog:ok?'Activo':n+' de '+DEV[k].need,bg:ok?'var(--sun)':'var(--color-surface)'}}),
       devCount:Object.keys(DEV).filter(k=>(st.dev[k]||0)>=DEV[k].need).length,
@@ -1365,11 +1496,11 @@ class Component extends DCLogic {
         const stage=mine?(st.married?'Casados':(p.g==='f'?'Novia':'Novio')):c.aff>=60?'Le gustas':c.aff>=30?'Saliendo':'Conocidos';
         const pl=LOCS.find(l=>l.id===L.places[0]);
         return {name:p.n,title:p.t,where:pl.label,ini:p.n[0],av:L.bg,w:c.aff+'%',stage,bg:mine?'var(--sun)':'var(--color-surface)',open:()=>this.setState(x=>({thread:'love_'+k,th:{...x.th,['love_'+k]:{...x.th['love_'+k],unread:false}}}))}}),
-      mapBldg:LOCS.filter(l=>(l.zone||'bloque')===st.zone&&!(l.maxAge&&st.age>l.maxAge)&&!(l.path&&!l.path.includes(st.path))&&MAP[l.id]).map(l=>{const P=MAP[l.id],ag=l.minAge&&st.age<l.minAge,lk=l.lock&&!st.unlocked[l.id];
+      mapBldg:LOCS.filter(l=>(l.zone||'bloque')===st.zone&&!(l.fam&&l.fam!==FAM)&&!(l.maxAge&&st.age>l.maxAge)&&!(l.path&&!l.path.includes(st.path))&&MAP[l.id]).map(l=>{const P=MAP[l.id],ag=l.minAge&&st.age<l.minAge,lk=l.lock&&!st.unlocked[l.id];
         const q=Object.keys(QUESTS).some(k=>st.quests[k]==='active'&&QUESTS[k].place===l.id),hr=!lk&&!ag&&LOVE.some(L=>L.places.includes(l.id));
         return {...P,label:lk?'???':ag?l.label.split(' ')[0]+' · '+l.minAge+'+':l.label,bg:lk?'repeating-linear-gradient(135deg, var(--color-neutral-200) 0 8px, var(--color-neutral-300) 8px 16px)':ag?'var(--color-neutral-300)':l.ink?'var(--ink)':l.sw,quest:q&&!lk,heart:hr,
           go:()=>{if(lk)return this.say(l.lock);if(ag)return this.say('Tienes '+st.age+'. Vuelve a los '+l.minAge+'.');this.setState({pos:{x:P.x+P.w/2,y:P.y+P.h/2}});clearTimeout(this.mt);this.mt=setTimeout(()=>this.setState({sheet:l.id}),460)}}}),
-      mapDecor:MAPDECOR[st.zone]||[],mapH:st.zone==='bloque'?540:380,mapWater:st.zone==='sanjuan',px:st.pos.x,py:st.pos.y,
+      mapDecor:MAPDECOR[st.zone]||[],mapH:st.zone==='bloque'?540:380,mapWater:['sanjuan','loiza','arecibo','ponce'].includes(st.zone),waterLabel:{sanjuan:'Bahía',loiza:'Océano Atlántico',arecibo:'Océano Atlántico',ponce:'Mar Caribe'}[st.zone]||'',px:st.pos.x,py:st.pos.y,
       dayLeft:(()=>{const ms=Math.max(0,DAYMS-(Date.now()-st.dayStart));return Math.floor(ms/3600000)+'h '+Math.floor(ms%3600000/60000)+'m'})(),
       mgChase:mg.type==='chase',
       chase:mg.type==='chase'?{msg:mg.msg,playing:!mg.over,over:!!mg.over,endLabel:mg.win==='win'?'Cobrar $60':'Ir preso',
@@ -1407,7 +1538,7 @@ class Component extends DCLogic {
       isDead:!!st.dead,dead:st.dead||{},deadName:display,heirName:this.heir(),nextGen:()=>this.nextGen(),
       inherit:[{k:'Chavos',v:'$'+st.chavos},{k:'Respeto (60%)',v:Math.round(st.s.resp*.6)},{k:'Calor (50%)',v:Math.round(st.calor*.5)},{k:'Territorio',v:Object.values(st.turf).filter(v=>v==='tu').length+' zonas'},{k:'Enemigos',v:st.enemies.length?st.enemies.join(', '):'Ninguno'},{k:'Tu otra mitad',v:st.partner?this.who(LOVE.find(x=>x.id===st.partner)).n+(st.married?' · casados':' · novios'):'Sin pareja'}],
       hasSheet:!!sheet,sheet:sheet||{},closeSheet:()=>this.setState({sheet:null}),
-      sheetActions:(sheet?[...Object.keys(QUESTS).filter(k=>st.quests[k]==='active'&&QUESTS[k].place===sheet.id).map(k=>({...QUESTS[k].act,qid:k})),...sheet.acts.filter(a=>!(a.meet&&st.th[a.meet])&&!(a.abu&&ABU_DEAD)&&!(a.abuDead&&!ABU_DEAD)),...this.loveActs(sheet.id)]:[]).map(a=>({...a,label:this.gx(a.label),fx:this.gx(a.fx||''),costLabel:a.qid?'Misión':a.soon?'Pronto':a.cost?'−'+a.cost+' Ánimo':'Gratis',run:()=>this.run(a)})),
+      sheetActions:(sheet?[...Object.keys(QUESTS).filter(k=>st.quests[k]==='active'&&QUESTS[k].place===sheet.id).map(k=>({...QUESTS[k].act,qid:k})),...sheet.acts.filter(a=>!(a.meet&&st.th[a.meet])&&!(a.abu&&ABU_DEAD)&&!(a.abuDead&&!ABU_DEAD)&&!(a.fam&&a.fam!==FAM)&&!(a.needQ&&st.quests[a.needQ]!=='done')),...this.loveActs(sheet.id)]:[]).map(a=>({...a,label:this.gx(a.label),fx:this.gx(a.fx||''),costLabel:a.qid?'Misión':a.soon?'Pronto':a.cost?'−'+a.cost+' Ánimo':'Gratis',run:()=>this.run(a)})),
       birthday:()=>{this.setState(st=>({age:st.age+1,animo:max,day:st.day+1,coquis:st.coquis+10}));this.say('¡Feliz cumpleaños! +10 coquís');this.addLog('Cumpliste '+(st.age+1)+(ABU_DEAD?'. Titi Wanda trajo un bizcocho de Costco.':'. Abuela hizo bizcocho.'));setTimeout(()=>(st.age+1>=18&&!this.state.path)?this.setState({ev:GRAD,result:null,sheet:null}):this.fireEvent(),300)},
       log:st.log,
       jobs:JOBS.map(j=>{const r=j.req||{};const lock=(r.path&&st.path!==r.path)?'Escoge trabajar al graduarte':(r.job&&!st.jobs[r.job])?'Habla con Doña Lydia':(r.age&&st.age<r.age)?'Necesitas '+r.age+' años':(r.resp&&st.s.resp<r.resp)?'Necesitas '+r.resp+' Respeto':'';
