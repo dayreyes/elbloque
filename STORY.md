@@ -18,6 +18,8 @@ Working doc for lore, cast and the content plan. Nothing here is in the game yet
 | ⚑ default: Season order | Family → Lane → Save the caserío → Hurricane. Family fits childhood with Abuela; the hurricane is the big late shake-up. |
 | ⚑ default: Childhood | 0–11 plays as fast yearly event cards (BitLife style) that set stats and traits. The map opens at 12. The current game starts at 16. |
 | ⚑ default: Street content | Real but not graphic. Drugs, guns, jail and death exist and matter. No gore, no glorifying, and people you love can be lost. |
+| Abuela | **Players name her** on the character screen ("Doña ___", default Carmen). **She can die at any age**, including before 18. |
+| Street bosses | The four in §5 are approved for now. |
 | ⚑ default: Home first | Las Palmas de Oro (San Juan) gets fleshed out first. The other three get the same treatment after. |
 
 ---
@@ -39,7 +41,7 @@ Working doc for lore, cast and the content plan. Nothing here is in the game yet
 
 ## 3. The four seasons
 
-### Season 1 — *La bendición* (Family mystery) · ages 12–17
+### Season 1 — *La bendición* (Family mystery) · ages 12–17 **(in game, beats 1–5)**
 Why you live with Abuela. Each life rolls one backstory (§4); the season's quests change to match it, but the beats are shared:
 1. **Something doesn't add up**: a photo, a letter, a name nobody says.
 2. **Abuela deflects**: she changes the subject and sends you on a mandado.
@@ -58,7 +60,7 @@ A category-4 storm hits. Months without power, Abuela's health, people leaving f
 
 ---
 
-## 4. Family backstories (one per life)
+## 4. Family backstories (one per life) **(in game)**
 
 | Backstory | Setup | Where it can go |
 |---|---|---|
@@ -95,10 +97,11 @@ Every caserío has its own street boss, history and "rules of the bloque". These
 
 ## 6. Expanded cast (El Bloque · Las Palmas de Oro)
 
-### Abuela — Doña Carmen Rivera
+### Abuela — Doña ___ (named by the player; default Carmen)
 - 71. Retired school-cafeteria cook. Diabetic, refuses to admit it. Watches the novela at 8 and calls during it to tell you who betrayed who.
 - Goes to the Pentecostal church on Tuesdays and Sundays. Keeps a shoebox under the bed **(Season 1 key)**.
-- **Mechanic:** an **Afecto** bar like the love interests have. High Afecto unlocks the truth and her recipes (cooking buffs). Low Afecto means she stops covering for you.
+- **Mechanic (in game):** **Afecto** and **Salud** bars in the Cel → Familia. Her Salud drops a little each night; health events (mareos, the pastillas, the hospital) let you take care of her. At 0 she dies. Season 1's truth needs 40 Afecto, or comes from her letter after she's gone.
+- **Planned:** High Afecto unlocks the truth and her recipes (cooking buffs). Low Afecto means she stops covering for you.
 - **Arc:** her health gets worse with age. Taking care of her (or not) is a real choice. Her death is a major life event; it can happen during the hurricane.
 
 ### Yadiel — your primo
@@ -133,7 +136,7 @@ Every caserío has its own street boss, history and "rules of the bloque". These
 ### New places on the map
 | Place | What it is | Unlocks |
 |---|---|---|
-| **La iglesia** (Pastor Ramón) | Culto, after-school program, coro | Damaris/Josué (romance), +Coco/+Felicidad, Season 1 clues |
+| **La iglesia** (Pastor Ramón) **(in game)** | Culto, after-school program, coro | Damaris/Josué (romance), +Coco/+Felicidad, Season 1 clues |
 | **La parada de guagua** | The bus stop at the entrance | Gossip events, Mrs. Cintrón, people leaving and arriving |
 | **El techo del 7** | The roof of your building | Thinking spot. Random deep talks (Yadiel, Kiko), the skyline view, later a rooftop studio |
 | **La lavandería** | Coin laundry on the ground floor | Chismes, Doña Lydia's sister, odd jobs |
@@ -143,7 +146,7 @@ Every caserío has its own street boss, history and "rules of the bloque". These
 - **El gas de Abuela**: the tank ran out and the truck won't come into the caserío. Carry it up 3 floors (the ascensor has been broken since 2019).
 - **La bocina de la Crew**: the Crew's speaker got stolen. Was it Los del 3?
 - **Kiko quiere salir**: Kiko asks you to help him get a job at Chago's without Yeyo finding out.
-- **La foto en la caja**: the Season 1 opener. Abuela's shoebox.
+- **La foto en la caja** **(in game)**: the Season 1 opener. Abuela's shoebox.
 - **Se fue la luz** **(event in game)**: becomes a quest. Find ice and a planta for Doña Lydia's freezer before the pan dulce spoils.
 - **Reyes en el bloque** **(event in game)**: El Gringo's toy giveaway. Do you line up? Who sees you there?
 
@@ -152,8 +155,7 @@ Every caserío has its own street boss, history and "rules of the bloque". These
 
 ---
 
-## 8. Questions for next round
-1. Do the El Gringo / La Doña / Bebo / three-families bosses feel right, or do you want different vibes for any caserío?
-2. Abuela's name, Doña Carmen. Keep it, or do you have someone in mind?
-3. Should the player be able to **lose Abuela** before 18 (e.g. in the hurricane), or protect her until adulthood?
-4. Which of the five new places do you want first?
+## 8. Next up
+- Season 1 follow-ups: each backstory's choice (find Mami, write to Papi, Keila, Arecibo…) opens a short side story.
+- More bloque places: parada de guagua, techo del 7, lavandería, gimnasio.
+- Childhood stage (0–15) before the current 16+ start.

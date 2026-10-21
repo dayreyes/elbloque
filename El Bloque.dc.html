@@ -102,6 +102,7 @@
       </div>
       <div class="field"><label>Nombre</label><input class="input" style="height:44px" placeholder="Yariel" value="{{ name }}" sc-camel-on-change="{{ setName }}"></div>
       <div class="field"><label>Apodo en el bloque</label><input class="input" style="height:44px" placeholder="El Flaco" value="{{ apodo }}" sc-camel-on-change="{{ setApodo }}"></div>
+      <div class="field"><label>¿Cómo se llama tu abuela?</label><input class="input" style="height:44px" placeholder="Carmen" value="{{ abuName }}" sc-camel-on-change="{{ setAbuName }}"></div>
       <div style="display:flex; flex-direction:column; gap:8px">
         <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Eres</span>
         <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px">
@@ -265,6 +266,21 @@
     <sc-if value="{{ tabCel }}" hint-placeholder-val="{{ false }}">
     <div style="padding:4px 18px 20px; display:flex; flex-direction:column; gap:4px">
       <sc-if value="{{ noThread }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:8px; padding-bottom:14px">
+          <h3 style="margin:0">Familia</h3>
+          <div style="display:grid; grid-template-columns:44px minmax(0,1fr) auto; gap:10px; align-items:center; padding:10px; border:2.5px solid var(--ink); border-radius:4px; background:var(--color-surface); box-shadow:var(--shadow-sm)">
+            <div style="width:44px; height:44px; border:2px solid var(--ink); background:var(--color-accent-300); display:grid; place-items:center; font-family:var(--font-heading); font-weight:900; font-size:22px">A</div>
+            <div style="min-width:0; display:flex; flex-direction:column; gap:4px">
+              <span style="font-family:var(--font-heading); font-weight:900; font-size:18px; text-transform:uppercase; line-height:1">{{ abuCard.name }}</span>
+              <sc-if value="{{ abuCard.alive }}" hint-placeholder-val="{{ true }}">
+              <div style="display:grid; grid-template-columns:52px minmax(0,1fr); gap:6px; align-items:center; font-family:var(--font-mono); font-size:9px; font-weight:700; text-transform:uppercase"><span>Afecto</span><div style="height:6px; border:1.5px solid var(--ink); background:var(--color-neutral-200)"><div style="height:100%; width:{{ abuCard.affW }}; background:var(--color-accent)"></div></div></div>
+              <div style="display:grid; grid-template-columns:52px minmax(0,1fr); gap:6px; align-items:center; font-family:var(--font-mono); font-size:9px; font-weight:700; text-transform:uppercase"><span>Salud</span><div style="height:6px; border:1.5px solid var(--ink); background:var(--color-neutral-200)"><div style="height:100%; width:{{ abuCard.saludW }}; background:{{ abuCard.saludBg }}"></div></div></div>
+              </sc-if>
+              <sc-if value="{{ abuCard.dead }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px">Abuela · siempre contigo</span></sc-if>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ abuCard.stage }}</span>
+          </div>
+        </div>
         <sc-if value="{{ hasLove }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex; flex-direction:column; gap:8px; padding-bottom:14px">
           <h3 style="margin:0">Corazón</h3>
@@ -605,7 +621,7 @@ const TRAITS=[
  {id:'rapero',name:'Rapero',bonus:'+8 Felicidad, beats pagan más',d:{feli:8}},
  {id:'estudioso',name:'Estudioso',bonus:'+15 Coco',d:{coco:15}},
  {id:'buscon',name:'Buscón',bonus:'+$20, +5 Respeto',d:{chavos:20,resp:5}}];
-const LBL={salud:'Salud',feli:'Felicidad',coco:'Coco',resp:'Respeto',chavos:'$',animo:'Ánimo',coquis:'Coquís',calor:'Calor'};
+const LBL={salud:'Salud',feli:'Felicidad',coco:'Coco',resp:'Respeto',chavos:'$',animo:'Ánimo',coquis:'Coquís',calor:'Calor',abuAff:'Afecto de Abuela',abuSalud:'Salud de Abuela'};
 const LOCS=[
  {id:'colmado',label:'Colmado Don Pepe',note:'Hay dominó en la mesa de afuera.',sub:'Malta fría, pan sobao y todos los chismes.',sw:'var(--sun)',tags:['Dominó','Briscola','Vender'],acts:[
    {label:'Dominó con Don Pepe',fx:'Minijuego · gana $10 y Respeto',cost:1,mg:'domino'},
@@ -633,9 +649,15 @@ const LOCS=[
    {label:'Ir a clase',fx:'+6 Coco · −2 Felicidad',cost:2,d:{coco:6,feli:-2},ev:.4},
    {cat:'artista',label:'Grabar en el salón de música',fx:'+4 Felicidad · +3 Respeto · camino de artista',cost:2,d:{feli:4,resp:3}},
    {cat:'fiestero',label:'Cortar clase',fx:'+5 Felicidad · −4 Coco',cost:1,d:{feli:5,coco:-4}}]},
- {id:'apto',label:'Tu apto · Edif. 7',note:'Abuela hizo arroz con gandules.',sub:'Tercer piso. El ascensor lleva roto desde el 2019.',sw:'var(--color-accent-300)',tags:['Dormir','Familia'],acts:[
+ {id:'iglesia',label:'La iglesia',note:'Culto martes y domingo. Hay sopa después.',sub:'Iglesia Fuente de Agua Viva. El Pastor Ramón se sabe el nombre de todo el bloque. Y el de tu abuela primero.',sw:'var(--color-accent-2-200)',tags:['Culto','Coro','Tareas'],lock:'Abuela te quiere llevar un domingo.',acts:[
+   {label:'Ir al culto',fx:'+4 Felicidad · +2 Coco · Abuela se alegra',cost:1,d:{feli:4,coco:2,abuAff:4},ev:.3},
+   {cat:'estudioso',label:'Programa de tareas del Pastor',fx:'+6 Coco · sopa gratis',cost:2,d:{coco:6,salud:2}},
+   {cat:'artista',label:'Cantar en el coro',fx:'+4 Felicidad · +2 Respeto · camino de artista',cost:2,d:{feli:4,resp:2}},
+   {label:'Hablar con el Pastor Ramón',fx:'Conocer gente · nuevo contacto',cost:0,meet:'ramon'}]},
+ {id:'apto',label:'Tu apto · Edif. 7',get note(){return ABU_DEAD?'El apto está muy callado.':'Abuela hizo arroz con gandules.'},sub:'Tercer piso. El ascensor lleva roto desde el 2019.',sw:'var(--color-accent-300)',tags:['Dormir','Familia'],acts:[
    {label:'Dormir',fx:'Llena el Ánimo, baja el Calor',cost:0,sleep:true},
-   {label:'Comer con Abuela',fx:'+6 Salud · +4 Felicidad',cost:1,d:{salud:6,feli:4}}]}];
+   {abu:true,label:'Comer con Abuela',fx:'+6 Salud · +4 Felicidad · Abuela se alegra',cost:1,d:{salud:6,feli:4,abuAff:3}},
+   {abuDead:true,label:'Mirar las fotos de Abuela',fx:'+4 Felicidad',cost:1,d:{feli:4}}]}];
 LOCS.push(
  {id:'plaza',zone:'pueblo',label:'La plaza del pueblo',note:'Viejitos jugando dominó y una piragua de frambuesa.',sub:'Frente a la iglesia. Los domingos hay bomba y plena.',sw:'var(--color-accent-2-300)',tags:['Gente','Fiestas'],acts:[
    {label:'Comerte una piragua',fx:'−$2 · +5 Felicidad',cost:0,d:{chavos:-2,feli:5}},
@@ -668,6 +690,55 @@ const TR={
  guagua:{title:'Tarjeta de la guagua',act:'Recargar la tarjeta de la guagua',fx:'Misión · −$5',cost:5,yad:'Recarga la tarjeta de la guagua en la Terminal',reply:'La guagua tarda, pero llega.',lock:'Recarga la tarjeta de la guagua.',hint:'Yadiel quiere ir a San Juan en guagua. Recarga la tarjeta en la Terminal del pueblo.'}};
 const CAS_TR={palmas:'tren',quebrada:'tren',ceiba:'publico',arena:'guagua',cantera:'tren',coqui:'tren',flamboyanes:'publico',marazul:'guagua'};
 let MODE='tren';
+// Family backstory for this life (Season 1 · La bendición) and whether Abuela has died. Set on start and on load.
+let FAM='mami',ABU_DEAD=false;
+const FAMS={
+ mami:{
+  foto:'Debajo de los papeles del seguro hay una foto: tu mamá en el aeropuerto de Carolina con una maleta. Detrás, en la letra de Abuela: "Orlando. Volvió a no llamar."',
+  lydia:'"Tu mamá me compraba pan todos los días antes de irse. Se fue pa\' trabajar en un hotel en Orlando. Mandaba chavos… hasta que dejó de mandar. Pregúntale al Pastor. Ella le escribía a la iglesia."',
+  pastor:'"Tu mamá nos escribió hace dos años pidiendo oración. Después, nada. {Mijo}, eso te lo tiene que contar tu abuela. Ella tiene las cartas."',
+  truth:'Abuela saca un paquete de cartas amarradas con una liga. "Tu mamá se fue cuando tenías seis. Al principio llamaba todos los domingos. Después conoció a alguien allá, tuvo otro nene… y le dio vergüenza llamar. No fue culpa tuya, {mijo}. Nunca fue culpa tuya."',
+  ch:[{label:'Buscarla en Facebook',d:{feli:-3,coco:2},flag:'famBuscar',out:'La encontraste. Tiene un nene de 8 años con tu misma cara. No le escribiste. Todavía.'},
+   {label:'Abrazar a Abuela',d:{feli:6,abuAff:10},out:'Abuela lloró en tu hombro. Esa noche cenaron juntos sin prender la novela.'},
+   {label:'Bajar al bloque con coraje',d:{resp:4,feli:-6,calor:3},out:'Rompiste la foto. Bajaste al bloque y no volviste hasta las 3am.'}]},
+ papi:{
+  foto:'Una foto vieja de la cancha: tu papá con 20 años, abrazado a un pana con gorra. Detrás dice "Papo y Ángel, 2012". Doblado adentro hay un recorte de periódico: "Arrestan a joven por asesinato en residencial".',
+  lydia:'"A tu papá le decían Papo. Era buen muchacho, de verdad. Pero aquella noche en la esquina… cada quien cuenta una cosa distinta. El Pastor es el que lo visita en la cárcel."',
+  pastor:'"Visito a tu papá en Bayamón hace años. Él siempre dice que no fue él quien disparó. No sé si es verdad. Lo que sí sé es lo que él le dijo a tu abuela. Pregúntale a ella."',
+  truth:'"Tu papá está preso, {mijo}. Quince años. Dicen que mató a un muchacho del 3. Él me juró que no fue él, que cargó con la culpa de otro pa\' proteger a alguien. Yo le creo. O quiero creerle. Te escribe todos los meses. Yo guardé las cartas."',
+  ch:[{label:'Escribirle a tu papá',d:{feli:4,coco:2},flag:'famCarta',out:'Le escribiste dos páginas. Él contestó con cinco. Dice que te ve crecer en las fotos que le manda Abuela.'},
+   {label:'Averiguar quién disparó',d:{resp:5,calor:6},flag:'famVerdad',out:'Kiko se puso nervioso cuando le preguntaste. Alguien en el bloque sabe más de lo que dice.'},
+   {label:'No quiero saber de él',d:{feli:-4,abuAff:-3},out:'Abuela guardó las cartas otra vez debajo de la cama. No dijo nada.'}]},
+ temprano:{
+  foto:'Una foto de tus papás jóvenes en la playa de Piñones, contigo de bebé. Debajo hay dos estampitas de funeral con la misma fecha.',
+  lydia:'"Dijeron que fue un accidente en la 52. Pero tu abuela nunca quiso hablar con la policía, y eso a mí siempre me pareció raro. Pregúntale al Pastor. Él hizo el entierro."',
+  pastor:'"Yo hice el servicio de tus papás. Había mucha gente del bloque. Gente que yo no conocía. Tu abuela me pidió que no hiciera preguntas. Esa historia te la tiene que contar ella."',
+  truth:'"No fue un accidente. Tu papá le debía chavos a gente mala. Los siguieron esa noche. Yo no te dije porque no quería que crecieras con odio. Esa gente… algunos todavía están aquí."',
+  ch:[{label:'Perdonar y seguir',d:{feli:4,abuAff:6},out:'"El odio te come por dentro", dijo Abuela. Esa noche dormiste mejor de lo que esperabas.'},
+   {label:'Averiguar quiénes fueron',d:{resp:6,calor:8},flag:'famVenganza',out:'Don Pepe sabe nombres. Te dijo uno y te pidió que lo olvidaras.'},
+   {label:'Visitar la tumba',d:{feli:2,salud:2},out:'Les llevaste flores del colmado. Te quedaste hablando solo una hora.'}]},
+ nena:{
+  foto:'Una foto tuya de bebé en brazos de una nena de unos 15 años. Detrás: "Keila y su bebé". Keila… como la vecina del Edif. 5 que siempre te saluda.',
+  lydia:'"Ay, ¿tú no sabías? Keila te tuvo bien jovencita. Tu abuela te crió pa\' que ella pudiera terminar la escuela. Keila va a la iglesia todos los domingos. Pregúntale al Pastor."',
+  pastor:'"Keila viene cada domingo y se sienta atrás. Siempre pregunta por ti. Pero eso no me toca a mí, {mijo}. Habla con tu abuela."',
+  truth:'"Keila es tu mamá. Te tuvo a los 15. Era una nena, {mijo}. Yo te crié pa\' que ella pudiera vivir su vida, y ella me hizo prometer que no te dijera hasta que estuvieras listo. Creo que ya lo estás."',
+  ch:[{label:'Ir al Edif. 5 a hablar con Keila',d:{feli:6},flag:'famKeila',out:'Keila abrió la puerta y empezó a llorar antes de que dijeras nada. Hicieron café y hablaron hasta tarde.'},
+   {label:'Necesito tiempo',d:{coco:2,feli:-2},out:'Abuela te agarró la mano. "El tiempo que necesites."'},
+   {label:'Reclamarle a Abuela',d:{feli:-4,abuAff:-6,resp:2},out:'Le dijiste cosas que no se dicen. Ella las aguantó todas.'}]},
+ secreto:{
+  foto:'Un certificado de nacimiento con un apellido que no es el tuyo, y una foto de una mujer que no conoces cargándote en un hospital de Arecibo.',
+  lydia:'"Tu abuela llegó contigo un día de lluvia. Nadie sabía de dónde. Ella dijo que eras de ella, y nadie preguntó más. Aquí uno no pregunta. El Pastor fue el que la ayudó con los papeles."',
+  pastor:'"Ayudé a tu abuela con unos papeles hace muchos años. Hizo algo muy valiente. Pero esa historia es de ella, no mía."',
+  truth:'"Yo no soy tu abuela de sangre, {mijo}. Tu mamá era una muchacha que limpiaba conmigo en el hospital. Se enfermó y no tenía a nadie. Me pidió que te cuidara. Te cuidé. Eso te hace mío igual."',
+  ch:[{label:'Eres mi abuela y punto',d:{feli:8,abuAff:12},out:'Abuela se rió y lloró a la vez. Te hizo un flan esa misma noche.'},
+   {label:'Buscar a mi familia de sangre',d:{coco:3,feli:-2},flag:'famSangre',out:'Arecibo queda a una hora. Tienes un apellido y una foto. Es un comienzo.'},
+   {label:'Quedarte callado',d:{feli:-3},out:'No supiste qué decir. Abuela tampoco. Los dos miraron la novela sin verla.'}]}};
+const FAM_IDS=Object.keys(FAMS);
+// Abuela's health. Her salud drops a little each night; these cards let you take care of her.
+const ABU_HOSP={kicker:'Centro Médico · Río Piedras',title:'Abuela en el hospital',body:'{abuela} se cayó en la escalera del 7. Tres pisos sin ascensor. La dejaron ingresada.',ch:[
+   {label:'Quedarte con ella toda la semana',d:{abuSalud:20,abuAff:10,chavos:-20,feli:-3},out:'Dormiste en una silla de plástico. Ella te presentó a todas las enfermeras.'},
+   {label:'Visitarla cuando puedas',d:{abuSalud:8,abuAff:3},out:'Le llevaste pan sobao escondido. Las enfermeras se hicieron las locas.'},
+   {label:'Seguir con lo tuyo',d:{abuSalud:-5,abuAff:-8,chavos:15},out:'Trabajaste toda la semana. Ella preguntó por ti cada día.'}]};
 // Save game: one life in localStorage. Transient UI (open sheets, minigames, toasts) is not saved.
 const SAVE_KEY='elbloque.save.v1';
 const NO_SAVE=['closet','mg','sheet','ev','result','toast','thread','noAnimo','ad','hasSave'];
@@ -684,7 +755,7 @@ const DEV={
  fiestero:{name:'Fiestero',need:3,bonus:'+2 Felicidad al salir',d:{feli:2}},
  familiar:{name:'Familiar',need:3,bonus:'+2 Felicidad con la familia',d:{feli:2}},
  mecanico:{name:'Manos de mecánico',need:3,bonus:'+$4 en el taller',d:{chavos:4}}};
-const PLACECAT={cancha:'atleta',liga:'atleta',escuela:'estudioso',yupi:'estudioso',privada:'estudioso',punto:'calle',taller:'mecanico',estudio:'artista',plaza:'fiestero',chinchorro:'fiestero',club:'fiestero',colmado:'buscon',muelle:'buscon',apto:'familiar',panaderia:'familiar'};
+const PLACECAT={cancha:'atleta',liga:'atleta',escuela:'estudioso',yupi:'estudioso',privada:'estudioso',punto:'calle',taller:'mecanico',estudio:'artista',plaza:'fiestero',chinchorro:'fiestero',club:'fiestero',colmado:'buscon',muelle:'buscon',apto:'familiar',panaderia:'familiar',iglesia:'familiar'};
 const LOVE=[
  {id:'emo',places:['estudio'],likes:'artista',dislikes:null,bg:'var(--color-neutral-400)',f:{n:'Kiara',t:'La rockera'},m:{n:'Iker',t:'El rockero'},
   first:['¿Tú eras quien estaba mirando el ensayo?','Ok. El viernes tocamos en un garaje en el pueblo. Vente.'],
@@ -698,7 +769,7 @@ const LOVE=[
   first:['Yo vivo en el Edif. 5, ¿tú no eres del 7?','Mi mai conoce a tu abuela. Aquí todo el mundo se conoce.'],
   after:['Mi mai pregunta por ti','Bajé a la cancha y no estabas'],
   rep:[{t:'Dile que la bendición',aff:6,d:{},a:'Ella dice que eres buena gente.'},{t:'Ando por ahí',aff:1,d:{},a:'Siempre andas por ahí.'}]},
- {id:'iglesia',places:['panaderia'],likes:'estudioso',dislikes:'calle',bg:'var(--color-accent-2-300)',f:{n:'Damaris',t:'La religiosa'},m:{n:'Josué',t:'El de la iglesia'},
+ {id:'iglesia',places:['iglesia'],likes:'estudioso',dislikes:'calle',bg:'var(--color-accent-2-300)',f:{n:'Damaris',t:'La religiosa'},m:{n:'Josué',t:'El de la iglesia'},
   first:['Hola, ¿vienes al culto del domingo?','Hay jóvenes como tú. Y hay sopa después.'],
   after:['Oré por ti hoy','El pastor pregunta si vas a cantar en el coro'],
   rep:[{t:'Voy el domingo',aff:7,d:{},a:'Gloria a Dios. Te guardo un asiento.'},{t:'No es lo mío',aff:-4,d:{},a:'Dios igual te quiere.'}]},
@@ -736,40 +807,49 @@ const FEST=[
    {label:'Bailar salsa frente a la tarima',d:{feli:9,salud:-2},out:'Una señora de 70 te bailó hasta el piso.'}]},
  {m:8,dm:1,hurricane:true,kicker:'Septiembre · Huracán',title:'Viene un huracán categoría 4',body:'El gobernador sale en la TV cada hora. Ya se fue la luz en media isla.',ch:[
    {label:'Ayudar a tapar las ventanas del edificio',d:{resp:8,salud:-3},out:'Pusieron paneles en todo el Edif. 7.'},
-   {label:'Llevar a Abuela al refugio',d:{feli:2,salud:2},out:'Durmieron en una escuela con 200 personas. Abuela hizo amigas.'},
-   {label:'Quedarme en el apto',d:{salud:-10,feli:-6},out:'El agua entró por el balcón. Tres semanas sin luz.'}]},
+   {label:'Llevar a Abuela al refugio',d:{feli:2,salud:2,abuAff:5,abuSalud:5},out:'Durmieron en una escuela con 200 personas. Abuela hizo amigas.'},
+   {label:'Quedarme en el apto',d:{salud:-10,feli:-6,abuSalud:-15},out:'El agua entró por el balcón. Tres semanas sin luz.'}]},
  {m:8,dm:3,kicker:'23 de septiembre',title:'El Grito de Lares',body:'Hay acto en la plaza de Lares. Tu tío se pone la boina todos los años.',ch:[
    {label:'Ir a Lares con tu tío',d:{coco:5,resp:4,feli:3},out:'Te aprendiste la historia completa de 1868.'},
    {label:'Postear la bandera de Lares',d:{resp:2},out:'Tu post tiene 40 likes.'},
    {label:'Quedarme durmiendo',d:{salud:2},out:'Tu tío no te habló en una semana.'}]},
  {m:11,dm:0,kicker:'Diciembre · Navidad',title:'¡Asalto navideño!',body:'A las 2am tocaron la puerta con panderos y un güiro. Es una parranda.',ch:[
-   {label:'Abrir y unirme a la parranda',d:{feli:12,salud:-3},out:'Terminaron en el apto de Doña Carmen comiendo pasteles a las 5am.'},
+   {label:'Abrir y unirme a la parranda',d:{feli:12,salud:-3},out:'Terminaron en el apto de {abuela} comiendo pasteles a las 5am.'},
    {label:'Darles coquito y que sigan',d:{resp:4,feli:5},out:'Se llevaron la botella completa.'},
    {label:'Hacerme el dormido',d:{feli:-4},out:'Cantaron más alto.'}]}];
 const DEVG={atleta:['Atlético','Atlética','Atlétique'],jugador:['Dominador','Dominadora','Dominadore'],buscon:['Buscón','Buscona','Buscone'],fiestero:['Fiestero','Fiestera','Fiestere']};
 const TG={pelotero:['Pelotero','Pelotera','Pelotere'],rapero:['Rapero','Rapera','Rapere'],estudioso:['Estudioso','Estudiosa','Estudiose'],buscon:['Buscón','Buscona','Buscone']};
-const MAP={apto:{x:4,y:4,w:32,h:22},punto:{x:4,y:30,w:32,h:13},cancha:{x:4,y:58,w:32,h:22},escuela:{x:4,y:84,w:32,h:12},colmado:{x:62,y:4,w:34,h:16},panaderia:{x:62,y:24,w:34,h:19},taller:{x:62,y:58,w:34,h:18},
+const MAP={iglesia:{x:62,y:80,w:34,h:16},apto:{x:4,y:4,w:32,h:22},punto:{x:4,y:30,w:32,h:13},cancha:{x:4,y:58,w:32,h:22},escuela:{x:4,y:84,w:32,h:12},colmado:{x:62,y:4,w:34,h:16},panaderia:{x:62,y:24,w:34,h:19},taller:{x:62,y:58,w:34,h:18},
  plaza:{x:4,y:4,w:32,h:39},terminal:{x:62,y:4,w:34,h:18},estudio:{x:62,y:26,w:34,h:17},liga:{x:4,y:58,w:32,h:28},chinchorro:{x:62,y:58,w:34,h:22},
  yupi:{x:4,y:4,w:32,h:39},privada:{x:62,y:4,w:34,h:39},muelle:{x:4,y:58,w:32,h:24},club:{x:62,y:58,w:34,h:22}};
-const MAPDECOR={bloque:[{x:62,y:80,w:34,h:16,label:'Edif. 5'}],pueblo:[{x:62,y:84,w:34,h:12,label:'Iglesia'}],sanjuan:[]};
+const MAPDECOR={bloque:[],pueblo:[{x:62,y:84,w:34,h:12,label:'Iglesia'}],sanjuan:[]};
 const CH=["...#..G",".#.#.#.",".#...#.","...#...","##.#.##",".......",".##.##.",".....#.","..#...."];
 const DAYMS=4*3600*1000;
 const DON={pelotero:'atleta',rapero:'artista',estudioso:'estudioso',buscon:'buscon'};
 const AREAS=[{id:'bloque',name:'El bloque'},{id:'pueblo',name:'El pueblo',lock:'Termina el Capítulo 1 pa\' salir del bloque.'},{id:'sanjuan',name:'San Juan',get lock(){return TR[MODE].lock}}];
 const CHAPTERS=[
  {n:1,title:'Nuevo en el bloque',hint:'Ayuda a la gente del bloque. Revisa el Cel y habla con la gente.',q:['pan','caja']},
- {n:2,title:'Salir del bloque',get hint(){return TR[MODE].hint},q:['pase']},
- {n:3,title:'Mayor de edad',hint:'Cumple 18 en Vida. Te toca escoger: universidad, trabajo o la calle.',q:['_path']},
- {n:4,title:'Tu camino',hint:'Historia de tu camino · próximamente.',q:['_never']}];
-const GRAD={kicker:'Graduación · 18 años',title:'¿Y ahora qué?',body:'Te graduaste de Escuela Superior. Abuela lloró en las gradas. Hay que decidir.',ch:[
+ {n:2,title:'La bendición',hint:'Temporada 1. Algo en la caja de Abuela no cuadra. Sigue la pista por el bloque.',q:['foto','chisme','pastor','verdad']},
+ {n:3,title:'Salir del bloque',get hint(){return TR[MODE].hint},q:['pase']},
+ {n:4,title:'Mayor de edad',hint:'Cumple 18 en Vida. Te toca escoger: universidad, trabajo o la calle.',q:['_path']},
+ {n:5,title:'Tu camino',hint:'Historia de tu camino · próximamente.',q:['_never']}];
+const GRAD={kicker:'Graduación · 18 años',title:'¿Y ahora qué?',bodyDead:'Te graduaste de Escuela Superior. En las gradas había un asiento vacío con una foto de Abuela.',body:'Te graduaste de Escuela Superior. Abuela lloró en las gradas. Hay que decidir.',ch:[
  {label:'La YUPI · pública · necesitas 50 Coco',path:'yupi',need:{coco:50},d:{coco:5,feli:4},out:'Entraste a la YUPI. El tren te deja a dos cuadras.',fail:'No te dio el promedio. Puedes volver a solicitar el año que viene.'},
  {label:'Sagrada Familia · privada · $150, o beca con 70 Coco',path:'privada',need:{chavos:150,orCoco:70},d:{resp:4,feli:3},out:'Entraste a la Sagrada Familia. Tu tía ya lo puso en Facebook.',fail:'No te dan los chavos ni el promedio pa\' la beca.'},
  {label:'Trabajar full-time',path:'trabajo',d:{chavos:30},out:'Doña Lydia te dio turno completo en la panadería. Los chavos llegan cada viernes.'},
- {label:'La calle',path:'calle',d:{resp:10,calor:10},out:'Kiko te dio la bienvenida. Abuela no dice nada, pero sabe.'}]};
+ {label:'La calle',path:'calle',d:{resp:10,calor:10,abuAff:-10},out:'Kiko te dio la bienvenida. Abuela no dice nada, pero sabe.',outDead:'Kiko te dio la bienvenida. Menos mal que Abuela no está pa\' verlo.'}]};
 const ZONES=[{id:'e7',name:'Edif. 7'},{id:'e5',name:'Edif. 5'},{id:'e3',name:'Edif. 3'},{id:'cancha',name:'Cancha'}];
 const QUESTS={
- pan:{title:'Pan sobao pa\' Abuela',giver:'Abuela',where:'Panadería La Esperanza',place:'panaderia',thread:'abuela',act:{label:'Comprarle pan sobao a Abuela',fx:'Misión · −$2',cost:1,d:{chavos:-2}},reward:{feli:6,salud:4,resp:1},out:'Abuela te dio la bendición y el primer pedazo.',reply:'Ay gracias {mijo}. Ven a comer que se enfría.'},
+ pan:{unlock:'iglesia',title:'Pan sobao pa\' Abuela',giver:'Abuela',where:'Panadería La Esperanza',place:'panaderia',thread:'abuela',act:{label:'Comprarle pan sobao a Abuela',fx:'Misión · −$2',cost:1,d:{chavos:-2}},reward:{feli:6,salud:4,resp:1,abuAff:8},out:'Abuela te dio la bendición y el primer pedazo. Dice que el domingo te lleva a la iglesia.',reply:'Ay gracias {mijo}. Ven a comer que se enfría.'},
  pase:{get title(){return TR[MODE].title},giver:'Yadiel',where:'La Terminal',place:'terminal',thread:'yadiel',get act(){return {label:TR[MODE].act,fx:TR[MODE].fx,cost:1,d:{chavos:-TR[MODE].cost}}},reward:{feli:4},out:'Ya puedes ir a San Juan cuando quieras.',get reply(){return TR[MODE].reply},area:'sanjuan'},
+ foto:{title:'La caja de Abuela',giver:'Abuela',where:'Tu apto · Edif. 7',place:'apto',thread:'abuela',intro:'{Mijo}, búscame los papeles del seguro. Están en la caja de zapatos debajo de mi cama.',act:{label:'Buscar en la caja de zapatos',fx:'Temporada 1 · La bendición',cost:1,d:{}},reward:{coco:2},out:'Encontraste una foto que no debías ver.',reply:'¿Los encontraste? Déjalos en la mesa, {mijo}.',next:'chisme',
+  get card(){return {kicker:'Temporada 1 · La bendición',title:'La foto en la caja',body:FAMS[FAM].foto,ch:[{label:'Guardarte la foto en el bolsillo',d:{},out:'Pusiste los papeles en la mesa. La foto, no.'}]}}},
+ chisme:{title:'Lo que sabe Doña Lydia',giver:'Tú',where:'Panadería La Esperanza',place:'panaderia',act:{label:'Enseñarle la foto a Doña Lydia',fx:'Temporada 1 · La bendición',cost:1,d:{}},reward:{coco:1},out:'Doña Lydia sabe más de lo que quiere decir.',next:'pastor',
+  get card(){return {kicker:'Panadería La Esperanza',title:'Doña Lydia mira la foto',body:FAMS[FAM].lydia,ch:[{label:'Ir a buscar al Pastor',d:{},out:'Doña Lydia te regaló una mallorca. "Pa\'l camino."'}]}}},
+ pastor:{title:'Hablar con el Pastor',giver:'Doña Lydia',where:'La iglesia',place:'iglesia',act:{label:'Preguntarle al Pastor Ramón por la foto',fx:'Temporada 1 · La bendición',cost:1,d:{}},reward:{coco:1},out:'El Pastor te mandó a hablar con tu abuela.',meet:'ramon',next:'verdad',
+  get card(){return {kicker:'Iglesia Fuente de Agua Viva',title:'El Pastor Ramón',body:FAMS[FAM].pastor,ch:[{label:'Volver al apto',d:{},out:'El Pastor te dio la bendición y una bolsa de sopa pa\' Abuela.'}]}}},
+ verdad:{title:'La verdad',giver:'El Pastor',where:'Tu apto · Edif. 7',place:'apto',thread:'abuela',needAbu:40,get act(){return {label:ABU_DEAD?'Leer la carta de Abuela':'Preguntarle a Abuela la verdad',fx:'Temporada 1 · final',cost:1,d:{}}},reward:{coco:3},out:'Ya sabes la verdad.',reply:'Te quiero, {mijo}. Eso no cambia.',
+  get card(){const F=FAMS[FAM];return {kicker:'Temporada 1 · La bendición',title:ABU_DEAD?'La carta de Abuela':'La verdad',body:ABU_DEAD?'En la caja de zapatos hay un sobre con tu nombre, en la letra de Abuela. '+F.truth:F.truth,ch:F.ch}}},
  caja:{title:'Bujías pa\' Chago',giver:'Wichi',where:'Taller de Chago',place:'taller',thread:'wichi',act:{label:'Entregarle la caja a Chago',fx:'Misión · +$10',cost:1,d:{}},reward:{chavos:10,resp:2},out:'Chago te pagó y dijo que vuelvas cuando quieras aprender.',reply:'Gracias bro. Te debo una.'}};
 const HEIRS={chico:['Junior','Kevin','Jadiel'],chica:['Yamilet','Naomi','Keishla'],nb:['Alex','Ariel','Dani']};
 const JAIL=[
@@ -779,10 +859,18 @@ const JAIL=[
  {title:'Abuela vino a visitarte',body:'Trajo pastelillos escondidos en la cartera.',ch:[{label:'Prometerle que voy a cambiar',d:{feli:8,calor:-10}},{label:'No mirarla a los ojos',d:{feli:-6}}]},
  {title:'Te ofrecen la cocina',body:'Paga casi nada, pero el tiempo pasa más rápido.',ch:[{label:'Dale',d:{chavos:15,salud:3}},{label:'Prefiero el patio',d:{salud:4,resp:2}}]}];
 const EVENTS=[
- {kicker:'Edificio 7 · 8:12 pm',title:'Se fue la luz. Otra vez.',body:'Hace 90 grados y todo el bloque está a oscuras. Se escuchan las chicharras y a Doña Carmen quejándose.',ch:[
-   {label:'Sacar la bocina y prender el party',d:{feli:8,resp:5,salud:-2},out:'Media cancha terminó bailando. Hasta Doña Carmen.'},
-   {label:'Ayudar a Abuela con las velas',d:{feli:3,resp:2},out:'Abuela te dio la bendición y un pedazo de flan.'},
+ {kicker:'Edificio 7 · 6:40 am',title:'Abuela está mareada',body:'La encontraste sentada en la cocina, sudando frío. Dice que es la presión, que no es nada. El glucómetro está en la gaveta, sin usar.',ch:[
+   {label:'Llevarla al CDT',d:{chavos:-15,abuSalud:15,abuAff:5},out:'Tenía el azúcar en 380. La doctora la regañó. Abuela la regañó de vuelta.'},
+   {label:'Medirle el azúcar y darle la insulina',d:{abuSalud:8,abuAff:3,coco:1},out:'Aprendiste a usar el glucómetro. Abuela dice que tienes manos de enfermero.'},
+   {label:'"Seguro es el calor"',d:{abuSalud:-8},out:'Se acostó un rato. Dijo que estaba bien. No estaba bien.'}]},
+ {kicker:'Edificio 7 · 8:12 pm',title:'Se fue la luz. Otra vez.',body:'Hace 90 grados y todo el bloque está a oscuras. Se escuchan las chicharras y a {abuela} quejándose.',ch:[
+   {label:'Sacar la bocina y prender el party',d:{feli:8,resp:5,salud:-2},out:'Media cancha terminó bailando. Hasta {abuela}.'},
+   {label:'Ayudar a Abuela con las velas',d:{feli:3,resp:2,abuAff:3},out:'Abuela te dio la bendición y un pedazo de flan.'},
    {label:'Bajar a la cancha, que hay brisa',d:{salud:2,feli:2},out:'Te quedaste hasta las 2am hablando con los panas.'}]},
+ {kicker:'Farmacia del pueblo',title:'Las pastillas de Abuela',body:'El plan médico no cubre la medicina nueva de Abuela. Son $40 al mes.',ch:[
+   {label:'Pagarla tú',d:{chavos:-40,abuSalud:12,abuAff:6},out:'Abuela no quería aceptar. Le dijiste que era un préstamo. Los dos saben que no.'},
+   {label:'Pedirle ayuda a Titi Wanda',d:{abuSalud:6},out:'Titi Wanda pagó la mitad y se quejó del gobierno por media hora.'},
+   {label:'Que se tome la vieja',d:{abuSalud:-6},out:'Abuela partió las pastillas viejas a la mitad pa\' que duren.'}]},
  {kicker:'Mensaje de tu primo',title:'Yadiel te pide $20 prestaos',body:'"Bro, son pa\' unas Jordans que están en especial. Te pago el viernes, palabra."',ch:[
    {label:'Prestárselos',d:{chavos:-20,resp:3},out:'Te juró por su madre que te paga. Ya veremos.'},
    {label:'Ni pa\' tu madre',d:{feli:-2,resp:1},out:'Te dejó en visto. Se le pasa.'},
@@ -824,6 +912,9 @@ THREADS.push(
  {id:'kiko',hidden:true,name:'Kiko (Edif. 3)',ini:'K',bg:'var(--color-accent-300)',msgs:['Te vi en la cancha. Tienes cara de que necesitas chavos.','Pasa por el punto detrás del 3. Sin compromiso.'],replies:[
    {t:'¿Dónde queda?',d:{},a:'Ya te dije. Detrás del 3. Ven solo.',unlock:'punto'},
    {t:'No estoy en eso',d:{resp:-1},a:'Ok. La oferta sigue.',unlock:'punto'}]},
+ {id:'ramon',hidden:true,name:'Pastor Ramón',ini:'R',bg:'var(--color-accent-2-200)',msgs:['Que Dios te bendiga. Tu abuela me habla de ti todos los domingos.','Los martes hay programa de tareas. Y sopa.'],replies:[
+   {t:'Allí estaré, Pastor',d:{coco:1,abuAff:2},a:'Gloria a Dios. Te guardo un plato.'},
+   {t:'Ya veremos',d:{},a:'Aquí la puerta siempre está abierta.'}]},
  {id:'lydia',hidden:true,name:'Doña Lydia (panadería)',ini:'L',bg:'var(--color-accent-2-300)',msgs:['Tú eres {elnieto} de Doña, ¿verdad?','Los sábados necesito ayuda en el horno.'],replies:[
    {t:'Cuente conmigo',d:{resp:2},a:'Ven a las 5am. Puntual.',job:'horno'},
    {t:'Tan temprano no',d:{},a:'Tú te lo pierdes.'}]});
@@ -838,15 +929,15 @@ const HCS=['var(--ink)','#5b3920','#b88a3e','var(--color-accent)','var(--color-a
 const TOPS=[['tee','Camiseta'],['jersey','Jersey'],['hoodie','Hoodie'],['guaya','Guayabera']];
 const TCS=['var(--color-accent)','var(--color-accent-2)','var(--sun)','var(--ink)','var(--color-surface)'];
 const SHELF=[{id:'malta',name:'Malta',p:1.5},{id:'pan',name:'Pan sobao',p:2},{id:'pastelillo',name:'Pastelillo',p:1.25},{id:'cafe',name:'Café',p:1},{id:'huevos',name:'Huevos',p:3},{id:'hielo',name:'Hielo',p:2.5}];
-const CUST=['Doña Carmen','Wichi','Titi Mayra','Un turista perdido','El cartero','Yadiel','La nena del 5','Don Tito'];
+const CUST=['Doña Nilda','Wichi','Titi Mayra','Un turista perdido','El cartero','Yadiel','La nena del 5','Don Tito'];
 const PARTS=[{id:'turbo',name:'Turbo',c:40,v:3,e:0,r:1},{id:'escape',name:'Escape',c:25,v:1,e:1,r:3},{id:'aros',name:'Aros cromados',c:30,v:0,e:3,r:0},{id:'susp',name:'Suspensión bajita',c:20,v:1,e:2,r:0},{id:'bocinas',name:'Bocinas',c:35,v:0,e:1,r:3},{id:'tintes',name:'Tintes',c:15,v:0,e:1,r:0},{id:'neon',name:'Luces neón',c:20,v:0,e:2,r:1}];
-const CLIENTS=[{n:'Kevin, el del 5',want:'Rápido pa\' la autopista',min:{v:4},maxR:4,b:70},{n:'Doña Carmen',want:'Bonito pero calladito',min:{e:4},maxR:1,b:60},{n:'DJ Brujo',want:'Que se oiga desde el pueblo',min:{r:6,e:3},maxR:99,b:100}];
+const CLIENTS=[{n:'Kevin, el del 5',want:'Rápido pa\' la autopista',min:{v:4},maxR:4,b:70},{n:'Doña Nilda',want:'Bonito pero calladito',min:{e:4},maxR:1,b:60},{n:'DJ Brujo',want:'Que se oiga desde el pueblo',min:{r:6,e:3},maxR:99,b:100}];
 const SUITS=[['oros','Oros','var(--sun)'],['copas','Copas','var(--color-accent)'],['espadas','Espadas','var(--color-accent-2)'],['bastos','Bastos','var(--color-neutral-600)']];
 const BR_RANK=[1,3,12,11,10,7,6,5,4,2],BR_PTS={1:11,3:10,12:4,11:3,10:2};
 const cl=v=>Math.max(0,Math.min(100,v));
 
 class Component extends DCLogic {
-  state={look:{skin:2,hair:'corto',hc:0,top:'tee',tc:0,hat:false,chain:false},closet:false,screen:'title',cas:'cantera',name:'',apodo:'',trait:'pelotero',tab:'barrio',s:{salud:72,feli:65,coco:40,resp:15},chavos:25,animo:5,coquis:40,calor:0,day:1,age:16,turf:{e7:'nadie',e5:'nadie',e3:'rival',cancha:'nadie'},enemies:[],armed:false,pos:{x:49,y:50},dayStart:Date.now(),quests:{},unlocked:{},jobs:{},zone:'bloque',areas:{bloque:true},path:null,dev:{},gender:'chico',likes:'chicas',love:{},partner:null,married:false,gen:1,dead:null,jail:null,mg:null,sheet:null,ev:null,result:null,log:[],toast:null,thread:null,th:{},noAnimo:false,owned:{},pass:false,ad:0,evi:0};
+  state={look:{skin:2,hair:'corto',hc:0,top:'tee',tc:0,hat:false,chain:false},closet:false,screen:'title',cas:'cantera',name:'',apodo:'',abuName:'',fam:'mami',abu:{aff:30,salud:70,dead:false,hosp:false},trait:'pelotero',tab:'barrio',s:{salud:72,feli:65,coco:40,resp:15},chavos:25,animo:5,coquis:40,calor:0,day:1,age:16,turf:{e7:'nadie',e5:'nadie',e3:'rival',cancha:'nadie'},enemies:[],armed:false,pos:{x:49,y:50},dayStart:Date.now(),quests:{},unlocked:{},jobs:{},zone:'bloque',areas:{bloque:true},path:null,dev:{},gender:'chico',likes:'chicas',love:{},partner:null,married:false,gen:1,dead:null,jail:null,mg:null,sheet:null,ev:null,result:null,log:[],toast:null,thread:null,th:{},noAnimo:false,owned:{},pass:false,ad:0,evi:0};
   componentDidMount(){
     this.kd=e=>{const m=this.state.mg;if(!m||m.type!=='chase')return;const v={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]}[e.key];if(v){e.preventDefault();this.move(v[0],v[1])}};window.addEventListener('keydown',this.kd);
     this.ck=setInterval(()=>{if(Date.now()-this.state.dayStart>=DAYMS)this.sleep();else this.forceUpdate()},30000);
@@ -860,20 +951,30 @@ class Component extends DCLogic {
     document.addEventListener('visibilitychange',this.onHide);window.addEventListener('pagehide',this.save);
   }
   componentDidUpdate(){clearTimeout(this.svt);this.svt=setTimeout(this.save,400)}
-  continueLife(){const v=readSave();if(!v)return this.setState({hasSave:false});MODE=CAS_TR[v.cas]||'tren';this.setState({...v,screen:'hub',hasSave:true})}
-  newLife(){this.setState({...this.fresh,dayStart:Date.now(),hasSave:this.state.hasSave})}
+  continueLife(){const v=readSave();if(!v)return this.setState({hasSave:false});MODE=CAS_TR[v.cas]||'tren';FAM=v.fam||'mami';const abu=v.abu||this.fresh.abu;ABU_DEAD=!!abu.dead;this.setState({...v,abuName:v.abuName||'',abu,screen:'hub',hasSave:true});
+    if(v.quests&&v.quests.pan==='done'&&v.quests.caja==='done'&&!v.quests.foto)setTimeout(()=>this.startQuest('foto'),3000)}
+  newLife(){ABU_DEAD=false;this.setState({...this.fresh,dayStart:Date.now(),hasSave:this.state.hasSave})}
   componentWillUnmount(){this.save();clearTimeout(this.svt);document.removeEventListener('visibilitychange',this.onHide);window.removeEventListener('pagehide',this.save);clearInterval(this.cmi);clearTimeout(this.bt);window.removeEventListener('keydown',this.kd);clearInterval(this.ck);clearInterval(this.ci);clearTimeout(this.tt);clearInterval(this.ai);clearInterval(this.hi);clearTimeout(this.dt);}
   max(){return this.props.animoMax??5}
   say(t){clearTimeout(this.tt);this.setState({toast:t});this.tt=setTimeout(()=>this.setState({toast:null}),2000)}
-  fmt(d){return Object.keys(d).filter(k=>d[k]).map(k=>k==='chavos'?(d[k]>0?'+$':'−$')+Math.abs(d[k]):(d[k]>0?'+':'−')+Math.abs(d[k])+' '+LBL[k])}
+  fmt(d){return Object.keys(d).filter(k=>d[k]&&!(ABU_DEAD&&(k==='abuAff'||k==='abuSalud'))).map(k=>k==='chavos'?(d[k]>0?'+$':'−$')+Math.abs(d[k]):(d[k]>0?'+':'−')+Math.abs(d[k])+' '+LBL[k])}
   apply(d,extra){
     this.setState(st=>{
       const s={...st.s};['salud','feli','coco','resp'].forEach(k=>{if(d[k])s[k]=cl(s[k]+d[k])});
-      return {s,chavos:Math.max(0,st.chavos+(d.chavos||0)),coquis:st.coquis+(d.coquis||0),calor:cl(st.calor+(d.calor||0)),animo:Math.max(0,Math.min(this.max(),st.animo+(d.animo||0))),...(extra||{})};
+      const abu=st.abu.dead||!(d.abuAff||d.abuSalud)?st.abu:{...st.abu,aff:cl(st.abu.aff+(d.abuAff||0)),salud:cl(st.abu.salud+(d.abuSalud||0))};
+      return {s,abu,chavos:Math.max(0,st.chavos+(d.chavos||0)),coquis:st.coquis+(d.coquis||0),calor:cl(st.calor+(d.calor||0)),animo:Math.max(0,Math.min(this.max(),st.animo+(d.animo||0))),...(extra||{})};
     });
   }
   addLog(t){this.setState(st=>({log:[{d:st.age+' años',t},...st.log].slice(0,20)}))}
-  fireEvent(){this.setState(st=>({ev:EVENTS[st.evi%EVENTS.length],evi:st.evi+1,result:null,sheet:null}))}
+  fireEvent(){const pool=ABU_DEAD?EVENTS.filter(e=>!/Abuela|abuela\}/.test(JSON.stringify(e))):EVENTS;this.setState(st=>({ev:pool[st.evi%pool.length],evi:st.evi+1,result:null,sheet:null}))}
+  startQuest(k){const q=QUESTS[k];if(this.state.quests[k])return;
+    this.setState(s=>({quests:{...s.quests,[k]:'active'},unlocked:{...s.unlocked,[q.place]:true}}));
+    if(q.intro&&q.thread&&!(q.thread==='abuela'&&ABU_DEAD))this.pushMsg(q.thread,q.intro);
+    this.say('Nueva misión: '+q.title+' · '+q.where)}
+  abuDies(){const st=this.state,nm=this.gx('{abuela}');ABU_DEAD=true;
+    this.setState({abu:{...st.abu,salud:0,dead:true},sheet:null,result:null,ev:{kicker:'Edificio 7',title:'Abuela se fue',body:nm+' murió en su cama, con la novela prendida y el rosario en la mano. Tenía '+(55+st.age)+' años. El bloque entero bajó al velorio.',ch:[
+      {label:'Bendición, Abuela.',d:{feli:-20},out:'Don Pepe cerró el colmado ese día. Doña Lydia trajo pan sobao. Nadie supo qué decir, y estuvo bien.'}]}});
+    this.addLog(nm+' murió. Tenías '+st.age+' años.')}
   run(a){
     const st=this.state;
     if(a.sleep)return this.sleep();
@@ -882,12 +983,17 @@ class Component extends DCLogic {
     if(a.reqSalud&&st.s.salud<a.reqSalud)return this.say('Necesitas '+a.reqSalud+' Salud pa\' eso.');
     if(a.req&&st.s.resp<a.req)return this.say('Necesitas '+a.req+' Respeto pa\' eso.');
     if(a.weapon&&st.armed)return this.say('Ya tienes una.');
+    if(a.qid&&QUESTS[a.qid].needAbu&&!ABU_DEAD&&st.abu.aff<QUESTS[a.qid].needAbu){this.setState({sheet:null});return this.say('Abuela cambia el tema y prende la novela. Necesitas '+QUESTS[a.qid].needAbu+' de Afecto con ella.')}
     if(st.animo<a.cost){this.setState({noAnimo:true,sheet:null});return}
-    let d=a.d||{};const cat=a.cat||(a.crime?'calle':PLACECAT[st.sheet]);
+    let d=a.d||{};if(a.crime&&!ABU_DEAD)d={...d,abuAff:(d.abuAff||0)-2};const cat=a.cat||(a.crime?'calle':PLACECAT[st.sheet]);
     if(cat&&!a.qid&&!a.mg&&this.has(cat)&&DEV[cat].d)d=this.merge(d,DEV[cat].d);
     if((d.chavos||0)<0&&st.chavos<-d.chavos){this.say('No te dan los chavos pa\' eso.');return}
     if(a.love)return this.romance(a);
-    if(a.qid){const q=QUESTS[a.qid],d2={...d};Object.keys(q.reward).forEach(k=>d2[k]=(d2[k]||0)+q.reward[k]);this.apply({...d2,animo:-a.cost},{sheet:null,quests:{...st.quests,[a.qid]:'done'}});this.say('Misión cumplida · '+this.fmt(d2).join(' · '));this.addLog(q.title+': '+q.out);if(q.area)this.setState(s=>({areas:{...s.areas,[q.area]:true}}));setTimeout(()=>{this.pushMsg(q.thread,q.reply);this.checkStory()},900);return}
+    if(a.qid){const q=QUESTS[a.qid],d2={...d};Object.keys(q.reward).forEach(k=>d2[k]=(d2[k]||0)+q.reward[k]);this.apply({...d2,animo:-a.cost},{sheet:null,quests:{...st.quests,[a.qid]:'done'}});this.say('Misión cumplida · '+this.fmt(d2).join(' · '));this.addLog(q.title+': '+q.out);if(q.area)this.setState(s=>({areas:{...s.areas,[q.area]:true}}));
+      if(q.unlock)this.setState(s=>({unlocked:{...s.unlocked,[q.unlock]:true}}));
+      if(q.meet&&!st.th[q.meet])setTimeout(()=>this.meetP(q.meet),300);
+      if(q.card)setTimeout(()=>this.setState({ev:q.card,result:null}),600);
+      setTimeout(()=>{if(q.reply&&!(q.thread==='abuela'&&ABU_DEAD))this.pushMsg(q.thread,q.reply);this.checkStory();if(q.next)setTimeout(()=>this.startQuest(q.next),q.card?2500:600)},900);return}
     if(a.mg){this.apply({animo:-a.cost},{sheet:null});return a.mg==='hoops'?this.startHoops():a.mg==='chase'?this.startChase():a.mg==='colmado'?this.startColmado():a.mg==='tuning'?this.startTuning():a.mg==='briscola'?this.startBriscola():this.startDomino()}
     const extra={sheet:null};
     if(a.turf){extra.turf={...st.turf,[a.turf]:'tu'};if(!st.enemies.includes('Los del 3'))extra.enemies=[...st.enemies,'Los del 3']}
@@ -903,7 +1009,7 @@ class Component extends DCLogic {
       if(a.ev&&Math.random()<a.ev)this.fireEvent();
     },650);
   }
-  gx(s){const g=this.state.gender,p=(a,b,c)=>g==='chica'?b:g==='nb'?c:a;return String(s).replace(/\{elnieto\}/g,p('el nieto','la nieta','le niete')).replace(/\{Mijo\}/g,p('Mijo','Mija','Mije')).replace(/\{mijo\}/g,p('mijo','mija','mije')).replace(/\{hijo\}/g,p('hijo','hija','hije')).replace(/\{Bienvenido\}/g,p('Bienvenido','Bienvenida','Bienvenide'))}
+  gx(s){const g=this.state.gender,p=(a,b,c)=>g==='chica'?b:g==='nb'?c:a;return String(s).replace(/\{elnieto\}/g,p('el nieto','la nieta','le niete')).replace(/\{Mijo\}/g,p('Mijo','Mija','Mije')).replace(/\{mijo\}/g,p('mijo','mija','mije')).replace(/\{hijo\}/g,p('hijo','hija','hije')).replace(/\{Bienvenido\}/g,p('Bienvenido','Bienvenida','Bienvenide')).replace(/\{abuela\}/g,'Doña '+(this.state.abuName.trim()||'Carmen'))}
   who(L){const lk=this.state.likes,i=LOVE.indexOf(L),g=lk==='chicas'?'f':lk==='chicos'?'m':(i%2?'m':'f');return {...L[g],g}}
   loveActs(pid){const st=this.state,out=[];LOVE.filter(L=>L.places.includes(pid)).forEach(L=>{const p=this.who(L),c=st.love[L.id],nov=p.g==='f'?'novia':'novio';
     if(!c)return out.push({label:'Hablarle a '+p.n,fx:p.t+' · nuevo contacto',cost:1,love:L.id,lv:'meet'});
@@ -920,7 +1026,7 @@ class Component extends DCLogic {
       clearTimeout(this.lt);this.lt=setTimeout(()=>this.setState(s=>({th:{...s.th,[tid]:{...s.th[tid],msgs:[...s.th[tid].msgs,{me:false,t:after}],replies:L.rep,unread:true}}})),1200);return}
     if(a.lv==='ask'){const love={...st.love};if(st.partner&&st.partner!==L.id){const P=st.partner;love[P]={...love[P],aff:Math.max(0,love[P].aff-30)};this.addLog('Terminaste con '+this.who(LOVE.find(x=>x.id===P)).n+'.')}
       this.apply({feli:10,animo:-a.cost},{sheet:null,love,partner:L.id});this.say('¡'+p.n+' dijo que sí! Ahora es tu '+nov+'.');this.addLog(p.n+' es tu '+nov+'.');return}
-    if(a.lv==='marry'){this.apply({feli:15,chavos:-50,animo:-a.cost},{sheet:null,married:true});this.say('Te casaste con '+p.n+'. Abuela no paró de llorar.');this.addLog('Te casaste con '+p.n+'.')}}
+    if(a.lv==='marry'){this.apply({feli:15,chavos:-50,animo:-a.cost},{sheet:null,married:true});this.say('Te casaste con '+p.n+'.'+(ABU_DEAD?' Pusieron una foto de Abuela en la mesa principal.':' Abuela no paró de llorar.'));this.addLog('Te casaste con '+p.n+'.')}}
   heir(){const s=this.state,l=HEIRS[s.gender]||HEIRS.chico;return l[(s.gen-1)%l.length]}
   dispName(){const s=this.state,nm=s.name.trim(),ap=s.apodo.trim();return ap&&nm?nm+' "'+ap+'"':(nm||ap||'Yariel')}
   dn(c){const g=this.state.gender,a=DEVG[c];return a?a[g==='chica'?1:g==='nb'?2:0]:DEV[c].name}
@@ -935,8 +1041,9 @@ class Component extends DCLogic {
   checkStory(){const s=this.state;
     if(s.quests.pan==='done'&&s.quests.caja==='done'&&!s.areas.pueblo){
       this.setState(x=>({areas:{...x.areas,pueblo:true},th:{...x.th,yadiel:{...x.th.yadiel,unread:true,msgs:[...x.th.yadiel.msgs,{me:false,t:'Primo, vámonos pa\' San Juan el sábado'},{me:false,t:TR[MODE].yad}],replies:[{t:'Dale, voy ahora',d:{},a:'Eso. Sin pase no hay viaje.',quest:'pase'}]}}}));
-      this.say('Capítulo 1 completo · se abrió El pueblo');this.addLog('Capítulo 1 completo. Ya conoces el bloque.')}
-    if(s.quests.pase==='done'&&s.areas.sanjuan)this.say('Capítulo 2 completo · se abrió San Juan')}
+      this.say('Capítulo 1 completo · se abrió El pueblo');this.addLog('Capítulo 1 completo. Ya conoces el bloque.');setTimeout(()=>this.startQuest('foto'),5000)}
+    if(s.quests.verdad==='done'&&!s.season1){this.setState({season1:true});this.addLog('Temporada 1 completa: ya sabes por qué vives con Abuela.')}
+    if(s.quests.pase==='done'&&s.areas.sanjuan)this.say('Viaje listo · se abrió San Juan')}
   pushMsg(id,t){this.setState(s=>s.th[id]?{th:{...s.th,[id]:{...s.th[id],msgs:[...s.th[id].msgs,{me:false,t}],unread:true}}}:null)}
   onReply(r,id){
     if(r.aff!=null&&id&&id.indexOf('love_')===0){const k=id.slice(5);this.setState(s=>({love:{...s.love,[k]:{...s.love[k],aff:Math.min(100,Math.max(0,s.love[k].aff+r.aff))}}}));this.say((r.aff>=0?'+':'')+r.aff+' Afecto');return}
@@ -1042,9 +1149,14 @@ class Component extends DCLogic {
     const bonus=this.state.owned.abanico?1:0;
     this.setState(st=>({animo:this.max()+bonus>this.max()?this.max():this.max(),day:st.day+1,sheet:null,noAnimo:false,calor:Math.max(0,st.calor-5)}));
     this.say('Dormiste como un bebé. Ánimo lleno.');this.setState({dayStart:Date.now()});
+    const a=this.state.abu;
+    if(!a.dead){const salud=Math.max(0,a.salud-(Math.random()<.55?1:0)-(this.state.age>=20?1:0));
+      if(salud<=0)return setTimeout(()=>this.abuDies(),800);
+      this.setState({abu:{...a,salud,hosp:salud<30?a.hosp:false}});
+      if(salud<30&&!a.hosp){this.setState(s=>({abu:{...s.abu,hosp:true}}));return setTimeout(()=>this.setState({ev:ABU_HOSP,result:null}),800)}}
     const nd=this.state.day+1,f=this.fest(nd);if(f)setTimeout(()=>this.setState({ev:f,result:null}),800);else if(Math.random()<.5)setTimeout(()=>this.fireEvent(),800);
   }
-  pick(c){let d=c.d||{},out=c.out;const extra={},st=this.state;
+  pick(c){let d=c.d||{},out=this.gx(ABU_DEAD&&c.outDead?c.outDead:c.out);const extra={},st=this.state;
     if(c.flag)extra[c.flag]=true;
     if(st.ev&&st.ev.hurricane&&st.prep){d={...d,salud:(d.salud||0)+6};out+=' Los suministros que compraste salvaron la semana.'}
     if(c.path){const n=c.need||{},beca=n.orCoco&&st.s.coco>=n.orCoco;let ok=true;
@@ -1079,7 +1191,8 @@ class Component extends DCLogic {
       caserios:CAS.map(c=>({...c,border:c.id===st.cas?'var(--color-accent)':'transparent',select:()=>this.setState({cas:c.id}),
         meters:['Chamba','Calor','Vibra'].map((label,i)=>({label,dots:[0,1,2,3,4].map(n=>({bg:n<c.m[i]?(i===1?'var(--color-accent-600)':'var(--color-accent-2-600)'):'var(--color-neutral-300)'}))}))})),
       casName:cas.name,casShort:cas.short,
-      name:st.name,apodo:st.apodo,setName:e=>this.setState({name:e.target.value}),setApodo:e=>this.setState({apodo:e.target.value}),
+      name:st.name,apodo:st.apodo,setName:e=>this.setState({name:e.target.value}),setApodo:e=>this.setState({apodo:e.target.value}),abuName:st.abuName,setAbuName:e=>this.setState({abuName:e.target.value}),
+      abuCard:{name:this.gx('{abuela}'),dead:st.abu.dead,alive:!st.abu.dead,aff:st.abu.aff,salud:st.abu.salud,affW:st.abu.aff+'%',saludW:st.abu.salud+'%',saludBg:st.abu.salud<30?'var(--color-accent)':'var(--color-accent-2)',stage:st.abu.dead?'Descansa en paz':st.abu.aff>=70?'Su orgullo':st.abu.aff>=40?'Te tiene fe':'Preocupada'},
       initial:(nm||ap||'Y')[0].toUpperCase(),
       av:{skin:SKINS[st.look.skin],hair:st.look.hair,hc:HCS[st.look.hc],top:st.look.top,tc:TCS[st.look.tc],hat:!!st.look.hat,chain:!!st.look.chain},
       closetOn:st.closet,openCloset:()=>this.setState({closet:true}),closeCloset:()=>this.setState({closet:false}),
@@ -1090,7 +1203,7 @@ class Component extends DCLogic {
       topOpts:TOPS.map(([id,label])=>({label,op:1,bg:st.look.top===id?'var(--sun)':'var(--color-surface)',pick:()=>this.setLook('top',id)})),
       extraOpts:[['hat','gorra','Gorra'],['chain','cadena','Cadena']].map(([k,it,label])=>{const own=!!st.owned[it];return {label:own?label:label+' · Tienda',op:own?1:.5,bg:st.look[k]?'var(--sun)':'var(--color-surface)',pick:()=>own?this.setLook(k,!st.look[k]):this.say('Cómprala en la Tienda primero.')}}),displayName:display,
       traits:TRAITS.map(t=>({...t,name:TG[t.id]?TG[t.id][st.gender==='chica'?1:st.gender==='nb'?2:0]:t.name,bg:t.id===st.trait?'var(--color-accent)':'var(--color-surface)',fg:t.id===st.trait?'var(--color-bg)':'var(--color-text)',select:()=>this.setState({trait:t.id})})),
-      start:()=>{const tr=TRAITS.find(t=>t.id===st.trait);const d={...cas.d};Object.keys(tr.d).forEach(k=>d[k]=(d[k]||0)+tr.d[k]);MODE=CAS_TR[cas.id]||'tren';const dc=DON[tr.id];this.apply(d,{screen:'hub',tab:'barrio',dev:{[dc]:DEV[dc].need}});this.say(this.gx('{Bienvenido}')+' a '+cas.short+'. '+this.fmt(d).join(' · '))},
+      start:()=>{const tr=TRAITS.find(t=>t.id===st.trait);const d={...cas.d};Object.keys(tr.d).forEach(k=>d[k]=(d[k]||0)+tr.d[k]);MODE=CAS_TR[cas.id]||'tren';FAM=FAM_IDS[Math.floor(Math.random()*FAM_IDS.length)];ABU_DEAD=false;const dc=DON[tr.id];this.apply(d,{fam:FAM,screen:'hub',tab:'barrio',dev:{[dc]:DEV[dc].need}});this.say(this.gx('{Bienvenido}')+' a '+cas.short+'. '+this.fmt(d).join(' · '))},
       age:st.age,nextAge:st.age+1,day:st.day,chavos:st.chavos,coquis:st.coquis,animo:st.animo,animoMax:max,calor:st.calor,
       tabBarrio:tab('barrio'),tabVida:tab('vida'),tabChamba:tab('chamba'),tabCel:tab('cel'),tabTienda:tab('tienda'),
       tc:{barrio:col('barrio'),vida:col('vida'),chamba:col('chamba'),cel:col('cel'),tienda:col('tienda')},
@@ -1154,8 +1267,8 @@ class Component extends DCLogic {
       isDead:!!st.dead,dead:st.dead||{},deadName:display,heirName:this.heir(),nextGen:()=>this.nextGen(),
       inherit:[{k:'Chavos',v:'$'+st.chavos},{k:'Respeto (60%)',v:Math.round(st.s.resp*.6)},{k:'Calor (50%)',v:Math.round(st.calor*.5)},{k:'Territorio',v:Object.values(st.turf).filter(v=>v==='tu').length+' zonas'},{k:'Enemigos',v:st.enemies.length?st.enemies.join(', '):'Ninguno'},{k:'Tu otra mitad',v:st.partner?this.who(LOVE.find(x=>x.id===st.partner)).n+(st.married?' · casados':' · novios'):'Sin pareja'}],
       hasSheet:!!sheet,sheet:sheet||{},closeSheet:()=>this.setState({sheet:null}),
-      sheetActions:(sheet?[...Object.keys(QUESTS).filter(k=>st.quests[k]==='active'&&QUESTS[k].place===sheet.id).map(k=>({...QUESTS[k].act,qid:k})),...sheet.acts.filter(a=>!(a.meet&&st.th[a.meet])),...this.loveActs(sheet.id)]:[]).map(a=>({...a,costLabel:a.qid?'Misión':a.soon?'Pronto':a.cost?'−'+a.cost+' Ánimo':'Gratis',run:()=>this.run(a)})),
-      birthday:()=>{this.setState(st=>({age:st.age+1,animo:max,day:st.day+1}));this.addLog('Cumpliste '+(st.age+1)+'. Abuela hizo bizcocho.');setTimeout(()=>(st.age+1>=18&&!this.state.path)?this.setState({ev:GRAD,result:null,sheet:null}):this.fireEvent(),300)},
+      sheetActions:(sheet?[...Object.keys(QUESTS).filter(k=>st.quests[k]==='active'&&QUESTS[k].place===sheet.id).map(k=>({...QUESTS[k].act,qid:k})),...sheet.acts.filter(a=>!(a.meet&&st.th[a.meet])&&!(a.abu&&ABU_DEAD)&&!(a.abuDead&&!ABU_DEAD)),...this.loveActs(sheet.id)]:[]).map(a=>({...a,costLabel:a.qid?'Misión':a.soon?'Pronto':a.cost?'−'+a.cost+' Ánimo':'Gratis',run:()=>this.run(a)})),
+      birthday:()=>{this.setState(st=>({age:st.age+1,animo:max,day:st.day+1}));this.addLog('Cumpliste '+(st.age+1)+(ABU_DEAD?'. Titi Wanda trajo un bizcocho de Costco.':'. Abuela hizo bizcocho.'));setTimeout(()=>(st.age+1>=18&&!this.state.path)?this.setState({ev:GRAD,result:null,sheet:null}):this.fireEvent(),300)},
       log:st.log,
       jobs:JOBS.map(j=>{const r=j.req||{};const lock=(r.path&&st.path!==r.path)?'Escoge trabajar al graduarte':(r.job&&!st.jobs[r.job])?'Habla con Doña Lydia':(r.age&&st.age<r.age)?'Necesitas '+r.age+' años':(r.resp&&st.s.resp<r.resp)?'Necesitas '+r.resp+' Respeto':'';
         const pay=j.id==='beats'&&st.trait==='rapero'?j.pay*2:j.pay;
@@ -1172,8 +1285,8 @@ class Component extends DCLogic {
       buyPass:()=>{if(st.pass)return;if(st.coquis<250)return this.say('Te faltan '+(250-st.coquis)+' coquís.');this.setState({pass:true,coquis:st.coquis-250});this.say('Pase activo. ¡Wepa!')},
       packs:PACKS.map(p=>({...p,best:!!p.best,buy:()=>{this.apply({coquis:p.n});this.say('Compra simulada: +'+p.n+' coquís')}})),
       items:ITEMS.map(it=>({...it,owned:!!st.owned[it.id],label:st.owned[it.id]?'Tuyo':it.c+' coquís',buy:()=>{if(st.coquis<it.c)return this.say('Te faltan '+(it.c-st.coquis)+' coquís.');this.setState({coquis:st.coquis-it.c,owned:{...st.owned,[it.id]:true},look:{...st.look,...(it.id==='gorra'?{hat:true}:it.id==='cadena'?{chain:true}:{})}});this.say(it.name+' es tuyo.')}})),
-      hasEvent:!!st.ev,ev,evChoosing:!!st.ev&&!st.result,evDone:!!st.result,
-      evChoices:(ev.ch||[]).map(c=>({label:c.label,pick:()=>this.pick(c)})),
+      hasEvent:!!st.ev,ev:{...ev,title:this.gx(ev.title||''),body:this.gx(ABU_DEAD&&ev.bodyDead?ev.bodyDead:(ev.body||''))},evChoosing:!!st.ev&&!st.result,evDone:!!st.result,
+      evChoices:(ev.ch||[]).map(c=>({label:this.gx(c.label),pick:()=>this.pick(c)})),
       result:st.result?{text:st.result.text,chips:Object.keys(st.result.d).filter(k=>st.result.d[k]).map(k=>{const v=st.result.d[k],good=k==='calor'?v<0:v>0;return {t:this.fmt({[k]:v})[0],bg:good?'var(--color-accent-2-200)':'var(--color-accent-200)',fg:good?'var(--color-accent-2-800)':'var(--color-accent-800)'}})}:{chips:[]},
       closeEvent:()=>this.setState({ev:null,result:null}),
       noAnimo:st.noAnimo,closeNoAnimo:()=>this.setState({noAnimo:false}),
