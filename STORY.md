@@ -137,10 +137,10 @@ Every caserío has its own street boss, history and "rules of the bloque". These
 | Place | What it is | Unlocks |
 |---|---|---|
 | **La iglesia** (Pastor Ramón) **(in game)** | Culto, after-school program, coro | Damaris/Josué (romance), +Coco/+Felicidad, Season 1 clues |
-| **La parada de guagua** | The bus stop at the entrance | Gossip events, Mrs. Cintrón, people leaving and arriving |
-| **El techo del 7** | The roof of your building | Thinking spot. Random deep talks (Yadiel, Kiko), the skyline view, later a rooftop studio |
-| **La lavandería** | Coin laundry on the ground floor | Chismes, Doña Lydia's sister, odd jobs |
-| **El gimnasio de boxeo** | Old gym under the overpass | Atleta lane alternative; Agente Rosado trains here |
+| **La parada de guagua** **(in game)** | The bus stop at the entrance | Gossip events, Mrs. Cintrón, people leaving and arriving |
+| **El techo del 7** **(in game)** | The roof of your building | Thinking spot. Random deep talks (Yadiel, Kiko), the skyline view, later a rooftop studio |
+| **La lavandería** **(in game)** | Coin laundry on the ground floor | Chismes, Doña Lydia's sister, odd jobs |
+| **El gimnasio de boxeo** **(in game)** | Old gym under the overpass | Atleta lane alternative; Agente Rosado trains here |
 
 ### New side stories (short 2–4 step quests)
 - **El gas de Abuela**: the tank ran out and the truck won't come into the caserío. Carry it up 3 floors (the ascensor has been broken since 2019).
@@ -155,7 +155,27 @@ Every caserío has its own street boss, history and "rules of the bloque". These
 
 ---
 
-## 8. Next up
-- Season 1 follow-ups: each backstory's choice (find Mami, write to Papi, Keila, Arecibo…) opens a short side story.
-- More bloque places: parada de guagua, techo del 7, lavandería, gimnasio.
+## 8. Season 1 follow-ups **(in game)**
+
+Each Season 1 choice that leads somewhere opens a short side story. Family members get named by the player the first time they appear (pop-up), and their names fill in through all story text.
+
+| Backstory · choice | Steps | Where it ends |
+|---|---|---|
+| Mami · Buscarla en Facebook | Techo del 7 (message) → Lavandería (video call, name your hermanito) → Apto (tell Abuela) | Mami and Abuela talk again; $50 from Kissimmee |
+| Papi · Escribirle | Parada (visit Bayamón) → Cancha (find Ángel) → El punto (El Gringo) | Ask El Gringo for help (you owe him: `gringoDebt`) or walk away |
+| Papi · Averiguar quién disparó | Colmado (Don Pepe) → Cancha (Kiko) | It was Kiko's older brother. Tell Papi, tell Agente Rosado (`rosadoCase`), or keep the secret |
+| Temprano · Averiguar quiénes fueron | Colmado (the name: Cano) → Gimnasio (Agente Rosado) → Iglesia (Cano confesses) | Forgive, confront, or walk away |
+| Nena · Ir a hablar con Keila | Lavandería → Iglesia → Apto | A mom in the Edif. 5 |
+| Secreto · Buscar a mi familia | Parada (Arecibo) → Techo (cousin Nayeli) → Parada (Utuado) | Abuela Toña and a second family |
+
+Flags like `gringoDebt` and `rosadoCase` are saved for later seasons to pay off.
+
+## 9. Economy **(in game)**
+- **Ánimo máximo**: 5, +1 each for Colchón nuevo, Tenis nuevos, Premium pass and Salud 80+. Café at Don Pepe's: +1 Ánimo once a day. Abanico: wake up with +1 extra.
+- **Pase de las Fiestas de la Calle**: XP = Ánimo spent (8 per level), 10 levels, free and premium rewards you claim in the Tienda.
+- **Coquís**: earned from story missions, birthdays and the pass. Spent on upgrades, Café grande, Abuela's gifts and medicine, and an abogado (−20 Calor).
+
+## 10. Next up
+- Pay off the saved flags (El Gringo's favor, Agente Rosado's case) in Season 2.
+- Characters for the new places (Doña Fela at the lavandería, the gym regulars).
 - Childhood stage (0–15) before the current 16+ start.
