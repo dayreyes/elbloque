@@ -232,7 +232,28 @@ A first-person piece about growing up in Las Gladiolas, "los castillos" by the M
 - **The weight, told with restraint**: the cupones and stretching the month, a pana's wake, a cousin caught in addiction (Rafy), Kiko's "es la que hay, papi".
 - **"Sacar la cara" for your people**: the heart of Season 3, *El bloque no se vende*.
 
-## 14. Next up
+## 14. Cómo habla el bloque **(in game)**
+
+Source: the *Dialecto Boricua* blog (Sheila Torres). We use the words, not the articles.
+
+**El diccionario del bloque** (Vida tab, 47 entries): a word unlocks automatically the first time it shows up in a story card, a message or an activity, with its meaning and +1 coquí. Players who don't know the slang learn it by playing.
+
+Where the slang lives:
+- **Dominó**: win with "¡Capicú!" (Don Pepe says it was *de chivo*).
+- **Hipódromo**: "¡Qué leche! Tú naciste parao" / "¡Qué salaera!".
+- **Caguas**: "¡Sopla Bairoa!" with the Criollos; a trovador singing Ramito's décimas; the plaza kiosko's "¡Pide, que hay!".
+- **People**: Yadiel *velando güira* under the hoop and *pichando*; Kiko's "Tú eres un estofón"; Mrs. Cintrón's "bombito al pítcher"; Capitán Mito, *paquetero* y *aguajero*; Maestra Nilsa's "El que no tiene dinga, tiene mandinga".
+- **Food**: a *mixta con pájaro en el estribo* at the chicharronera, *quesitos* at the panadería, Abuela's *arroz amogollao*.
+- **Everywhere**: *embrollao*, *arrancao como una tusa*, *titingó*, *jurutungo*, *choreto*, *esñemao*, *ají / sajorí / culillo*, *como coco*, *ñame con corbata*, *la gallina de arriba ensucia a la de abajo*, *como cucaracha en baile de gallinas*, *¡Ay bendito!*.
+
+Left out on purpose: the vulgar sexual vocabulary and the phrases the blog itself calls racist ("pelo malo", "mejorar la raza", "trabajar como un negro").
+
+New events from the same source:
+- **La revista El Caserío**: Abuela's 1946 copy of the government magazine (families moving from the arrabal on zocos to buildings with bathrooms, kitchens and light). The name later became an insult and the government renamed them "residenciales".
+- **La dirección**: a job interview in the Milla de Oro goes cold when they read "Res. Las Palmas de Oro".
+- **Se te pegó la frisa**, **El arroz con pegao**, **Brayan brinca el charco** (to Orlando, "allá fuera"), **Las octavitas** (Jan 7: asaltos, coquito, pitorro), and **San Ciriaco** (1899) in Abuela's memory when the hurricane comes.
+
+## 15. Next up
 - People in each pueblo (contacts, mini-stories per place), not just activities.
 - Orlando as a far trip for the Mami story (flight from the airport).
 - Pay off the saved flags (El Gringo's favor, Agente Rosado's case) in Season 2.

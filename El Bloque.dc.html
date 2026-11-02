@@ -239,6 +239,16 @@
         </div>
         </sc-for>
       </div>
+      <div style="display:flex; flex-direction:column; gap:6px">
+        <div style="display:flex; justify-content:space-between; align-items:baseline"><h4 style="margin:0">El diccionario del bloque</h4><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ wordInfo }}</span></div>
+        <sc-if value="{{ noWords }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px; color:var(--color-neutral-700)">Las palabras boricuas que oigas en el bloque se guardan aquí.</span></sc-if>
+        <sc-for list="{{ wordList }}" as="x" hint-placeholder-count="3">
+        <div style="display:grid; grid-template-columns:minmax(0,38%) minmax(0,1fr); gap:10px; padding:7px 0; border-top:1px solid var(--color-divider)">
+          <span style="font-family:var(--font-heading); font-weight:900; font-size:16px; text-transform:uppercase; line-height:1.05">{{ x.w }}</span>
+          <span style="font-size:12px; line-height:1.4">{{ x.m }}</span>
+        </div>
+        </sc-for>
+      </div>
       <button class="btn btn-primary" style="height:56px; font-size:18px; justify-content:space-between; padding:0 22px" sc-camel-on-click="{{ birthday }}"><span>Cumplir años</span><span style="font-family:var(--font-body); font-size:13px; font-weight:700">{{ age }} → {{ nextAge }}</span></button>
       <div style="display:flex; flex-direction:column; gap:2px">
         <h4 style="margin:0 0 6px">Tu historia</h4>
@@ -683,8 +693,9 @@ const LOCS=[
    {cat:'familiar',label:'Sentarte a escuchar chismes',fx:'+3 Coco · +2 Felicidad',cost:1,d:{coco:3,feli:2},ev:.6}]},
  {id:'panaderia',label:'Panadería La Esperanza',note:'Huele a pan sobao desde la parada.',sub:'Abre a las 5am. Los domingos la cola llega a la calle.',sw:'var(--color-accent-200)',tags:['Pan','Gente'],lock:'Alguien te va a mandar pa\' acá.',acts:[
    {label:'Comprar una mallorca',fx:'−$3 · +5 Felicidad',cost:0,d:{chavos:-3,feli:5}},
+   {label:'Comprar un quesito',fx:'−$2 · +4 Felicidad',cost:0,d:{chavos:-2,feli:4}},
    {label:'Hablar con Doña Lydia',fx:'Conocer gente · nuevo contacto',cost:0,meet:'lydia'}]},
- {id:'cancha',label:'La cancha',note:'Pickup a las 6. Yadiel busca uno más.',sub:'Aro sin malla, pero el juego está caliente.',sw:'var(--color-accent-2)',tags:['Pickup','Deportes'],acts:[
+ {id:'cancha',label:'La cancha',note:'Pickup a las 6. Yadiel siempre está velando güira debajo del canasto.',sub:'Aro sin malla, pero el juego está caliente.',sw:'var(--color-accent-2)',tags:['Pickup','Deportes'],acts:[
    {label:'Pickup contra Yadiel',fx:'Minijuego · a 5 tiros',cost:2,mg:'hoops'},
    {label:'Hablar con el pana del 3',fx:'Conocer gente · nuevo contacto',cost:0,meet:'kiko'},
    {label:'Entrenar solo',fx:'+6 Salud · camino de atleta',cost:2,d:{salud:6,resp:1},ev:.4}]},
@@ -719,7 +730,7 @@ const LOCS=[
    {cat:'buscon',label:'Doblar ropa por propinas',fx:'+$6 · +1 Respeto',cost:2,d:{chavos:6,resp:1}},
    {cat:'familiar',label:'Escuchar a Doña Fela',fx:'+3 Coco · el chisme del día',cost:1,d:{coco:3},ev:.6}]},
  {id:'gimnasio',label:'El gimnasio',note:'Huele a sudor y a Bengay.',sub:'Un gimnasio de boxeo viejo debajo del puente. Los guantes son de los \'90.',sw:'var(--color-accent-300)',tags:['Boxeo','Calor −'],lock:'El Agente Rosado entrena ahí. Lo ves en la parada.',acts:[
-   {label:'Entrenar boxeo',fx:'+6 Salud · +1 Respeto · camino de atleta',cost:2,d:{salud:6,resp:1}},
+   {label:'Entrenar boxeo',fx:'+6 Salud · +1 Respeto · sales esñemao',cost:2,d:{salud:6,resp:1}},
    {label:'Darle al saco pa\' botar el coraje',fx:'+3 Felicidad · −6 Calor',cost:1,d:{feli:3,calor:-6}},
    {label:'Sparring con el Agente Rosado',fx:'+4 Respeto · −4 Salud',cost:2,d:{resp:4,salud:-4},reqSalud:40}]},
  {id:'iglesia',label:'La iglesia',note:'Culto martes y domingo. Hay sopa después.',sub:'Iglesia Fuente de Agua Viva. El Pastor Ramón se sabe el nombre de todo el bloque. Y el de tu abuela primero.',sw:'var(--color-accent-2-200)',tags:['Culto','Coro','Tareas'],lock:'Abuela te quiere llevar un domingo.',acts:[
@@ -748,11 +759,12 @@ LOCS.push(
    {label:'Darte un despojo',fx:'−$10 · +6 Felicidad · −5 Calor',cost:1,d:{chavos:-10,feli:6,calor:-5}},
    {abu:true,label:'Comprarle un santo de palo a Abuela',fx:'−$20 · +8 Afecto de Abuela',cost:0,d:{chavos:-20,abuAff:8}},
    {label:'Hablar con Doña Inés',fx:'Conocer gente · nuevo contacto',cost:0,meet:'ines'}]},
- {id:'plazacaguas',zone:'caguas',label:'La plaza de Caguas',note:'Una ceiba vieja da sombra a media plaza.',sub:'Viejitos, palomas, piraguas y la catedral.',sw:'var(--color-accent-2-300)',tags:['Plaza','Ceiba'],acts:[
+ {id:'plazacaguas',zone:'caguas',label:'La plaza de Caguas',note:'Una ceiba vieja da sombra. Un kiosko pregona: «¡Pide, que hay!»',sub:'Viejitos, palomas, piraguas y la catedral.',sw:'var(--color-accent-2-300)',tags:['Plaza','Ceiba'],acts:[
+   {label:'Escuchar a un trovador en la plaza',fx:'+4 Felicidad · décimas de Ramito, el de Bairoa',cost:1,d:{feli:4,coco:1}},
    {label:'Piragua de tamarindo',fx:'−$2 · +4 Felicidad',cost:0,d:{chavos:-2,feli:4}},
    {label:'Sentarte debajo de la ceiba',fx:'+3 Felicidad',cost:1,d:{feli:3}}]},
  {id:'parque',zone:'caguas',label:'El parque de pelota',note:'Liga de invierno. Los Criollos juegan esta noche.',sub:'Gradas de cemento, alcapurrias y gritos al umpire.',sw:'var(--color-accent-300)',tags:['Pelota'],acts:[
-   {label:'Ver un juego de pelota',fx:'−$6 · +6 Felicidad',cost:1,d:{chavos:-6,feli:6}},
+   {label:'Ver a los Criollos y gritar «¡Sopla Bairoa!»',fx:'−$6 · +6 Felicidad',cost:1,d:{chavos:-6,feli:6}},
    {cat:'atleta',label:'Tryout de la Doble A',fx:'Minijuego · a 5 tiros',cost:2,mg:'hoops'}]},
  // ---- Canóvanas ----
  {id:'finca',zone:'canovanas',label:'La finca de Don Chuco',note:'Le faltan tres cabras desde el \'95.',sub:'Una finca con verjas reforzadas, un perro nervioso y un letrero: "AQUÍ NO HAY NADA PA\' CHUPAR".',sw:'var(--color-accent-2-300)',tags:['Chupacabras','Finca'],acts:[
@@ -789,6 +801,7 @@ LOCS.push(
    {cat:'atleta',label:'Tryout de la liga juvenil',fx:'Minijuego · a 5 tiros',cost:2,mg:'hoops'},
    {cat:'buscon',label:'Vender agua en el parking',fx:'+$10',cost:2,d:{chavos:10}}]},
  {id:'chicharron',zone:'bayamon',label:'La chicharronera',note:'La fila llega a la carretera.',sub:'Chicharronera El Gordo, en la Carretera 2. Chicharrón, morcilla y una Medalla fría.',sw:'var(--sun)',tags:['Comida','Chamba'],acts:[
+   {label:'Una mixta con pájaro en el estribo',fx:'−$5 · +6 Salud · arroz, habichuelas y salchichas',cost:0,d:{chavos:-5,salud:6}},
    {label:'Comerte una libra de chicharrón',fx:'−$6 · +6 Felicidad · −2 Salud',cost:0,d:{chavos:-6,feli:6,salud:-2}},
    {cat:'buscon',label:'Trabajar en el caldero',fx:'+$14 · −2 Salud',cost:2,d:{chavos:14,salud:-2}},
    {label:'Hablar con Doña Tata',fx:'Conocer gente · nuevo contacto',cost:0,meet:'tata'}]},
@@ -797,7 +810,7 @@ LOCS.push(
    {label:'Ver una película',fx:'−$8 · +6 Felicidad',cost:1,d:{chavos:-8,feli:6}},
    {label:'Comprar tenis nuevos',fx:'−$90 · +1 Ánimo máximo',cost:0,d:{chavos:-90},grant:'tenis'}]},
  // ---- Loíza ----
- {id:'pinones',zone:'loiza',label:'Kioskos de Piñones',note:'El aceite está caliente desde las 10am.',sub:'Bacalaítos, alcapurrias y coco frío frente al mar.',sw:'var(--sun)',tags:['Frituras','Chamba'],acts:[
+ {id:'pinones',zone:'loiza',label:'Kioskos de Piñones',note:'El aceite está caliente desde las 10am.',sub:'Bacalaítos, alcapurrias y coco frío frente al mar, por un tubo y siete llaves.',sw:'var(--sun)',tags:['Frituras','Chamba'],acts:[
    {label:'Bacalaíto y alcapurria',fx:'−$4 · +5 Felicidad',cost:0,d:{chavos:-4,feli:5}},
    {cat:'buscon',label:'Freír en un kiosko',fx:'+$12',cost:2,d:{chavos:12}}]},
  {id:'playa',zone:'loiza',label:'La playa',note:'Bandera amarilla. Corriente fuerte.',sub:'Playa de Piñones. Arena, almendros y el sonido de la bomba de lejos.',sw:'var(--color-accent-2-300)',tags:['Playa','Surf'],acts:[
@@ -833,7 +846,7 @@ LOCS.push(
  {id:'tanama',zone:'utuado',label:'Río Tanamá',note:'El río entra por una cueva y sale por otra.',sub:'Tubing, cuevas y agua fría de montaña.',sw:'var(--color-accent-2-300)',tags:['Aventura'],acts:[
    {label:'Tubing por las cuevas',fx:'−$15 · +10 Felicidad · −2 Salud',cost:2,d:{chavos:-15,feli:10,salud:-2}},
    {label:'Caminar el sendero',fx:'+5 Salud · +2 Felicidad',cost:1,d:{salud:5,feli:2}}]},
- {id:'cafetal',zone:'utuado',label:'Hacienda cafetalera',note:'El grano rojo se recoge a mano.',sub:'Café de altura. Pagan por almud recogido.',sw:'var(--color-neutral-500)',tags:['Café','Chamba'],acts:[
+ {id:'cafetal',zone:'utuado',label:'Hacienda cafetalera',note:'Este año el café está choreto. Se recoge a mano.',sub:'Café de altura. Pagan por almud recogido.',sw:'var(--color-neutral-500)',tags:['Café','Chamba'],acts:[
    {cat:'buscon',label:'Recoger café',fx:'+$12 · −2 Salud',cost:3,d:{chavos:12,salud:-2}},
    {abu:true,label:'Comprarle café de la montaña a Abuela',fx:'−$8 · +6 Afecto de Abuela',cost:0,d:{chavos:-8,abuAff:6}},
    {label:'Hablar con Don Ciro',fx:'Conocer gente · nuevo contacto',cost:0,meet:'ciro'}]},
@@ -888,7 +901,7 @@ let FAM='mami',ABU_DEAD=false;
 const FAMS={
  mami:{names:{mama:'Yesenia',hermano:'Adrián'},ask:['mama'],
   foto:'Debajo de los papeles del seguro hay una foto: tu mamá en el aeropuerto de Carolina con una maleta. Detrás, en la letra de Abuela: "Orlando. Volvió a no llamar."',
-  lydia:'"{mama} me compraba pan todos los días antes de irse. Se fue pa\' trabajar en un hotel en Orlando. Mandaba chavos… hasta que dejó de mandar. Pregúntale al Pastor. Ella le escribía a la iglesia."',
+  lydia:'"{mama} me compraba pan todos los días antes de irse. Brincó el charco pa\' trabajar en un hotel en Orlando. Mandaba chavos… hasta que dejó de mandar. Pregúntale al Pastor. Ella le escribía a la iglesia."',
   pastor:'"{mama} nos escribió hace dos años pidiendo oración. Después, nada. {Mijo}, eso te lo tiene que contar tu abuela. Ella tiene las cartas."',
   truth:'Abuela saca un paquete de cartas amarradas con una liga. "{mama} se fue cuando tenías seis. Al principio llamaba todos los domingos. Después conoció a alguien allá, tuvo otro nene… y le dio vergüenza llamar. No fue culpa tuya, {mijo}. Nunca fue culpa tuya."',
   ch:[{label:'Buscarla en Facebook',d:{feli:-3,coco:2},flag:'famBuscar',startQ:'m1',out:'La encontraste: {mama}, Kissimmee, Florida. No le escribiste. Todavía.'},
@@ -978,6 +991,10 @@ const FEST=[
  {m:0,dm:0,kicker:'6 de enero · Día de Reyes',title:'Los Reyes pasaron por el bloque',body:'Anoche pusiste grama en una caja de zapatos pa\' los camellos. Abuela dice que ya estás grande pa\' eso, pero igual te dejó algo.',ch:[
    {label:'Abrir el regalo de Abuela',d:{feli:6,chavos:10},out:'Un sobre con $10 y una tarjeta que dice "pa\' tus cositas".'},
    {label:'Repartir regalos a los nenes del bloque',d:{resp:5,feli:4},out:'Te vestiste de Melchor. Los nenes no se dieron cuenta.'}]},
+ {m:0,dm:1,kicker:'7 de enero · Las octavitas',title:'Las octavitas',body:'Se acabó Reyes y nadie se ha enterado. Empiezan las octavitas: ocho días más de asaltos y parrandas. Yadiel trajo un güiro, Wichi un pandero, y alguien tiene una botella de pitorro escondida.',ch:[
+   {label:'Salir de asalto por todo el bloque',d:{feli:10,resp:4,salud:-2},out:'Cantaron en seis aptos. En el cuarto les dieron coquito; en el quinto, pasteles. Llegaste a las 4am con la voz rota.'},
+   {label:'Tocar el güiro en la parranda',d:{feli:6,resp:2},grow:'artista',out:'Nadie sabía que tenías ese ritmo. Ahora te llaman pa\' todas las parrandas.'},
+   {label:'Quedarte con Abuela viendo el especial de TV',d:{feli:3,abuAff:3},out:'Abuela se sabía todos los aguinaldos. Te los cantó todos.',outDead:'Pusiste los aguinaldos que le gustaban a Abuela. Los cantaste solo.'}]},
  {m:0,dm:2,kicker:'Enero · Las SanSe',title:'Fiestas de la Calle en San Juan',body:'Cabezudos, bomba en cada esquina y medio país en la calle. Yadiel dice que van todos.',ch:[
    {label:'Irme de fiesta hasta las 3am',d:{feli:12,salud:-5,chavos:-15},out:'Bailaste con un cabezudo. Perdiste una chancleta.'},
    {label:'Vender agua y piraguas',d:{chavos:35,calor:5},out:'Vendiste todo antes de la medianoche. Un guardia te pidió el permiso.'},
@@ -1001,7 +1018,7 @@ const FEST=[
    {label:'Montarme en la estrella',d:{feli:6,chavos:-5},out:'Desde arriba se ve todo el caserío.'},
    {label:'Ir a la procesión con Abuela',d:{feli:4,resp:3},out:'Abuela cantó todas las canciones.'},
    {label:'Bailar salsa frente a la tarima',d:{feli:9,salud:-2},out:'Una señora de 70 te bailó hasta el piso.'}]},
- {m:8,dm:1,hurricane:true,kicker:'Septiembre · Huracán',title:'Viene un huracán categoría 4',body:'El gobernador sale en la TV cada hora. Ya se fue la luz en media isla.',ch:[
+ {m:8,dm:1,hurricane:true,kicker:'Septiembre · Huracán',title:'Viene un huracán categoría 4',body:'El gobernador sale en la TV cada hora. Ya se fue la luz en media isla. Abuela se persigna: "Mi abuela decía que San Ciriaco fue peor. Que se llevó hasta las gallinas."',bodyDead:'El gobernador sale en la TV cada hora. Ya se fue la luz en media isla. Te acuerdas de Abuela diciendo que San Ciriaco fue peor.',ch:[
    {label:'Ayudar a tapar las ventanas del edificio',d:{resp:8,salud:-3},out:'Pusieron paneles en todo el Edif. 7.'},
    {label:'Llevar a Abuela al refugio',d:{feli:2,salud:2,abuAff:5,abuSalud:5},out:'Durmieron en una escuela con 200 personas. Abuela hizo amigas.'},
    {label:'Quedarme en el apto',d:{salud:-10,feli:-6,abuSalud:-15},out:'El agua entró por el balcón. Tres semanas sin luz.'}]},
@@ -1035,6 +1052,55 @@ const MAPDECOR={bloque:[],pueblo:[{x:62,y:84,w:34,h:12,label:'Iglesia'}],sanjuan
 const CH=["...#..G",".#.#.#.",".#...#.","...#...","##.#.##",".......",".##.##.",".....#.","..#...."];
 const DAYMS=4*3600*1000;
 const DON={pelotero:'atleta',rapero:'artista',estudioso:'estudioso',buscon:'buscon'};
+// El diccionario del bloque: a word unlocks the first time it shows up in a card, message or activity (+1 coquí).
+const WORDS=[
+ {k:'caserio',w:'Caserío',re:'caser[ií]o',m:'Vivienda pública. El gobierno usó la palabra desde los \'40; después la cambió por "residencial" porque la gente de afuera la usaba como insulto.'},
+ {k:'chavos',w:'Chavos',re:'chavos',m:'Dinero.'},
+ {k:'janguear',w:'Janguear',re:'janguea',m:'Pasar el rato con los panas.'},
+ {k:'capicu',w:'¡Capicú!',re:'capic[uú]',m:'Ganar el dominó con una ficha que cuadra por los dos lados. Se grita a todo pulmón.'},
+ {k:'chivo',w:'De chivo',re:'de chivo',m:'Por pura suerte.'},
+ {k:'leche',w:'¡Qué leche!',re:'qu[eé] leche|lech[uú]',m:'¡Qué suerte! Al suertudo le dicen lechú.'},
+ {k:'salaera',w:'Salaera',re:'salaera',m:'Mala suerte. "Estar más salao que una patita de mondongo."'},
+ {k:'parao',w:'Nacer parao',re:'naci[oó] parao|nacer parao',m:'Tener buena suerte en la vida.'},
+ {k:'maroma',w:'Suerte no, maroma',re:'maroma',m:'No fue suerte, fue esfuerzo.'},
+ {k:'cacao',w:'Pedir cacao',re:'cacao',m:'Rendirse, suplicar perdón. Viene del gallo que huye cacareando.'},
+ {k:'guira',w:'Velar güira',re:'vel(ar|ando) güira',m:'Estar al acecho esperando la oportunidad pa\' aprovecharse.'},
+ {k:'pichar',w:'Pichar',re:'pich(ar|ando|ó)',m:'Ignorar a alguien.'},
+ {k:'bombito',w:'Bombito al pítcher',re:'bombito al p[ií]tcher',m:'Algo facilísimo.'},
+ {k:'bairoa',w:'¡Sopla Bairoa!',re:'sopla bairoa',m:'¡Dale duro! Grito de ánimo que popularizó Ramito, el trovador del barrio Bairoa de Caguas, y que adoptaron los fanáticos de los Criollos.'},
+ {k:'estofon',w:'Estofón',re:'estof[oó]n',m:'Comelibros, el que saca A en todo.'},
+ {k:'aji',w:'Ser un ají',re:'un ají',m:'Nene travieso con energía de más.'},
+ {k:'culillo',w:'Culillo',re:'culillo',m:'Inquietud de no poder estarse quieto.'},
+ {k:'sajori',w:'Sajorí',re:'sajor[ií]',m:'Nene inquieto y metido en todo.'},
+ {k:'esnemao',w:'Esñemao',re:'esñema',m:'Agotado, sin fuerzas.'},
+ {k:'embrollao',w:'Embrollao',re:'embrolla',m:'Lleno de deudas.'},
+ {k:'tusa',w:'Arrancao como una tusa',re:'tusa',m:'Sin un chavo. La tusa es lo que queda del maíz cuando le quitas los granos.'},
+ {k:'mixta',w:'Mixta',re:'mixta',m:'Arroz, habichuelas y carne guisada. "Con pájaro en el estribo": con salchichas.'},
+ {k:'quesito',w:'Quesito',re:'quesito',m:'Hojaldre enrollado con queso crema y azúcar por encima.'},
+ {k:'tubo',w:'Por un tubo y siete llaves',re:'siete llaves',m:'En abundancia.'},
+ {k:'pidequehay',w:'¡Pide, que hay!',re:'pide,? que hay',m:'"Aquí sobra." Pregón de un negocio de Caguas en los \'40.'},
+ {k:'paquetero',w:'Paquetero',re:'paqueter',m:'Mentiroso de cuentos bien elaborados.'},
+ {k:'aguajero',w:'Aguajero',re:'aguajer',m:'El que amenaza o promete y no cumple.'},
+ {k:'name',w:'Ñame con corbata',re:'ñame con corbata',m:'Alguien inepto que se viste de importante. Casi siempre, un político.'},
+ {k:'coco',w:'Estar como coco',re:'como coco',m:'Fuerte y saludable.'},
+ {k:'gallina',w:'La gallina de arriba ensucia a la de abajo',re:'gallina de arriba',m:'Los de abajo siempre salen perjudicados.'},
+ {k:'cucaracha',w:'Como cucaracha en baile de gallinas',re:'cucaracha en baile',m:'Fuera de lugar, incómodo.'},
+ {k:'titingo',w:'Titingó',re:'titing[oó]',m:'Alboroto, lío. Un africanismo.'},
+ {k:'jurutungo',w:'Jurutungo',re:'jurutungo',m:'Un lugar lejísimo.'},
+ {k:'choreto',w:'Choreto',re:'choret',m:'Abundante, que hay de sobra.'},
+ {k:'frisa',w:'Se te pegó la frisa',re:'peg[oó] la frisa',m:'Te quedaste dormido y llegaste tarde.'},
+ {k:'morra',w:'Morra',re:'\\bmorra',m:'El mal humor de recién levantado.'},
+ {k:'amogollao',w:'Amogollao',re:'amogolla',m:'Arroz demasiado blando. También, un lío.'},
+ {k:'asalto',w:'¡Asalto!',re:'asalto',m:'Llegar de sorpresa a una casa con una parranda navideña.'},
+ {k:'octavitas',w:'Las octavitas',re:'octavitas',m:'Ocho días más de fiesta después de Reyes. La Navidad boricua no se acaba.'},
+ {k:'pitorro',w:'Pitorro',re:'pitorro',m:'Ron casero de caña. Ilegal, pero en todas las parrandas.'},
+ {k:'charco',w:'Brincar el charco',re:'brinc(ar|ó|a) el charco',m:'Irse pa\' Estados Unidos.'},
+ {k:'allafuera',w:'Allá fuera',re:'allá fuera',m:'Estados Unidos.'},
+ {k:'ciriaco',w:'San Ciriaco',re:'san ciriaco',m:'El huracán de 1899. "Peor que San Ciriaco" es lo peor que se puede ser.'},
+ {k:'dinga',w:'Dinga y mandinga',re:'dinga',m:'"El que no tiene dinga, tiene mandinga": todo boricua tiene raíces africanas.'},
+ {k:'enfogonao',w:'Enfogonao',re:'enfogona',m:'Enojado, que echa fuego.'},
+ {k:'bendito',w:'¡Ay bendito!',re:'bendito',m:'Compasión, pena. El boricua lo dice por todo.'},
+ {k:'wepa',w:'¡Wepa!',re:'wepa',m:'¡Celebración!'}];
 // Leyendas: discovered through places, people and events. Each one pays 5 coquís the first time.
 const LEGENDS=[
  {id:'garita',name:'La Garita del Diablo',where:'Viejo San Juan',lore:'En una noche de tormenta, el soldado Sánchez desapareció de una garita del Castillo San Cristóbal. Solo quedaron su uniforme y un olor a azufre. Dicen que se lo llevó el Diablo.'},
@@ -1069,7 +1135,7 @@ const TRIPS=[
    {label:'Comprarte uno también',d:{chavos:-2,feli:3},out:'El mejor pastelillo de tu vida. El chofer te guiñó el ojo.'},
    {label:'Dormir el viaje',d:{salud:2},out:'Te despertaste con la cara pegada al cristal y el faro de Arecibo enfrente.'}]}},
  {id:'utuado',name:'Utuado',how:'Público',fare:10,publico:true,blurb:'Montaña adentro. Lagos, ríos, café y el corazón taíno de la isla.',
-  arrive:{kicker:'Público · 2 horas',title:'Utuado',body:'La carretera sube y sube con curvas que no se acaban. En una, el público tuvo que parar porque un caballo suelto no se quería mover. Hace fresco. Fresco de verdad.',ch:[
+  arrive:{kicker:'Público · 2 horas',title:'Utuado',body:'La carretera sube y sube con curvas que no se acaban. En una, el público tuvo que parar porque un caballo suelto no se quería mover. Hace fresco. Fresco de verdad. "Bienvenido al jurutungo", dice el chofer.',ch:[
    {label:'Bajarte a empujar el caballo',d:{resp:2,salud:-1},out:'El caballo te miró como si el loco fueras tú. Pero se movió.'},
    {label:'Respirar el aire de la montaña',d:{feli:4},out:'Huele a café y a tierra mojada. Nada que ver con el Expreso.'}]}},
  {id:'caguas',name:'Caguas',how:'Público',fare:4,publico:true,blurb:'El Valle del Turabo. La Montaña de la India, la botánica y la ceiba de la plaza.',
@@ -1195,7 +1261,7 @@ const QUESTS={
  ch2:{title:'La evidencia',where:'La alcaldía · Canóvanas',place:'alcaldia',act:{label:'Llevarle la historia al alcalde',fx:'Leyenda · final',cost:1,d:{}},reward:{coquis:10},out:'Saliste en las noticias de Canóvanas.',
   card:{kicker:'La alcaldía de Canóvanas',title:'Indiana Pérez',body:'El alcalde se puso el sombrero de explorador antes de que terminaras de hablar. Llamó a la prensa. "¡Tenemos testigos!" En una hora había dos cámaras, un señor vendiendo camisetas y Don Chuco dando entrevistas.',ch:[
    {label:'Vender camisetas con tu cara',d:{chavos:25,resp:3},out:'"EL NENE QUE LO VIO". Se vendieron todas. El alcalde quería un porcentaje.'},
-   {label:'Decirle a la cámara que eran perros',d:{coco:4,resp:-2},out:'El alcalde te quitó el micrófono. Don Chuco no te habla. La cabra está bien.'}]}},
+   {label:'Decirle a la cámara que eran perros',d:{coco:4,resp:-2},out:'Don Chuco dice que el alcalde es un ñame con corbata. El alcalde te quitó el micrófono. Don Chuco no te habla. La cabra está bien.'}]}},
  co1:{title:'La cueva de Cofresí',where:'Faro Los Morrillos · Cabo Rojo',place:'faro',act:{label:'Bajar a la cueva debajo del faro',fx:'Leyenda',cost:2,d:{}},reward:{coquis:5},out:'La cueva tenía una marca.',next:'co2',
   card:{kicker:'Debajo de Los Morrillos',title:'La cueva',body:'Bajas agarrado de las piedras con la marea subiendo. Adentro, en la pared, alguien talló hace mucho una R y una C. Y una flecha que apunta al sur, hacia Buyé.',ch:[
    {label:'Seguir la flecha',d:{coco:2},legend:'cofresi',out:'El mapa del Capitán Mito tenía una X en Buyé. Igualito.'},
@@ -1213,7 +1279,23 @@ const JAIL=[
  {title:'Abuela vino a visitarte',body:'Trajo pastelillos escondidos en la cartera.',ch:[{label:'Prometerle que voy a cambiar',d:{feli:8,calor:-10}},{label:'No mirarla a los ojos',d:{feli:-6}}]},
  {title:'Te ofrecen la cocina',body:'Paga casi nada, pero el tiempo pasa más rápido.',ch:[{label:'Dale',d:{chavos:15,salud:3}},{label:'Prefiero el patio',d:{salud:4,resp:2}}]}];
 const EVENTS=[
- {kicker:'Colmado Don Pepe · 7am',title:'Le chuparon los gallos a Don Pepe',body:'Don Pepe encontró sus dos gallos de pelea tiesos detrás del colmado. "Ni una gota de sangre", dice. Media fila del colmado ya sabe quién fue.',ch:[
+ {kicker:'Tu apto · una caja vieja',title:'La revista El Caserío',body:'Debajo de los álbumes, Abuela guarda una revista amarilla de 1946: "El Caserío". Fotos de familias saliendo de casitas en zocos sobre el mangle, sin luz ni agua. Del otro lado, edificios nuevos con baño, cocina y patio. "Mi mamá llegó así, del campo al arrabal y del arrabal aquí", dice Abuela. "Esto era un milagro. Después la gente de afuera empezó a decir \'gente de caserío\' como insulto, y el gobierno le cambió el nombre a \'residencial\'. Como si el nombre fuera el problema."',ch:[
+   {label:'Llevarla a la clase de Mrs. Cintrón',d:{coco:4,resp:2},grow:'orador',out:'Hiciste una presentación. Nadie en el salón sabía esa historia. Mrs. Cintrón te pidió una copia.'},
+   {label:'Guardarla con cuidado',d:{feli:3,abuAff:3},out:'Abuela te la regaló. "Pa\' que no se te olvide de dónde vienes."'}],bodyDead:'En una caja de Abuela hay una revista amarilla de 1946: "El Caserío". Familias saliendo de casitas en zocos sobre el mangle; edificios nuevos con baño, cocina y luz. En el margen, en la letra de Abuela: "Mamá llegó así." Después la gente de afuera empezó a decir "gente de caserío" como insulto, y el gobierno le cambió el nombre a "residencial".'},
+ {kicker:'Milla de Oro · Hato Rey',title:'La dirección',body:'Entrevista pa\' un trabajo de verano en un banco, a diez minutos caminando del bloque. Todo iba bien hasta que la señora leyó tu dirección: Res. Las Palmas de Oro. Se le cambió la cara. En el lobby te sentiste como cucaracha en baile de gallinas.',ch:[
+   {label:'Hablarle con pico de oro',d:{resp:4,coco:2},grow:'orador',out:'Le hablaste de la escuela, de los libros de Abuela, del bloque. Te dieron el trabajo. Suerte no, maroma. Saliste enfogonao igual.'},
+   {label:'Poner la dirección de Titi Wanda la próxima vez',d:{feli:-3,coco:1},out:'Funciona. Y duele que funcione.'},
+   {label:'Levantarte e irte',d:{resp:3,feli:-2},out:'"Gracias por su tiempo." Bajaste los diez minutos caminando con la cabeza en alto.'}]},
+ {kicker:'Tu apto · 7:48am',title:'Se te pegó la frisa',body:'La alarma sonó a las 6. La apagaste "por cinco minutos". Son las 7:48 y la guagua de la escuela se fue. Te levantas con una morra que no te soportas ni tú.',ch:[
+   {label:'Correr a la escuela',d:{salud:2,coco:2,feli:-2},out:'Llegaste sudao al segundo periodo. Mrs. Cintrón solo levantó una ceja.'},
+   {label:'Quedarte, total ya es tarde',d:{feli:3,coco:-3},out:'Desayunaste con Abuela. Te dijo que eso no se repite. Se repitió.'}]},
+ {kicker:'La cocina de Abuela',title:'El arroz con pegao',body:'Abuela te va a enseñar a hacer arroz. "Ni mucha agua ni poca. Si te queda amogollao, lo botamos y empezamos otra vez. Y el pegao es pa\' quien friega."',ch:[
+   {label:'Hacerlo a su manera',d:{abuAff:4,salud:2},out:'Te quedó un poco amogollao. Abuela se lo comió igual y dijo que estaba perfecto.',outDead:'Lo hiciste como ella decía. Te quedó un poco amogollao. Estaba perfecto.'},
+   {label:'Ponerle tu toque',d:{feli:3,abuAff:1},out:'Le echaste sofrito de más. Abuela dice que tienes futuro, pero que no se lo digas a nadie.'}]},
+ {kicker:'La cancha · despedida',title:'Brayan brinca el charco',body:'Brayan, el de la Crew del 7, se va pa\' Orlando el lunes. Su mamá consiguió trabajo allá fuera. Es el tercero del bloque este año.',ch:[
+   {label:'Hacerle una despedida en la cancha',d:{feli:4,resp:3,chavos:-5},out:'Pizza, música y una camiseta firmada por toda la Crew. Brayan lloró y dijo que vuelve en Navidad. Todos dicen eso.'},
+   {label:'Preguntarle por qué se va',d:{coco:2,feli:-2},out:'"Aquí no hay chamba, bro. Allá fuera por lo menos hay chavos." No supiste qué contestarle.'}]},
+ {kicker:'Colmado Don Pepe · 7am',title:'Le chuparon los gallos a Don Pepe',body:'Don Pepe encontró sus dos gallos de pelea tiesos detrás del colmado. "Ni una gota de sangre. Y esos gallos nunca pidieron cacao en la gallera", dice. Se formó un titingó en el colmado. Media fila ya sabe quién fue.',ch:[
    {label:'"Fue el Chupacabras"',d:{feli:2},legend:'chupacabra',out:'Don Pepe asintió serio. "Eso mismo dijo Wichi." Wichi dijo que fue una jauría.'},
    {label:'Ir a Canóvanas a investigar',d:{coco:1},startQ:'ch1',out:'Dicen que en Canóvanas hay un señor, Don Chuco, que lo vio en el \'95.'}]},
  {kicker:'Tu apto · Edif. 7',title:'Haciendo de Juan Bobo',body:'Abuela te pidió que trajeras "algo pa\' la cena que no se riegue". Llegaste con un caldero de habichuelas… en una bolsa del colmado. Abuela se rió hasta llorar y te contó de Juan Bobo, el que cargaba agua en una canasta.',ch:[
@@ -1222,7 +1304,7 @@ const EVENTS=[
  {kicker:'La lavandería',title:'La Cucarachita Martina del 5',body:'Martina, la sobrina de Doña Fela, se encontró $20 barriendo la lavandería. Se compró un traje y ahora tiene tres pretendientes: el corillero de las bocinas, el del carro con aros cromados y Ratón, el callado del 3.',ch:[
    {label:'"Escoge a Ratón"',d:{feli:3},legend:'cucarachita',out:'Doña Fela aplaudió: "¡Como en el cuento! La Cucarachita escogió al Ratoncito Pérez, el que hablaba bajito."'},
    {label:'"Quédate con los $20"',d:{coco:2},legend:'cucarachita',out:'"Esa es la versión moderna", dijo Doña Fela. "Me gusta."'}]},
- {kicker:'Edif. 7 · 10pm',title:'El nene de la vecina no se duerme',body:'Cuidas al nene de la vecina del segundo. Son las 10 y está brincando en el sofá con una sobredosis de malta.',ch:[
+ {kicker:'Edif. 7 · 10pm',title:'El nene de la vecina no se duerme',body:'Cuidas al nene de la vecina del segundo. Son las 10 y está brincando en el sofá con una sobredosis de malta. Es un ají, un sajorí. Tiene un culillo que no se aguanta.',ch:[
    {label:'"Si no te duermes, viene el Cuco"',d:{resp:1},legend:'cuco',out:'Se durmió en tres minutos. Abuela te miró desde la puerta: "A ti también te funcionaba."'},
    {label:'Contarle un cuento',d:{feli:3,coco:1},legend:'cuco',out:'Le contaste de Juan Bobo. Se durmió a la mitad, riéndose.'}]},
  {kicker:'Camino del colmado · 1am',title:'El señor de las guayabas',body:'Bajando de la cancha, un señor flaco te para debajo del palo de guayabas. "¿Tienes una guayaba madura?" Cuando se estira pa\' alcanzar una rama, se le sube la camisa. No tiene ombligo.',ch:[
@@ -1238,12 +1320,12 @@ const EVENTS=[
    {label:'Comprarle una a Abuela',d:{chavos:-5,abuSalud:3,abuAff:3},legend:'sanamuerto',out:'Abuela se la tomó con fe. Dice que se siente mejor. Puede ser.'},
    {label:'"Eso es agua de la pluma"',d:{coco:2},legend:'sanamuerto',out:'La vecina se ofendió. Abuela compró una igual cuando no estabas.'}]},
  {kicker:'Colmado Don Pepe',title:'Cuando llegó la Guardia',body:'Don Pepe saca una foto vieja: soldados con rifles en la entrada del caserío, en los \'90. "Mano Dura, le decían. Cercaron el bloque. Revisaban a todo el mundo, culpable o no. A mi hijo lo tiraron al piso por llegar tarde del trabajo."',ch:[
-   {label:'"¿Y funcionó?"',d:{coco:3},out:'"Se fueron los soldados y el punto seguía ahí. Lo que cambió fue cómo nos miraba la gente de afuera."'},
+   {label:'"¿Y funcionó?"',d:{coco:3},out:'"Se fueron los soldados y el punto seguía ahí. Lo que cambió fue cómo nos miraba la gente de afuera. La gallina de arriba ensucia a la de abajo, y aquí estamos abajo."'},
    {label:'Escuchar toda la historia',d:{coco:2,resp:2},out:'Te contó cuando construyeron el caserío, con gente que bajó del campo y salió de los arrabales. "Esto era un sueño, {mijo}. Todavía puede serlo."'}]},
- {kicker:'Tu apto · día 1 del mes',title:'Llegaron los cupones',body:'Abuela tiene la tarjeta del PAN en una mano y la libreta de cuentas en la otra. Hay que estirar el mes.',ch:[
+ {kicker:'Tu apto · día 1 del mes',title:'Llegaron los cupones',body:'Abuela tiene la tarjeta del PAN en una mano y la libreta de cuentas en la otra. Hay que estirar el mes. "Estamos embrollaos, {mijo}. Arrancaos como una tusa."',ch:[
    {label:'Ayudarla con las cuentas',d:{coco:3,abuAff:3},out:'Arroz, habichuelas, huevos, leche. Te diste cuenta de todo lo que ella hace pa\' que nunca falte.'},
    {label:'Darle de tus chavos',d:{chavos:-15,abuAff:6},out:'No quería aceptarlos. Los aceptó. Esa noche hubo pollo.'}]},
- {kicker:'Detrás del Edif. 3',title:'"Es la que hay, papi"',body:'Kiko te espera a la salida de la escuela. "Tú eres inteligente, pero la escuela no paga la luz. El punto sí. Es la que hay, papi."',ch:[
+ {kicker:'Detrás del Edif. 3',title:'"Es la que hay, papi"',body:'Kiko te espera a la salida de la escuela. "Tú eres un estofón, pero la escuela no paga la luz. El punto sí. Es la que hay, papi."',ch:[
    {label:'Irte a la biblioteca',d:{coco:4},grow:'orador',out:'Kiko se encogió de hombros. "Tú sabrás." Pero te miró como si quisiera ir contigo.'},
    {label:'Irte a hacer música en el techo',d:{feli:3,resp:2},out:'Escribiste dieciséis barras sobre Kiko. Nunca se las enseñaste.'},
    {label:'"Explícame cómo es"',d:{chavos:15,calor:6},out:'Kiko sonrió. "Así se habla." Esa noche no dormiste bien.'}]},
@@ -1251,12 +1333,12 @@ const EVENTS=[
    {label:'Abrazar a su mamá',d:{feli:-6,resp:3},out:'"Tú eras su pana", te dijo. "Hazme el favor de llegar a viejo."'},
    {label:'Prometerte que no vas a terminar así',d:{feli:-4,coco:3},grow:'orador',out:'Esa noche escribiste una página entera. La guardaste en el libro de Abuela.'},
    {label:'Buscar a los que fueron',d:{resp:5,calor:10,feli:-5},out:'Yeyo te frenó en la escalera. "Esto no es tuyo. No lo hagas tuyo."'}]},
- {kicker:'Mensaje de Titi Wanda',title:'Tu primo Rafy',body:'Rafy, el hijo mayor de Titi Wanda, volvió a pedir chavos. Todo el mundo sabe pa\' qué. Titi Wanda sufre en silencio.',ch:[
+ {kicker:'Mensaje de Titi Wanda',title:'Tu primo Rafy',body:'Rafy, el hijo mayor de Titi Wanda, volvió a pedir chavos. Todo el mundo sabe pa\' qué. Titi Wanda sufre en silencio. «Ay, bendito», es lo único que dice.',ch:[
    {label:'Llevarlo a un programa de rehabilitación',d:{feli:-2,resp:3},out:'Lo dejaste en la puerta. Duró una semana. La segunda vez fue él solo.'},
    {label:'No darle nada',d:{feli:-3},out:'Rafy te miró como si no te conociera. Titi Wanda te dio las gracias bajito.'},
    {label:'Darle $10',d:{chavos:-10,feli:-2},out:'Te dio un abrazo flaco. Sabes lo que hiciste. Él también.'}]},
  {kicker:'Edificio 7 · 6:40 am',title:'Abuela está mareada',body:'La encontraste sentada en la cocina, sudando frío. Dice que es la presión, que no es nada. El glucómetro está en la gaveta, sin usar.',ch:[
-   {label:'Llevarla al CDT',d:{chavos:-15,abuSalud:15,abuAff:5},out:'Tenía el azúcar en 380. La doctora la regañó. Abuela la regañó de vuelta.'},
+   {label:'Llevarla al CDT',d:{chavos:-15,abuSalud:15,abuAff:5},out:'"Ya estoy como coco", dijo saliendo. Tenía el azúcar en 380. La doctora la regañó. Abuela la regañó de vuelta.'},
    {label:'Medirle el azúcar y darle la insulina',d:{abuSalud:8,abuAff:3,coco:1},out:'Aprendiste a usar el glucómetro. Abuela dice que tienes manos de enfermero.'},
    {label:'"Seguro es el calor"',d:{abuSalud:-8},out:'Se acostó un rato. Dijo que estaba bien. No estaba bien.'}]},
  {kicker:'Edificio 7 · 8:12 pm',title:'Se fue la luz. Otra vez.',body:'Hace 90 grados y todo el bloque está a oscuras. Se escuchan las chicharras y a {abuela} quejándose.',ch:[
@@ -1297,7 +1379,7 @@ const THREADS=[
    {t:'Ya comí en el colmado',d:{feli:-2},a:'Ese colmado te va a matar. Ok.'}]},
  {id:'yadiel',name:'Yadiel (primo)',ini:'Y',bg:'var(--color-accent-2-300)',msgs:['Bro','Hay pickup a las 6 en la cancha, ¿te tiras?'],replies:[
    {t:'Tamo ahí',d:{resp:2},a:'Así es. Después del juego te enseño cómo subir al techo del 7.',unlock:'techo'},
-   {t:'Hoy no puedo',d:{},a:'Flojo. Pues sube al techo del 7 y piensa en tu vida. La puerta no cierra.',unlock:'techo'}]},
+   {t:'Hoy no puedo',d:{},a:'Flojo. Me estás pichando. Pues sube al techo del 7 y piensa en tu vida. La puerta no cierra.',unlock:'techo'}]},
  {id:'crew',name:'La Crew del 7',ini:'7',bg:'var(--color-neutral-300)',msgs:['Mañana hay fiesta en la cancha','¿Alguien tiene bocina?'],replies:[
    {t:'Yo traigo la mía',d:{resp:4},a:'LEYENDA'},
    {t:'Yo traigo el hielo',d:{chavos:-4,resp:2},a:'Eso es ser buena gente.'}]}];
@@ -1319,12 +1401,13 @@ THREADS.push(
    {t:'Eso eran perros',d:{coco:1},a:'Eso dijo el gobierno. Ven y me lo dices en la cara a las 3am.',startQ:'ch1'}]},
  {id:'mito',hidden:true,name:'Capitán Mito',ini:'M',bg:'var(--sun)',msgs:['Mi tatarabuelo navegó con Cofresí. Tengo el mapa original. Bueno, una copia de la copia.','Te lo dejo en $10 porque me caes bien.'],replies:[
    {t:'Dame el mapa',d:{chavos:-10},a:'La X está debajo de Los Morrillos. Empieza por la cueva. Y no le digas a nadie.',startQ:'co1'},
-   {t:'Eso es un tumbe',d:{resp:1},a:'¡Tumbe! Bueno, si cambias de idea, aquí estoy hasta que baje el sol.'}]},
+   {t:'Mito, tú eres un paquetero',d:{resp:1},a:'¡Paquetero yo! ¿Y aguajero también? Bueno, si cambias de idea, aquí estoy hasta que baje el sol.'}]},
  {id:'tata',hidden:true,name:'Doña Tata (Bayamón)',ini:'T',bg:'var(--sun)',msgs:['Cuarenta años friendo chicharrón en la Carretera 2. Yo he visto de todo.','Si quieres chamba los fines de semana, aquí hay caldero pa\' ti.'],replies:[
    {t:'Cuente conmigo',d:{chavos:5},a:'Ven el sábado. Trae camiseta vieja que el aceite salta.'},
    {t:'¿Usted ha visto qué?',d:{coco:2},a:'En el \'75 en Moca hablaban de un vampiro que mataba animales. Mi papá decía que eran los perros. Mi mamá ponía ajo en la puerta.'}]},
  {id:'nilsa',hidden:true,name:'Maestra Nilsa (bomba)',ini:'N',bg:'var(--color-accent)',msgs:['El barril no se toca con las manos, se toca con la historia.','En julio son las Fiestas de Santiago Apóstol. Vente a ver los vejigantes.'],replies:[
    {t:'¿Me enseña?',d:{resp:2},a:'Los sábados a las 10. Descalzo. Y respeta el primo.'},
+   {t:'¿Yo tengo raíces de aquí?',d:{feli:3},a:'El que no tiene dinga, tiene mandinga, {mijo}. Todo boricua lleva África adentro. Ven a tocar.'},
    {t:'¿Qué son los vejigantes?',d:{coco:2},a:'Máscaras de coco con cuernos. Representan a los moros en la fiesta de Santiago. Aquí los hicimos nuestros.'}]},
  {id:'wilfredo',hidden:true,name:'Don Wilfredo (pescador)',ini:'W',bg:'var(--color-accent-2-200)',msgs:['Cuarenta años pescando en este rompeolas. El mar me ha contado cosas.','¿Tú has oído de Carabalí?'],replies:[
    {t:'Cuéntemelo',d:{coco:2},a:'Escapó de la esclavitud y peleó desde el monte. Lo acorralaron en una cueva en Utuado. Si vas, entra con respeto.',legend:'carabali'},
@@ -1336,7 +1419,7 @@ THREADS.push(
    {t:'Vengo en paz',d:{resp:2},a:'Así me gusta. La cancha es de todo el mundo.'},
    {t:'¿Y si gano?',d:{resp:3,calor:2},a:'Si ganas, te invito una Medalla. Si ganas mucho, no vuelvas.'}]},
  {id:'cintron',hidden:true,name:'Mrs. Cintrón',ini:'C',bg:'var(--color-surface)',msgs:['You are in my third period class, right? Siempre llegas tarde.','Tienes potencial. Los martes doy tutorías gratis en la biblioteca.'],replies:[
-   {t:'Yes, Mrs. Allí estaré',d:{coco:3},a:'Good. Trae lápiz. Y no llegues tarde.'},
+   {t:'Yes, Mrs. Allí estaré',d:{coco:3},a:'Good. Si estudias, el examen va a ser un bombito al pítcher. Y no llegues tarde.'},
    {t:'Lo voy a pensar',d:{},a:'Thinking is good. Doing is better.'}]},
  {id:'rosado',hidden:true,name:'Agente Rosado',ini:'R',bg:'var(--color-neutral-400)',msgs:['Tú eres {elnieto} de {abuela}. Yo me crié en el 5, ¿sabías?','Si tienes coraje, bótalo en el gimnasio debajo del puente. No en la calle.'],replies:[
    {t:'¿Usted entrena ahí?',d:{},a:'Todos los días a las 6. Pregunta por mí.',unlock:'gimnasio'},
@@ -1385,7 +1468,7 @@ const BR_RANK=[1,3,12,11,10,7,6,5,4,2],BR_PTS={1:11,3:10,12:4,11:3,10:2};
 const cl=v=>Math.max(0,Math.min(100,v));
 
 class Component extends DCLogic {
-  state={look:{skin:2,hair:'corto',hc:0,top:'tee',tc:0,hat:false,chain:false},closet:false,screen:'title',cas:'cantera',name:'',apodo:'',abuName:'',names:{},visited:{},legends:{},passXP:0,claimed:{},daily:{},fam:'mami',abu:{aff:30,salud:70,dead:false,hosp:false},trait:'pelotero',tab:'barrio',s:{salud:72,feli:65,coco:40,resp:15},chavos:25,animo:5,coquis:40,calor:0,day:1,age:16,turf:{e7:'nadie',e5:'nadie',e3:'rival',cancha:'nadie'},enemies:[],armed:false,pos:{x:49,y:50},dayStart:Date.now(),quests:{},unlocked:{},jobs:{},zone:'bloque',areas:{bloque:true},path:null,dev:{},gender:'chico',likes:'chicas',love:{},partner:null,married:false,gen:1,dead:null,jail:null,mg:null,sheet:null,ev:null,result:null,log:[],toast:null,thread:null,th:{},noAnimo:false,owned:{},pass:false,ad:0,evi:0};
+  state={look:{skin:2,hair:'corto',hc:0,top:'tee',tc:0,hat:false,chain:false},closet:false,screen:'title',cas:'cantera',name:'',apodo:'',abuName:'',names:{},visited:{},legends:{},words:{},passXP:0,claimed:{},daily:{},fam:'mami',abu:{aff:30,salud:70,dead:false,hosp:false},trait:'pelotero',tab:'barrio',s:{salud:72,feli:65,coco:40,resp:15},chavos:25,animo:5,coquis:40,calor:0,day:1,age:16,turf:{e7:'nadie',e5:'nadie',e3:'rival',cancha:'nadie'},enemies:[],armed:false,pos:{x:49,y:50},dayStart:Date.now(),quests:{},unlocked:{},jobs:{},zone:'bloque',areas:{bloque:true},path:null,dev:{},gender:'chico',likes:'chicas',love:{},partner:null,married:false,gen:1,dead:null,jail:null,mg:null,sheet:null,ev:null,result:null,log:[],toast:null,thread:null,th:{},noAnimo:false,owned:{},pass:false,ad:0,evi:0};
   componentDidMount(){
     this.kd=e=>{const m=this.state.mg;if(!m||m.type!=='chase')return;const v={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]}[e.key];if(v){e.preventDefault();this.move(v[0],v[1])}};window.addEventListener('keydown',this.kd);
     this.ck=setInterval(()=>{if(Date.now()-this.state.dayStart>=DAYMS)this.sleep();else this.forceUpdate()},30000);
@@ -1399,9 +1482,9 @@ class Component extends DCLogic {
     document.addEventListener('visibilitychange',this.onHide);window.addEventListener('pagehide',this.save);
   }
   componentDidUpdate(){clearTimeout(this.svt);this.svt=setTimeout(this.save,400)}
-  continueLife(){const v=readSave();if(!v)return this.setState({hasSave:false});MODE=CAS_TR[v.cas]||'tren';FAM=v.fam||'mami';const abu=v.abu||this.fresh.abu;ABU_DEAD=!!abu.dead;this.setState({...v,visited:v.visited||{},legends:v.legends||{},abuName:v.abuName||'',names:v.names||{},passXP:v.passXP||0,claimed:v.claimed||{},daily:v.daily||{},abu,screen:'hub',hasSave:true});
+  continueLife(){const v=readSave();if(!v)return this.setState({hasSave:false});MODE=CAS_TR[v.cas]||'tren';FAM=v.fam||'mami';const abu=v.abu||this.fresh.abu;ABU_DEAD=!!abu.dead;this.pendW={};this.setState({...v,visited:v.visited||{},legends:v.legends||{},words:v.words||{},abuName:v.abuName||'',names:v.names||{},passXP:v.passXP||0,claimed:v.claimed||{},daily:v.daily||{},abu,screen:'hub',hasSave:true});
     if(v.quests&&v.quests.pan==='done'&&v.quests.caja==='done'&&!v.quests.foto)setTimeout(()=>this.startQuest('foto'),3000)}
-  newLife(){ABU_DEAD=false;this.setState({...this.fresh,dayStart:Date.now(),hasSave:this.state.hasSave})}
+  newLife(){ABU_DEAD=false;this.pendW={};this.setState({...this.fresh,dayStart:Date.now(),hasSave:this.state.hasSave})}
   componentWillUnmount(){this.save();clearTimeout(this.svt);document.removeEventListener('visibilitychange',this.onHide);window.removeEventListener('pagehide',this.save);clearInterval(this.cmi);clearTimeout(this.bt);window.removeEventListener('keydown',this.kd);clearInterval(this.ck);clearInterval(this.ci);clearTimeout(this.tt);clearInterval(this.ai);clearInterval(this.hi);clearTimeout(this.dt);}
   max(){const s=this.state;return (this.props.animoMax??5)+(s.owned.colchon?1:0)+(s.owned.tenis?1:0)+(s.pass?1:0)+(s.s.salud>=80?1:0)}
   say(t){clearTimeout(this.tt);this.setState({toast:t});this.tt=setTimeout(()=>this.setState({toast:null}),2000)}
@@ -1431,6 +1514,10 @@ class Component extends DCLogic {
   learn(id){if((this.state.legends||{})[id])return;const L=LEGENDS.find(x=>x.id===id);if(!L)return;
     this.setState(s=>({legends:{...(s.legends||{}),[id]:true},coquis:s.coquis+5}));this.addLog('Nueva leyenda: '+L.name+'.');
     clearTimeout(this.lgt);this.lgt=setTimeout(()=>this.say('Nueva leyenda: '+L.name+' · +5 coquís'),1100)}
+  learnWords(text){if(!text)return;const t=String(text),known=this.state.words||{};this.pendW=this.pendW||{};
+    const nw=WORDS.filter(w=>!known[w.k]&&!this.pendW[w.k]&&new RegExp(w.re,'i').test(t));if(!nw.length)return;nw.forEach(w=>this.pendW[w.k]=1);
+    this.setState(st=>{const words={...(st.words||{})};nw.forEach(w=>words[w.k]=true);return {words,coquis:st.coquis+nw.length}});
+    this.wq=[...(this.wq||[]),...nw.map(w=>w.w)];clearTimeout(this.wt);this.wt=setTimeout(()=>{this.say('Diccionario: '+this.wq.join(', ')+' · +'+this.wq.length+(this.wq.length===1?' coquí':' coquís'));this.wq=[]},2300)}
   startQuest(k){const q=QUESTS[k];if(this.state.quests[k])return;
     this.setState(s=>({quests:{...s.quests,[k]:'active'},unlocked:{...s.unlocked,[q.place]:true}}));
     if(q.intro&&q.thread&&!(q.thread==='abuela'&&ABU_DEAD))this.pushMsg(q.thread,q.intro);
@@ -1445,6 +1532,7 @@ class Component extends DCLogic {
     if(a.soon){this.setState({sheet:null});return this.say('Próximamente: '+a.label)}
     if(a.meet)return this.meetP(a.meet);
     if(a.travel){this.setState({sheet:null,travel:true});return}
+    this.learnWords(this.gx(a.label+' '+(a.fx||'')+' '+((LOCS.find(l=>l.id===st.sheet)||{}).note||'')));
     if(a.reqSalud&&st.s.salud<a.reqSalud)return this.say('Necesitas '+a.reqSalud+' Salud pa\' eso.');
     if(a.req&&st.s.resp<a.req)return this.say('Necesitas '+a.req+' Respeto pa\' eso.');
     if(a.weapon&&st.armed)return this.say('Ya tienes una.');
@@ -1453,7 +1541,7 @@ class Component extends DCLogic {
     if(a.daily&&(st.daily||{})[a.daily]){this.setState({sheet:null});return this.say('Ya te tomaste uno hoy. Vuelve mañana.')}
     if(a.daily)this.setState(s=>({daily:{...(s.daily||{}),[a.daily]:true}}));
     let d=a.d||{};if(a.crime&&!ABU_DEAD)d={...d,abuAff:(d.abuAff||0)-2};
-    if(a.gamble){if(st.chavos<a.gamble.bet){this.setState({sheet:null});return this.say('No te da pa\' la apuesta.')}const w=Math.random()<a.gamble.p;d={...d,chavos:w?a.gamble.win:-a.gamble.bet};setTimeout(()=>this.say(w?'¡Ganó tu caballo! +$'+a.gamble.win:'Tu caballo llegó último. −$'+a.gamble.bet),60)}
+    if(a.gamble){if(st.chavos<a.gamble.bet){this.setState({sheet:null});return this.say('No te da pa\' la apuesta.')}const w=Math.random()<a.gamble.p;d={...d,chavos:w?a.gamble.win:-a.gamble.bet};const gm=w?'¡Qué leche! Tú naciste parao. Ganó tu caballo, de chivo. +$'+a.gamble.win:'¡Qué salaera! Tu caballo llegó último. −$'+a.gamble.bet;setTimeout(()=>this.say(gm),60);this.learnWords(gm)}
     if(a.legend)this.learn(a.legend);const cat=a.cat||(a.crime?'calle':PLACECAT[st.sheet]);
     if(cat&&!a.nodev&&!a.qid&&!a.mg&&DEV[cat]&&this.has(cat)&&DEV[cat].d)d=this.merge(d,DEV[cat].d);
     if((d.chavos||0)<0&&st.chavos<-d.chavos){this.say('No te dan los chavos pa\' eso.');return}
@@ -1515,16 +1603,17 @@ class Component extends DCLogic {
   merge(a,b){const o={...a};Object.keys(b).forEach(k=>o[k]=(o[k]||0)+b[k]);return o}
   grow(c){if(!c||!DEV[c])return;const n=(this.state.dev[c]||0)+1;this.setState(s=>({dev:{...s.dev,[c]:(s.dev[c]||0)+1}}));
     if(n===DEV[c].need){clearTimeout(this.gt);this.gt=setTimeout(()=>this.say('Nuevo rasgo: '+this.dn(c)+' · '+DEV[c].bonus),1300);this.addLog('Ahora eres '+this.dn(c).toLowerCase()+'. '+DEV[c].bonus+'.')}}
-  meetP(id){const t=THREADS.find(x=>x.id===id);this.setState(s=>({sheet:null,th:{...s.th,[id]:{msgs:t.msgs.map(m=>({me:false,t:m})),replies:t.replies,unread:true}}}));this.say('Nuevo contacto en el Cel: '+t.name);this.addLog('Conociste a '+t.name+'.')}
+  meetP(id){const t=THREADS.find(x=>x.id===id);this.learnWords(this.gx(t.msgs.join(' ')));this.setState(s=>({sheet:null,th:{...s.th,[id]:{msgs:t.msgs.map(m=>({me:false,t:m})),replies:t.replies,unread:true}}}));this.say('Nuevo contacto en el Cel: '+t.name);this.addLog('Conociste a '+t.name+'.')}
   checkStory(){const s=this.state;
     if(s.quests.pan==='done'&&s.quests.caja==='done'&&!s.areas.pueblo){
       this.setState(x=>({areas:{...x.areas,pueblo:true},th:{...x.th,yadiel:{...x.th.yadiel,unread:true,msgs:[...x.th.yadiel.msgs,{me:false,t:'Primo, vámonos pa\' San Juan el sábado'},{me:false,t:TR[MODE].yad}],replies:[{t:'Dale, voy ahora',d:{},a:'Eso. Sin pase no hay viaje.',quest:'pase'}]}}}));
       this.say('Capítulo 1 completo · se abrió El pueblo');this.addLog('Capítulo 1 completo. Ya conoces el bloque.');setTimeout(()=>this.startQuest('foto'),5000)}
     if(s.quests.verdad==='done'&&!s.season1){this.setState({season1:true});this.addLog('Temporada 1 completa: ya sabes por qué vives con Abuela.')}
     if(s.quests.pase==='done'&&s.areas.sanjuan)this.say('Viaje listo · se abrió San Juan')}
-  pushMsg(id,t){this.setState(s=>s.th[id]?{th:{...s.th,[id]:{...s.th[id],msgs:[...s.th[id].msgs,{me:false,t}],unread:true}}}:null)}
+  pushMsg(id,t){this.learnWords(this.gx(t));this.setState(s=>s.th[id]?{th:{...s.th,[id]:{...s.th[id],msgs:[...s.th[id].msgs,{me:false,t}],unread:true}}}:null)}
   onReply(r,id){
     if(r.aff!=null&&id&&id.indexOf('love_')===0){const k=id.slice(5);this.setState(s=>({love:{...s.love,[k]:{...s.love[k],aff:Math.min(100,Math.max(0,s.love[k].aff+r.aff))}}}));this.say((r.aff>=0?'+':'')+r.aff+' Afecto');return}
+    this.learnWords(this.gx((r.t||'')+' '+(r.a||'')));
     if(r.legend)this.learn(r.legend);
     if(r.startQ)setTimeout(()=>this.startQuest(r.startQ),800);
     if(r.quest){const q=QUESTS[r.quest];this.setState(s=>({quests:{...s.quests,[r.quest]:'active'},unlocked:{...s.unlocked,[q.place]:true}}));this.say('Nueva misión: '+q.title+' · se abrió '+q.where);return}
@@ -1611,7 +1700,7 @@ class Component extends DCLogic {
   domBlock(m){const a=this.pips(m.me),b=this.pips(m.opp);return {...m,over:true,win:a<b?'win':a>b?'lose':'tie',msg:'Tranque. Tú '+a+' puntos, Don Pepe '+b+'.'}}
   domPlay(i){const m=this.state.mg;if(!m||m.over||m.turn!=='me')return;const t=m.me[i];if(!this.fits(t,m))return;
     let n={...m,...this.place(m,t),me:m.me.filter((_,j)=>j!==i),passes:0,turn:'opp',msg:'Don Pepe está pensando…'};
-    if(!n.me.length)n={...n,over:true,win:'win',msg:'¡Dominaste! Don Pepe dice que fue suerte.'};
+    if(!n.me.length)n={...n,over:true,win:'win',msg:'¡Capicú! Dominaste. Don Pepe dice que fue de chivo.'},this.learnWords('capicú de chivo');
     this.setState({mg:n});if(!n.over){clearTimeout(this.dt);this.dt=setTimeout(()=>this.domOpp(),900)}}
   domPass(){const m=this.state.mg;let n={...m,passes:m.passes+1,turn:'opp',msg:'Pasaste.'};if(n.passes>=2)n=this.domBlock(n);
     this.setState({mg:n});if(!n.over){clearTimeout(this.dt);this.dt=setTimeout(()=>this.domOpp(),900)}}
@@ -1636,7 +1725,7 @@ class Component extends DCLogic {
       if(salud<30&&!a.hosp){this.setState(s=>({abu:{...s.abu,hosp:true}}));return setTimeout(()=>this.setState({ev:ABU_HOSP,result:null}),800)}}
     const nd=this.state.day+1,f=this.fest(nd);if(f)setTimeout(()=>this.setState({ev:f,result:null}),800);else if(Math.random()<.5)setTimeout(()=>this.fireEvent(),800);
   }
-  pick(c){let d=c.d||{},out=this.gx(ABU_DEAD&&c.outDead?c.outDead:c.out);if(c.startQ)this.setState({pendingQ:c.startQ});if(c.legend)this.learn(c.legend);if(c.grow)this.grow(c.grow);const extra={},st=this.state;
+  pick(c){let d=c.d||{},out=this.gx(ABU_DEAD&&c.outDead?c.outDead:c.out);const ev0=this.state.ev||{};this.learnWords(this.gx([ev0.title,ev0.body,c.label,out].join(' ')));if(c.startQ)this.setState({pendingQ:c.startQ});if(c.legend)this.learn(c.legend);if(c.grow)this.grow(c.grow);const extra={},st=this.state;
     if(c.flag)extra[c.flag]=true;
     if(st.ev&&st.ev.hurricane&&st.prep){d={...d,salud:(d.salud||0)+6};out+=' Los suministros que compraste salvaron la semana.'}
     if(c.path){const n=c.need||{},beca=n.orCoco&&st.s.coco>=n.orCoco;let ok=true;
@@ -1700,6 +1789,8 @@ class Component extends DCLogic {
         tag:(st.visited||{})[t.id]?'':'Nuevo',hasTag:!(st.visited||{})[t.id]&&!lk}}),
       areaTitle:([...AREAS,...TRIPS].find(a=>a.id===st.zone)||AREAS[0]).name,
       chapter:(()=>{const isDone=k=>k==='_path'?!!st.path:k==='_never'?false:st.quests[k]==='done';const c=CHAPTERS.find(c=>!c.q.every(isDone))||CHAPTERS[CHAPTERS.length-1];return {n:c.n,title:c.title,hint:c.hint,done:c.q.filter(isDone).length,total:c.q.length}})(),
+      wordInfo:Object.keys(st.words||{}).length+' de '+WORDS.length,hasWords:Object.keys(st.words||{}).length>0,noWords:!Object.keys(st.words||{}).length,
+      wordList:WORDS.filter(w=>(st.words||{})[w.k]).map(w=>({w:w.w,m:w.m})),
       legendInfo:Object.keys(st.legends||{}).length+' de '+LEGENDS.length,
       legendList:LEGENDS.map(L=>{const k=!!(st.legends||{})[L.id];return {name:k?L.name:'???',where:L.where,lore:k?L.lore:'Todavía no la conoces.',bg:k?'var(--color-surface)':'var(--color-neutral-200)',op:k?1:.7}}),
       devList:Object.keys(DEV).filter(k=>st.dev[k]).sort((a,b)=>(st.dev[b]>=DEV[b].need)-(st.dev[a]>=DEV[a].need)).map(k=>{const n=st.dev[k],ok=n>=DEV[k].need;return {name:this.dn(k),bonus:ok?DEV[k].bonus:'Sigue así pa\' desbloquearlo',prog:ok?'Activo':n+' de '+DEV[k].need,bg:ok?'var(--sun)':'var(--color-surface)'}}),
