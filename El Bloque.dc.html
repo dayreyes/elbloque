@@ -1046,11 +1046,11 @@ const CH=["...#..G",".#.#.#.",".#...#.","...#...","##.#.##",".......",".##.##.",
 const DAYMS=4*3600*1000;
 const DON={pelotero:'atleta',rapero:'artista',estudioso:'estudioso',buscon:'buscon'};
 // Art in img/: contact portraits (p-<thread id>.jpg) and legend cards (leg-<legend id>.jpg). Add an id here when its file lands.
-const PORTRAITS=['abuela','rosado','mito','chago','chuco','pepe','ines','lydia','guille','kiko'];
+const PORTRAITS=['abuela','rosado','mito','chago','chuco','pepe','ines','lydia','guille','kiko','cintron','ramon','wichi','yadiel'];
 // Who runs each place: their portrait shows next to the place name.
 const HOSTS={apto:'abuela',taller:'chago',colmado:'pepe',panaderia:'lydia',iglesia:'ramon',gimnasio:'rosado',boqueron:'mito',finca:'chuco',botanica:'ines',castillo:'guille',lavanderia:'fela'};
-const LEGEND_ART=['clemente','hupia','jacho','guanina'];
-const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 20%'},guanina:{pos:'center 45%'}};
+const LEGEND_ART=['clemente','hupia','jacho','guanina','garita'];
+const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 20%'},guanina:{pos:'center 45%'},garita:{pos:'center 60%'}};
 // El diccionario del bloque: a word unlocks the first time it shows up in a card, message or activity (+1 coquí).
 const WORDS=[
  {k:'caserio',w:'Caserío',re:'caser[ií]o',m:'Vivienda pública. El gobierno usó la palabra desde los \'40; después la cambió por "residencial" porque la gente de afuera la usaba como insulto.'},
@@ -1238,11 +1238,11 @@ const QUESTS={
    {label:'Prometer volver',d:{feli:10,coco:2},out:'Tienes dos abuelas ahora. Cuando le contaste a la tuya, dijo: "Mejor. Más gente que te quiera."',outDead:'Tienes otra abuela ahora. Le llevaste a Abuela Toña la foto de tu abuela. Se pusieron las dos en la misma repisa.'}]}},
  // ---- Legend stories ----
  g1:{title:'Tour de fantasmas',where:'El Castillo · San Juan',place:'castillo',act:{label:'Hacer el tour de noche con Guille',fx:'Leyenda',cost:1,d:{}},reward:{coquis:5},out:'Guille te contó lo de la garita.',
-  card:{kicker:'Castillo San Cristóbal · 9pm',title:'La Garita del Diablo',body:'Guille alumbra una garita en la esquina de la muralla, sobre el mar. "Aquí estaba de guardia el soldado Sánchez, una noche de tormenta. Al amanecer solo encontraron su uniforme. Y un olor a azufre." Se te queda mirando. "Te reto a quedarte solo ahí hasta la medianoche."',ch:[
+  card:{art:'garita',kicker:'Castillo San Cristóbal · 9pm',title:'La Garita del Diablo',body:'Guille alumbra una garita en la esquina de la muralla, sobre el mar. "Aquí estaba de guardia el soldado Sánchez, una noche de tormenta. Al amanecer solo encontraron su uniforme. Y un olor a azufre." Se te queda mirando. "Te reto a quedarte solo ahí hasta la medianoche."',ch:[
    {label:'Aceptar el reto',d:{resp:2},startQ:'g2',out:'"Valiente o loco. Ya veremos." Guille se fue riéndose con el grupo.'},
    {label:'"Ni loco"',d:{feli:2},legend:'garita',out:'"El más inteligente del grupo", dijo Guille. El grupo se rió nervioso.'}]}},
  g2:{title:'Solo en la garita',where:'El Castillo · San Juan',place:'castillo',act:{label:'Quedarte solo en la garita hasta la medianoche',fx:'Leyenda · final',cost:2,d:{}},reward:{coquis:10},out:'Pasaste la noche en la Garita del Diablo.',
-  card:{kicker:'Castillo San Cristóbal · 11:58pm',title:'Medianoche',body:'El viento silba por las troneras. Abajo, el mar revienta contra las piedras. A las 11:58 sientes un olor a fósforo quemado. En el piso de la garita, algo brilla: un botón de metal viejo, con un ancla.',ch:[
+  card:{art:'garita',kicker:'Castillo San Cristóbal · 11:58pm',title:'Medianoche',body:'El viento silba por las troneras. Abajo, el mar revienta contra las piedras. A las 11:58 sientes un olor a fósforo quemado. En el piso de la garita, algo brilla: un botón de metal viejo, con un ancla.',ch:[
    {label:'Guardarte el botón',d:{coco:3},grow:'creyente',legend:'garita',flag:'botonSanchez',out:'Lo tienes en el bolsillo. Guille lo miró y se puso serio: "Eso no estaba ahí esta tarde."'},
    {label:'Salir corriendo',d:{feli:3,salud:1},legend:'garita',out:'Corriste hasta la Plaza de Armas. Te comiste un mallorca a la 1am pa\' calmarte.'}]}},
  gu1:{title:'La Montaña de la India',where:'Montaña de la India · Caguas',place:'montana',act:{label:'Subir al atardecer y mirar bien',fx:'Leyenda',cost:2,d:{}},reward:{coquis:5},out:'Viste el perfil de Guanina.',next:'gu2',
