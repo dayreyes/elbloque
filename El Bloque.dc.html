@@ -30,16 +30,7 @@
 
   <sc-if value="{{ isTitle }}" hint-placeholder-val="{{ true }}">
   <div style="flex:1; display:flex; flex-direction:column; padding:24px 26px 34px; gap:24px">
-    <div style="position:relative; flex:1; border-radius:var(--radius-lg); background:var(--color-accent-200); overflow:hidden">
-      <div style="position:absolute; width:260px; height:260px; border-radius:50%; background:var(--color-accent-400); right:-70px; top:-60px"></div>
-      <div style="position:absolute; width:180px; height:180px; border-radius:50%; background:var(--color-accent-2-400); left:-50px; bottom:40px"></div>
-      <div style="position:absolute; left:40px; right:40px; bottom:0; height:46%; display:flex; gap:10px; align-items:flex-end">
-        <div style="flex:1; height:70%; background:var(--color-neutral-100); border-radius:4px 4px 0 0"></div>
-        <div style="flex:1; height:100%; background:var(--color-bg); border-radius:4px 4px 0 0"></div>
-        <div style="flex:1; height:58%; background:var(--color-neutral-100); border-radius:4px 4px 0 0"></div>
-      </div>
-      <span style="position:absolute; left:18px; top:16px; font-size:11px; color:var(--color-accent-800)">key art placeholder</span>
-    </div>
+    <div role="img" aria-label="Un caserío al atardecer con su cancha, una abuela en la ventana y las torres de Hato Rey detrás" style="position:relative; flex:1; min-height:0; border:2.5px solid var(--ink); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); background:var(--color-accent-200) url(img/title.jpg) center bottom / cover no-repeat"></div>
     <div style="display:flex; flex-direction:column; gap:6px">
       <h1 style="margin:0; font-size:52px; line-height:1">El Bloque</h1>
       <p style="margin:0; font-size:16px; color:var(--color-neutral-800)">Una vida. Un caserío. Tus decisiones.</p>
@@ -60,7 +51,7 @@
     <div style="flex:1; overflow:auto; padding:4px 22px 16px; display:flex; flex-direction:column; gap:14px">
       <sc-for list="{{ caserios }}" as="c" hint-placeholder-count="3">
       <div sc-camel-on-click="{{ c.select }}" style="cursor:pointer; border-radius:var(--radius-lg); background:var(--color-surface); border:2.5px solid var(--ink); box-shadow:var(--shadow-sm); padding:10px; border:2.5px solid {{ c.border }}; display:flex; flex-direction:column; gap:10px; transition:border-color .2s">
-        <div style="height:92px; border-radius:4px; background:repeating-linear-gradient(135deg, var(--color-neutral-200) 0 10px, var(--color-neutral-100) 10px 20px); display:flex; align-items:flex-end; padding:10px 12px; font-size:11px; color:var(--color-neutral-700)">foto · {{ c.name }}</div>
+        <div role="img" aria-label="{{ c.name }}" style="aspect-ratio:16 / 9; border:2px solid var(--ink); border-radius:4px; background:var(--color-neutral-200) url({{ c.img }}) center / cover no-repeat"></div>
         <div style="padding:0 6px 4px; display:flex; flex-direction:column; gap:8px">
           <div style="display:flex; align-items:center; justify-content:space-between; gap:8px">
             <h4 style="margin:0">{{ c.name }}</h4>
@@ -1757,7 +1748,7 @@ class Component extends DCLogic {
       
       isTitle:st.screen==='title',isPick:st.screen==='pick',isCreate:st.screen==='create',isHub:st.screen==='hub',
       goTitle:()=>this.setState({screen:'title'}),goPick:()=>this.state.screen==='title'?this.newLife():this.setState({screen:'pick'}),noSave:!st.hasSave,continueLife:()=>this.continueLife(),goCreate:()=>this.setState({screen:'create'}),
-      caserios:CAS.map(c=>({...c,border:c.id===st.cas?'var(--color-accent)':'transparent',select:()=>this.setState({cas:c.id}),
+      caserios:CAS.map(c=>({...c,img:'img/cas-'+c.id+'.jpg',border:c.id===st.cas?'var(--color-accent)':'transparent',select:()=>this.setState({cas:c.id}),
         meters:['Chamba','Calor','Vibra'].map((label,i)=>({label,dots:[0,1,2,3,4].map(n=>({bg:n<c.m[i]?(i===1?'var(--color-accent-600)':'var(--color-accent-2-600)'):'var(--color-neutral-300)'}))}))})),
       casName:cas.name,casShort:cas.short,
       name:st.name,apodo:st.apodo,setName:e=>this.setState({name:e.target.value}),setApodo:e=>this.setState({apodo:e.target.value}),abuName:st.abuName,setAbuName:e=>this.setState({abuName:e.target.value}),

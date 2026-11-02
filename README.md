@@ -13,6 +13,7 @@ Imported from the Claude Design project (`El Bloque.dc.html`, published as the "
 - `bloque.css` — shared tokens, type, buttons/tags/cards + `@font-face` rules
 - `support.js` — Claude Design runtime that renders `.dc.html` files
 - `react*.production.min.js` — React 18.3.1, vendored so the page doesn't depend on unpkg
+- `img/` — title key art and the four caserío illustrations (generated, compressed to ~900px)
 - `fonts/` — Big Shoulders Display, Bricolage Grotesque, Space Mono (woff2)
 
 ## Run locally
