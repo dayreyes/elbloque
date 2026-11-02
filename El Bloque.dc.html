@@ -226,6 +226,7 @@
         <sc-for list="{{ legendList }}" as="l" hint-placeholder-count="2">
         <div style="display:flex; flex-direction:column; gap:3px; padding:8px 10px; border:2px solid var(--ink); border-radius:4px; background:{{ l.bg }}; opacity:{{ l.op }}">
           <div style="display:flex; justify-content:space-between; gap:8px; align-items:baseline"><span style="font-family:var(--font-heading); font-weight:900; font-size:17px; text-transform:uppercase; line-height:1">{{ l.name }}</span><span style="font-family:var(--font-mono); font-size:9px; font-weight:700; text-transform:uppercase; white-space:nowrap">{{ l.where }}</span></div>
+          <sc-if value="{{ l.hasArt }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="{{ l.name }}" style="aspect-ratio:16 / 9; margin:4px 0 2px; border:2px solid var(--ink); border-radius:3px; background:{{ l.artBg }}"></div></sc-if>
           <span style="font-size:12px; line-height:1.4">{{ l.lore }}</span>
         </div>
         </sc-for>
@@ -279,7 +280,7 @@
         <div style="display:flex; flex-direction:column; gap:8px; padding-bottom:14px">
           <h3 style="margin:0">Familia</h3>
           <div style="display:grid; grid-template-columns:44px minmax(0,1fr) auto; gap:10px; align-items:center; padding:10px; border:2.5px solid var(--ink); border-radius:4px; background:var(--color-surface); box-shadow:var(--shadow-sm)">
-            <div style="width:44px; height:44px; border:2px solid var(--ink); background:var(--color-accent-300); display:grid; place-items:center; font-family:var(--font-heading); font-weight:900; font-size:22px">A</div>
+            <div style="width:44px; height:44px; border:2px solid var(--ink); background:{{ abuCard.av }}; display:grid; place-items:center; font-family:var(--font-heading); font-weight:900; font-size:22px">{{ abuCard.ini }}</div>
             <div style="min-width:0; display:flex; flex-direction:column; gap:4px">
               <span style="font-family:var(--font-heading); font-weight:900; font-size:18px; text-transform:uppercase; line-height:1">{{ abuCard.name }}</span>
               <sc-if value="{{ abuCard.alive }}" hint-placeholder-val="{{ true }}">
@@ -310,7 +311,7 @@
         <h3 style="margin:0 0 8px">Mensajes</h3>
         <sc-for list="{{ threads }}" as="th" hint-placeholder-count="3">
         <div sc-camel-on-click="{{ th.open }}" style="cursor:pointer; display:flex; gap:12px; align-items:center; padding:12px 10px; border-radius:4px" style-hover="background:var(--color-surface)">
-          <div style="width:46px; height:46px; flex:none; border-radius:50%; background:{{ th.bg }}; display:grid; place-items:center; font-family:var(--font-heading); font-size:18px">{{ th.ini }}</div>
+          <div style="width:46px; height:46px; flex:none; border-radius:50%; border:2px solid var(--ink); background:{{ th.av }}; display:grid; place-items:center; font-family:var(--font-heading); font-size:18px">{{ th.label }}</div>
           <div style="flex:1; min-width:0; display:flex; flex-direction:column"><span style="font-weight:700; font-size:15px">{{ th.name }}</span><span style="font-size:13px; color:var(--color-neutral-700); white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ th.preview }}</span></div>
           <sc-if value="{{ th.unread }}" hint-placeholder-val="{{ false }}"><div style="width:10px; height:10px; border-radius:50%; background:var(--color-accent)"></div></sc-if>
         </div>
@@ -414,6 +415,7 @@
   <sc-if value="{{ hasEvent }}" hint-placeholder-val="{{ false }}">
   <div style="position:absolute; inset:0; display:flex; align-items:center; padding:20px; background:color-mix(in srgb, var(--color-neutral-900) 55%, transparent)">
     <div style="width:100%; background:var(--color-bg); border-radius:4px; padding:24px 22px 22px; display:flex; flex-direction:column; gap:14px; box-shadow:var(--shadow-lg); animation:pop .3s ease">
+      <sc-if value="{{ ev.hasArt }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="{{ ev.title }}" style="aspect-ratio:16 / 10; margin:-8px -6px 0; border:2px solid var(--ink); border-radius:4px; background:{{ ev.artBg }}"></div></sc-if>
       <span class="tag tag-accent-2" style="align-self:flex-start">{{ ev.kicker }}</span>
       <h2 style="margin:0; font-size:27px; text-wrap:pretty">{{ ev.title }}</h2>
       <p style="margin:0; font-size:15px; line-height:1.5; color:var(--color-neutral-800); text-wrap:pretty">{{ ev.body }}</p>
@@ -1017,7 +1019,7 @@ const FEST=[
    {label:'Ir a Lares con tu tío',d:{coco:5,resp:4,feli:3},out:'Te aprendiste la historia completa de 1868.'},
    {label:'Postear la bandera de Lares',d:{resp:2},out:'Tu post tiene 40 likes.'},
    {label:'Quedarme durmiendo',d:{salud:2},out:'Tu tío no te habló en una semana.'}]},
- {m:11,dm:4,kicker:'31 de diciembre',title:'La foto de Clemente',body:'Antes de las uvas y del brindis, Abuela prende una vela al lado de la foto de Roberto Clemente, entre la Virgen y San Judas. "Murió un día como hoy, llevando comida y medicinas a Nicaragua. Ese es un santo, aunque Roma no lo diga."',ch:[
+ {m:11,dm:4,kicker:'31 de diciembre',art:'clemente',title:'La foto de Clemente',body:'Antes de las uvas y del brindis, Abuela prende una vela al lado de la foto de Roberto Clemente, entre la Virgen y San Judas. "Murió un día como hoy, llevando comida y medicinas a Nicaragua. Ese es un santo, aunque Roma no lo diga."',ch:[
    {label:'Prender una vela con ella',d:{feli:4,abuAff:4},legend:'clemente',out:'"Juega como él y vive como él", te dijo. Después se comió las doce uvas en un minuto.'},
    {label:'Preguntarle por Clemente',d:{coco:3},legend:'clemente',out:'Te contó de los 3,000 hits, del avión, de la gente esperando en la playa. Lloró un poquito.',outDead:'Prendiste la vela tú solo, al lado de la foto de Clemente y la de Abuela.'}],bodyDead:'Antes de las uvas, prendes la vela que Abuela le prendía a Roberto Clemente todos los 31. Ahora hay dos fotos en la repisa.'},
  {m:11,dm:0,kicker:'Diciembre · Navidad',title:'¡Asalto navideño!',body:'A las 2am tocaron la puerta con panderos y un güiro. Es una parranda.',ch:[
@@ -1043,6 +1045,10 @@ const MAPDECOR={bloque:[],pueblo:[{x:62,y:84,w:34,h:12,label:'Iglesia'}],sanjuan
 const CH=["...#..G",".#.#.#.",".#...#.","...#...","##.#.##",".......",".##.##.",".....#.","..#...."];
 const DAYMS=4*3600*1000;
 const DON={pelotero:'atleta',rapero:'artista',estudioso:'estudioso',buscon:'buscon'};
+// Art in img/: contact portraits (p-<thread id>.jpg) and legend cards (leg-<legend id>.jpg). Add an id here when its file lands.
+const PORTRAITS=[];
+const LEGEND_ART=['clemente','hupia','jacho','guanina'];
+const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 20%'},guanina:{pos:'center 45%'}};
 // El diccionario del bloque: a word unlocks the first time it shows up in a card, message or activity (+1 coquí).
 const WORDS=[
  {k:'caserio',w:'Caserío',re:'caser[ií]o',m:'Vivienda pública. El gobierno usó la palabra desde los \'40; después la cambió por "residencial" porque la gente de afuera la usaba como insulto.'},
@@ -1238,7 +1244,7 @@ const QUESTS={
    {label:'Guardarte el botón',d:{coco:3},grow:'creyente',legend:'garita',flag:'botonSanchez',out:'Lo tienes en el bolsillo. Guille lo miró y se puso serio: "Eso no estaba ahí esta tarde."'},
    {label:'Salir corriendo',d:{feli:3,salud:1},legend:'garita',out:'Corriste hasta la Plaza de Armas. Te comiste un mallorca a la 1am pa\' calmarte.'}]}},
  gu1:{title:'La Montaña de la India',where:'Montaña de la India · Caguas',place:'montana',act:{label:'Subir al atardecer y mirar bien',fx:'Leyenda',cost:2,d:{}},reward:{coquis:5},out:'Viste el perfil de Guanina.',next:'gu2',
-  card:{kicker:'Montaña de la India · Caguas',title:'Guanina',body:'Desde arriba, el perfil de la montaña es una mujer acostada mirando al cielo. Doña Inés te contó por el camino: Guanina, princesa taína, avisó a su amado español, Sotomayor, que su gente se iba a levantar. Él no huyó. Los dos murieron. "Ella está ahí", dice Inés. "Esperándolo."',ch:[
+  card:{art:'guanina',kicker:'Montaña de la India · Caguas',title:'Guanina',body:'Desde arriba, el perfil de la montaña es una mujer acostada mirando al cielo. Doña Inés te contó por el camino: Guanina, princesa taína, avisó a su amado español, Sotomayor, que su gente se iba a levantar. Él no huyó. Los dos murieron. "Ella está ahí", dice Inés. "Esperándolo."',ch:[
    {label:'Creerle a Doña Inés',d:{feli:3},grow:'creyente',legend:'guanina',out:'"Ahora ve a la plaza", te dice. "La ceiba te va a contar el resto."'},
    {label:'"Es una montaña"',d:{coco:3},legend:'guanina',out:'"Claro que es una montaña", sonríe Inés. "Igual ve a la plaza. Escucha la ceiba."'}]}},
  gu2:{title:'La ceiba',where:'La plaza de Caguas',place:'plazacaguas',act:{label:'Escuchar la ceiba cuando sopla el viento',fx:'Leyenda · final',cost:1,d:{}},reward:{coquis:10},out:'La ceiba susurró.',
@@ -1298,13 +1304,13 @@ const EVENTS=[
  {kicker:'Edif. 7 · 10pm',title:'El nene de la vecina no se duerme',body:'Cuidas al nene de la vecina del segundo. Son las 10 y está brincando en el sofá con una sobredosis de malta. Es un ají, un sajorí. Tiene un culillo que no se aguanta.',ch:[
    {label:'"Si no te duermes, viene el Cuco"',d:{resp:1},legend:'cuco',out:'Se durmió en tres minutos. Abuela te miró desde la puerta: "A ti también te funcionaba."'},
    {label:'Contarle un cuento',d:{feli:3,coco:1},legend:'cuco',out:'Le contaste de Juan Bobo. Se durmió a la mitad, riéndose.'}]},
- {kicker:'Camino del colmado · 1am',title:'El señor de las guayabas',body:'Bajando de la cancha, un señor flaco te para debajo del palo de guayabas. "¿Tienes una guayaba madura?" Cuando se estira pa\' alcanzar una rama, se le sube la camisa. No tiene ombligo.',ch:[
+ {kicker:'Camino del colmado · 1am',art:'hupia',title:'El señor de las guayabas',body:'Bajando de la cancha, un señor flaco te para debajo del palo de guayabas. "¿Tienes una guayaba madura?" Cuando se estira pa\' alcanzar una rama, se le sube la camisa. No tiene ombligo.',ch:[
    {label:'Darle una guayaba y seguir caminando',d:{feli:-1},grow:'creyente',legend:'hupia',out:'"Gracias, {mijo}." Cuando miraste pa\' atrás, no había nadie. Abuela dice que era una hupía.'},
    {label:'Correr hasta el apto',d:{salud:1},legend:'hupia',out:'Abuela no se sorprendió: "Las hupías salen a comer guayabas. No le hacen daño a nadie."'}]},
  {kicker:'Carretera vieja · en el público',title:'Lo que cuelga de los árboles',body:'El público se metió por la carretera vieja pa\' evitar el tapón. En una curva, los faros alumbraron figuras colgando de los árboles. El chofer ni frenó. "Los ahorcados", dijo. "Ya no están."',ch:[
    {label:'Mirar pa\' atrás',d:{feli:-2,coco:2},legend:'ahorcados',out:'No había nada. Solo ramas. El chofer subió el volumen de la radio.'},
    {label:'Cerrar los ojos',d:{},legend:'ahorcados',out:'Los abriste cuando el público volvió a la autopista.'}]},
- {kicker:'Los cañaverales · de noche',title:'Una luz en el campo',body:'Desde la guagua se ve una luz que flota sobre el cañaveral, sola, buscando algo. El señor de atrás se persigna: "El Jacho. Busca las cenizas de la cruz que quemó."',ch:[
+ {kicker:'Los cañaverales · de noche',art:'jacho',title:'Una luz en el campo',body:'Desde la guagua se ve una luz que flota sobre el cañaveral, sola, buscando algo. El señor de atrás se persigna: "El Jacho. Busca las cenizas de la cruz que quemó."',ch:[
    {label:'Persignarte también',d:{feli:1},grow:'creyente',legend:'jacho',out:'La luz se apagó cuando la guagua pasó. El señor asintió.'},
    {label:'"Es un carro en la finca"',d:{coco:2},legend:'jacho',out:'"Un carro sin ruido y sin carretera", contestó el señor.'}]},
  {kicker:'Edificio 7',title:'El agua del Sana Muerto',body:'La vecina del cuarto vende botellitas de "agua del río Sana Muerto, de Ciales". Dice que un muerto se levantó en ese río. Abuela está mirando las botellas con interés.',ch:[
@@ -1752,7 +1758,7 @@ class Component extends DCLogic {
         meters:['Chamba','Calor','Vibra'].map((label,i)=>({label,dots:[0,1,2,3,4].map(n=>({bg:n<c.m[i]?(i===1?'var(--color-accent-600)':'var(--color-accent-2-600)'):'var(--color-neutral-300)'}))}))})),
       casName:cas.name,casShort:cas.short,
       name:st.name,apodo:st.apodo,setName:e=>this.setState({name:e.target.value}),setApodo:e=>this.setState({apodo:e.target.value}),abuName:st.abuName,setAbuName:e=>this.setState({abuName:e.target.value}),
-      abuCard:{name:this.gx('{abuela}'),dead:st.abu.dead,alive:!st.abu.dead,aff:st.abu.aff,salud:st.abu.salud,affW:st.abu.aff+'%',saludW:st.abu.salud+'%',saludBg:st.abu.salud<30?'var(--color-accent)':'var(--color-accent-2)',stage:st.abu.dead?'Descansa en paz':st.abu.aff>=70?'Su orgullo':st.abu.aff>=40?'Te tiene fe':'Preocupada'},
+      abuCard:{av:PORTRAITS.includes('abuela')?'var(--color-accent-300) url(img/p-abuela.jpg) center / cover no-repeat':'var(--color-accent-300)',ini:PORTRAITS.includes('abuela')?'':'A',name:this.gx('{abuela}'),dead:st.abu.dead,alive:!st.abu.dead,aff:st.abu.aff,salud:st.abu.salud,affW:st.abu.aff+'%',saludW:st.abu.salud+'%',saludBg:st.abu.salud<30?'var(--color-accent)':'var(--color-accent-2)',stage:st.abu.dead?'Descansa en paz':st.abu.aff>=70?'Su orgullo':st.abu.aff>=40?'Te tiene fe':'Preocupada'},
       initial:(nm||ap||'Y')[0].toUpperCase(),
       av:{skin:SKINS[st.look.skin],hair:st.look.hair,hc:HCS[st.look.hc],top:st.look.top,tc:TCS[st.look.tc],hat:!!st.look.hat,chain:!!st.look.chain},
       closetOn:st.closet,openCloset:()=>this.setState({closet:true}),closeCloset:()=>this.setState({closet:false}),
@@ -1783,7 +1789,7 @@ class Component extends DCLogic {
       wordInfo:Object.keys(st.words||{}).length+' de '+WORDS.length,hasWords:Object.keys(st.words||{}).length>0,noWords:!Object.keys(st.words||{}).length,
       wordList:WORDS.filter(w=>(st.words||{})[w.k]).map(w=>({w:w.w,m:w.m})),
       legendInfo:Object.keys(st.legends||{}).length+' de '+LEGENDS.length,
-      legendList:LEGENDS.map(L=>{const k=!!(st.legends||{})[L.id];return {name:k?L.name:'???',where:L.where,lore:k?L.lore:'Todavía no la conoces.',bg:k?'var(--color-surface)':'var(--color-neutral-200)',op:k?1:.7}}),
+      legendList:LEGENDS.map(L=>{const k=!!(st.legends||{})[L.id];return {hasArt:k&&LEGEND_ART.includes(L.id),artBg:'url(img/leg-'+L.id+'.jpg) '+((ART[L.id]||{}).pos||'center')+' / cover no-repeat',name:k?L.name:'???',where:L.where,lore:k?L.lore:'Todavía no la conoces.',bg:k?'var(--color-surface)':'var(--color-neutral-200)',op:k?1:.7}}),
       devList:Object.keys(DEV).filter(k=>st.dev[k]).sort((a,b)=>(st.dev[b]>=DEV[b].need)-(st.dev[a]>=DEV[a].need)).map(k=>{const n=st.dev[k],ok=n>=DEV[k].need;return {name:this.dn(k),bonus:ok?DEV[k].bonus:'Sigue así pa\' desbloquearlo',prog:ok?'Activo':n+' de '+DEV[k].need,bg:ok?'var(--sun)':'var(--color-surface)'}}),
       devCount:Object.keys(DEV).filter(k=>(st.dev[k]||0)>=DEV[k].need).length,
       genders:[['chico','Chico'],['chica','Chica'],['nb','No binarie']].map(([id,label])=>({label,bg:st.gender===id?'var(--sun)':'var(--color-surface)',pick:()=>this.setState({gender:id})})),
@@ -1841,7 +1847,7 @@ class Component extends DCLogic {
       jobs:JOBS.map(j=>{const r=j.req||{};const lock=(r.path&&st.path!==r.path)?'Escoge trabajar al graduarte':(r.job&&!st.jobs[r.job])?'Habla con Doña Lydia':(r.age&&st.age<r.age)?'Necesitas '+r.age+' años':(r.resp&&st.s.resp<r.resp)?'Necesitas '+r.resp+' Respeto':'';
         const pay=j.id==='beats'&&st.trait==='rapero'?j.pay*2:j.pay;
         return {...j,pay,hot:!!j.calor,open:!lock,locked:!!lock,lockText:lock,op:lock?.6:1,work:()=>this.run({cat:j.id==='beats'?'artista':'buscon',cost:j.cost,d:{chavos:pay,calor:j.calor||0},ev:.25})}}),
-      threads:[...THREADS.filter(t=>st.th[t.id]),...Object.keys(st.th).filter(k=>st.th[k].meta).map(k=>({id:k,...st.th[k].meta}))].map(t=>{const s=st.th[t.id]||{msgs:[],unread:false};return {...t,preview:this.gx((s.msgs[s.msgs.length-1]||{}).t||''),unread:s.unread,open:()=>this.setState(x=>({thread:t.id,th:{...x.th,[t.id]:{...x.th[t.id],unread:false}}}))}}),
+      threads:[...THREADS.filter(t=>st.th[t.id]),...Object.keys(st.th).filter(k=>st.th[k].meta).map(k=>({id:k,...st.th[k].meta}))].map(t=>{const s=st.th[t.id]||{msgs:[],unread:false},pic=PORTRAITS.includes(t.id);return {...t,av:pic?t.bg+' url(img/p-'+t.id+'.jpg) center / cover no-repeat':t.bg,label:pic?'':t.ini,preview:this.gx((s.msgs[s.msgs.length-1]||{}).t||''),unread:s.unread,open:()=>this.setState(x=>({thread:t.id,th:{...x.th,[t.id]:{...x.th[t.id],unread:false}}}))}}),
       noThread:!th,hasThread:!!th,closeThread:()=>this.setState({thread:null}),
       thread:th?{name:thMeta.name,msgs:th.msgs.map(m=>({t:this.gx(m.t),align:m.me?'flex-end':'flex-start',bg:m.me?'var(--color-accent)':'var(--color-surface)',fg:m.me?'var(--color-bg)':'var(--color-text)'})),
         replies:th.replies.map(r=>({t:r.t,send:()=>{const id=st.thread;
@@ -1859,7 +1865,7 @@ class Component extends DCLogic {
       buyPass:()=>{if(st.pass)return;if(st.coquis<250)return this.say('Te faltan '+(250-st.coquis)+' coquís.');this.setState({pass:true,coquis:st.coquis-250});this.say('Pase activo. ¡Wepa!')},
       packs:PACKS.map(p=>({...p,best:!!p.best,buy:()=>{this.apply({coquis:p.n});this.say('Compra simulada: +'+p.n+' coquís')}})),
       items:ITEMS.filter(it=>!(it.abu&&ABU_DEAD)).map(it=>({...it,owned:!it.use&&!!st.owned[it.id],label:!it.use&&st.owned[it.id]?'Tuyo':it.c+' coquís',buy:()=>{if(st.coquis<it.c)return this.say('Te faltan '+(it.c-st.coquis)+' coquís.');if(it.use){this.apply(it.d,{coquis:st.coquis-it.c});return this.say(it.name+' · '+this.fmt(it.d).join(' · '))}this.setState({coquis:st.coquis-it.c,owned:{...st.owned,[it.id]:true},look:{...st.look,...(it.id==='gorra'?{hat:true}:it.id==='cadena'?{chain:true}:{})}});this.say(it.name+' es tuyo.')}})),
-      hasEvent:!!st.ev,ev:{...ev,title:this.gx(ev.title||''),body:this.gx(ABU_DEAD&&ev.bodyDead?ev.bodyDead:(ev.body||''))},evChoosing:!!st.ev&&!st.result,evDone:!!st.result,
+      hasEvent:!!st.ev,ev:{...ev,hasArt:LEGEND_ART.includes(ev.art),artBg:ev.art?'url(img/leg-'+ev.art+'.jpg) '+((ART[ev.art]||{}).pos||'center')+' / cover no-repeat':'none',title:this.gx(ev.title||''),body:this.gx(ABU_DEAD&&ev.bodyDead?ev.bodyDead:(ev.body||''))},evChoosing:!!st.ev&&!st.result,evDone:!!st.result,
       evChoices:(ev.ch||[]).map(c=>({label:this.gx(c.label),pick:()=>this.pick(c)})),
       result:st.result?{text:st.result.text,chips:Object.keys(st.result.d).filter(k=>st.result.d[k]).map(k=>{const v=st.result.d[k],good=k==='calor'?v<0:v>0;return {t:this.fmt({[k]:v})[0],bg:good?'var(--color-accent-2-200)':'var(--color-accent-200)',fg:good?'var(--color-accent-2-800)':'var(--color-accent-800)'}})}:{chips:[]},
       closeEvent:()=>{const q=st.pendingQ,names=st.pendingNames||[];this.setState({ev:null,result:null,pendingQ:null});if(names.length)this.nextName();if(q)setTimeout(()=>this.startQuest(q),names.length?300:600)},
