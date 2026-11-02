@@ -401,7 +401,7 @@
     <div sc-camel-on-click="{{ closeSheet }}" style="flex:1"></div>
     <div style="background:var(--color-bg); border-radius:4px 4px 0 0; padding:12px 20px 34px; display:flex; flex-direction:column; gap:12px; animation:pop .25s ease">
       <div style="align-self:center; width:40px; height:5px; border-radius:2px; background:var(--color-neutral-400)"></div>
-      <div style="display:flex; flex-direction:column; gap:2px"><h3 style="margin:0">{{ sheet.label }}</h3><span style="font-size:13px; color:var(--color-neutral-700)">{{ sheet.sub }}</span></div>
+      <div style="display:flex; align-items:center; gap:12px"><sc-if value="{{ hasHost }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="" style="width:52px; height:52px; flex:none; border:2px solid var(--ink); border-radius:50%; background:{{ hostBg }}; box-shadow:var(--shadow-sm)"></div></sc-if><div style="display:flex; flex-direction:column; gap:2px; min-width:0"><h3 style="margin:0">{{ sheet.label }}</h3><span style="font-size:13px; color:var(--color-neutral-700)">{{ sheet.sub }}</span></div></div>
       <sc-for list="{{ sheetActions }}" as="a" hint-placeholder-count="2">
       <div sc-camel-on-click="{{ a.run }}" style="cursor:pointer; display:flex; align-items:center; gap:12px; padding:13px 16px; border-radius:4px; background:var(--color-surface)" style-hover="background:var(--color-neutral-300)" style-active="transform:scale(.98)">
         <div style="flex:1; display:flex; flex-direction:column"><span style="font-weight:700; font-size:15px">{{ a.label }}</span><span style="font-size:12px; color:var(--color-neutral-700)">{{ a.fx }}</span></div>
@@ -1046,7 +1046,9 @@ const CH=["...#..G",".#.#.#.",".#...#.","...#...","##.#.##",".......",".##.##.",
 const DAYMS=4*3600*1000;
 const DON={pelotero:'atleta',rapero:'artista',estudioso:'estudioso',buscon:'buscon'};
 // Art in img/: contact portraits (p-<thread id>.jpg) and legend cards (leg-<legend id>.jpg). Add an id here when its file lands.
-const PORTRAITS=[];
+const PORTRAITS=['abuela','rosado','mito','chago','chuco'];
+// Who runs each place: their portrait shows next to the place name.
+const HOSTS={apto:'abuela',taller:'chago',colmado:'pepe',panaderia:'lydia',iglesia:'ramon',gimnasio:'rosado',boqueron:'mito',finca:'chuco',botanica:'ines',castillo:'guille',lavanderia:'fela'};
 const LEGEND_ART=['clemente','hupia','jacho','guanina'];
 const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 20%'},guanina:{pos:'center 45%'}};
 // El diccionario del bloque: a word unlocks the first time it shows up in a card, message or activity (+1 coquí).
@@ -1840,7 +1842,7 @@ class Component extends DCLogic {
       jailChoices:jl?(jc?jc.ch.map(c=>({label:c.label,pick:()=>this.jailPick(c)})):[{label:'Volver al bloque',pick:()=>this.release()}]):[],
       isDead:!!st.dead,dead:st.dead||{},deadName:display,heirName:this.heir(),nextGen:()=>this.nextGen(),
       inherit:[{k:'Chavos',v:'$'+st.chavos},{k:'Respeto (60%)',v:Math.round(st.s.resp*.6)},{k:'Calor (50%)',v:Math.round(st.calor*.5)},{k:'Territorio',v:Object.values(st.turf).filter(v=>v==='tu').length+' zonas'},{k:'Enemigos',v:st.enemies.length?st.enemies.join(', '):'Ninguno'},{k:'Tu otra mitad',v:st.partner?this.who(LOVE.find(x=>x.id===st.partner)).n+(st.married?' · casados':' · novios'):'Sin pareja'}],
-      hasSheet:!!sheet,sheet:sheet||{},closeSheet:()=>this.setState({sheet:null}),
+      hasSheet:!!sheet,sheet:sheet||{},hasHost:!!(sheet&&PORTRAITS.includes(HOSTS[sheet.id])&&!(sheet.id==='apto'&&ABU_DEAD)),hostBg:sheet&&HOSTS[sheet.id]?'var(--color-surface) url(img/p-'+HOSTS[sheet.id]+'.jpg) center / cover no-repeat':'none',closeSheet:()=>this.setState({sheet:null}),
       sheetActions:(sheet?[...Object.keys(QUESTS).filter(k=>st.quests[k]==='active'&&QUESTS[k].place===sheet.id).map(k=>({...QUESTS[k].act,qid:k})),...sheet.acts.filter(a=>!(a.meet&&st.th[a.meet])&&!(a.abu&&ABU_DEAD)&&!(a.abuDead&&!ABU_DEAD)&&!(a.fam&&a.fam!==FAM)&&!(a.needQ&&st.quests[a.needQ]!=='done')),...this.loveActs(sheet.id)]:[]).map(a=>({...a,label:this.gx(a.label),fx:this.gx(a.fx||''),costLabel:a.qid?'Misión':a.soon?'Pronto':a.cost?'−'+a.cost+' Ánimo':'Gratis',run:()=>this.run(a)})),
       birthday:()=>{this.setState(st=>({age:st.age+1,animo:max,day:st.day+1,coquis:st.coquis+10}));this.say('¡Feliz cumpleaños! +10 coquís');this.addLog('Cumpliste '+(st.age+1)+(ABU_DEAD?'. Titi Wanda trajo un bizcocho de Costco.':'. Abuela hizo bizcocho.'));setTimeout(()=>(st.age+1>=18&&!this.state.path)?this.setState({ev:GRAD,result:null,sheet:null}):this.fireEvent(),300)},
       log:st.log,
