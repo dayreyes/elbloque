@@ -88,7 +88,7 @@
         <h2 style="margin:0; font-size:30px">¿Quién eres tú?</h2>
       </div>
       <div style="display:flex; align-items:center; gap:16px">
-        <dc-import name="Avatar" size="104" bg="var(--color-accent-2-200)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" hint-size="104px,104px"></dc-import>
+        <dc-import name="Avatar" size="104" bg="var(--color-accent-2-200)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" earrings="{{ av.ear }}" glasses="{{ av.gl }}" streak="{{ av.st }}" neck="{{ av.neck }}" hint-size="104px,104px"></dc-import>
         <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-start"><span style="font-size:13px; line-height:1.4">Piel, pelo y fit. Lo que compres en la Tienda sale en el clóset.</span><button class="btn btn-secondary" style="height:40px" sc-camel-on-click="{{ openCloset }}">Editar look</button></div>
       </div>
       <div class="field"><label>Nombre</label><input class="input" style="height:44px" placeholder="Yariel" value="{{ name }}" sc-camel-on-change="{{ setName }}"></div>
@@ -124,7 +124,7 @@
   <sc-if value="{{ isHub }}" hint-placeholder-val="{{ false }}">
   <div style="flex:1; min-height:0; display:flex; flex-direction:column">
     <div style="flex:none; padding:6px 18px 10px; display:flex; align-items:center; gap:10px">
-      <div sc-camel-on-click="{{ openCloset }}" style="cursor:pointer; display:flex"><dc-import name="Avatar" size="42" bg="var(--sun)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" hint-size="42px,42px"></dc-import></div>
+      <div sc-camel-on-click="{{ openCloset }}" style="cursor:pointer; display:flex"><dc-import name="Avatar" size="42" bg="var(--sun)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" earrings="{{ av.ear }}" glasses="{{ av.gl }}" streak="{{ av.st }}" neck="{{ av.neck }}" hint-size="42px,42px"></dc-import></div>
       <div style="flex:1; min-width:0; display:flex; flex-direction:column; line-height:1.2">
         <span style="font-family:var(--font-heading); font-size:17px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ displayName }}</span>
         <span style="font-size:11px; color:var(--color-neutral-700); white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ age }} años · {{ monthName }} · {{ casShort }}</span>
@@ -167,7 +167,7 @@
           <sc-if value="{{ b.heart }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; top:-9px; left:-9px; width:24px; height:24px; border:2.5px solid var(--ink); background:var(--color-accent); color:var(--paper); display:grid; place-items:center; font-size:13px">♥</span></sc-if>
         </div>
         </sc-for>
-        <div style="position:absolute; left:{{ px }}%; top:{{ py }}%; width:36px; height:36px; margin:-18px 0 0 -18px; display:flex; box-shadow:3px 3px 0 var(--ink); transition:left .45s ease, top .45s ease; pointer-events:none"><dc-import name="Avatar" size="36" bg="var(--color-accent)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" hint-size="36px,36px"></dc-import></div>
+        <div style="position:absolute; left:{{ px }}%; top:{{ py }}%; width:36px; height:36px; margin:-18px 0 0 -18px; display:flex; box-shadow:3px 3px 0 var(--ink); transition:left .45s ease, top .45s ease; pointer-events:none"><dc-import name="Avatar" size="36" bg="var(--color-accent)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" earrings="{{ av.ear }}" glasses="{{ av.gl }}" streak="{{ av.st }}" neck="{{ av.neck }}" hint-size="36px,36px"></dc-import></div>
       </div>
       <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase"><span>Toca un lugar pa' entrar</span><span>Nuevo día en {{ dayLeft }}</span></div>
       <div style="border:2.5px solid var(--ink); background:var(--ink); color:var(--paper); padding:12px 14px; display:flex; flex-direction:column; gap:6px; box-shadow:var(--shadow-sm)">
@@ -605,7 +605,7 @@
     <div sc-camel-on-click="{{ closeCloset }}" style="flex:1; min-height:40px"></div>
     <div style="background:var(--paper); border-top:3px solid var(--ink); padding:16px 18px 28px; display:flex; flex-direction:column; gap:9px; overflow:auto; max-height:86%">
       <div style="display:flex; gap:14px; align-items:center; padding-bottom:4px">
-        <dc-import name="Avatar" size="112" bg="var(--color-accent-2-200)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" hint-size="112px,112px"></dc-import>
+        <dc-import name="Avatar" size="112" bg="var(--color-accent-2-200)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" earrings="{{ av.ear }}" glasses="{{ av.gl }}" streak="{{ av.st }}" neck="{{ av.neck }}" hint-size="112px,112px"></dc-import>
         <div style="display:flex; flex-direction:column; gap:4px"><h3 style="margin:0">El clóset</h3><span style="font-size:12.5px; line-height:1.4">Gorra y cadena se desbloquean en la Tienda.</span></div>
       </div>
       <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Piel</span>
@@ -671,10 +671,10 @@ const CAS=[
  {id:'marazul',name:'Res. Arena Negra',short:'Arena Negra',town:'Loíza',blurb:'A cinco minutos de la playa. Bomba los viernes, frituras todos los días.',m:[2,2,5],perk:'+10 Felicidad',d:{feli:10}},
  {id:'coqui',name:'Res. Quebrada Fría',short:'Quebrada Fría',town:'Bayamón',blurb:'Al lado del tren urbano y del estadio. Si quieres ser pelotero, empieza aquí.',m:[4,3,3],perk:'+10 Salud',d:{salud:10}}];
 const TRAITS=[
- {id:'pelotero',name:'Pelotero',bonus:'+10 Salud',d:{salud:10}},
- {id:'rapero',name:'Rapero',bonus:'+8 Felicidad, beats pagan más',d:{feli:8}},
- {id:'estudioso',name:'Estudioso',bonus:'+15 Coco',d:{coco:15}},
- {id:'buscon',name:'Buscón',bonus:'+$20, +5 Respeto',d:{chavos:20,resp:5}}];
+ {id:'pelotero',name:'Deportista',bonus:'+10 Salud',d:{salud:10}},
+ {id:'rapero',name:'Artista',bonus:'+8 Felicidad, beats pagan más',d:{feli:8}},
+ {id:'estudioso',name:'Estofón',bonus:'+15 Coco',d:{coco:15}},
+ {id:'buscon',name:'Joseador',bonus:'+$20, +5 Respeto',d:{chavos:20,resp:5}}];
 const LBL={salud:'Salud',feli:'Felicidad',coco:'Coco',resp:'Respeto',chavos:'$',animo:'Ánimo',coquis:'Coquís',calor:'Calor',abuAff:'Afecto de Abuela',abuSalud:'Salud de Abuela'};
 const LOCS=[
  {id:'colmado',label:'Colmado Don Pepe',note:'Hay dominó en la mesa de afuera.',sub:'Malta fría, pan sobao y todos los chismes.',sw:'var(--sun)',tags:['Dominó','Briscola','Vender'],acts:[
@@ -709,7 +709,7 @@ const LOCS=[
  {id:'parada',label:'La parada',note:'La guagua pasa "ahorita". Nadie sabe cuándo es ahorita.',sub:'La parada de guagua a la entrada del caserío. Aquí se sabe quién llega y quién se va.',sw:'var(--color-neutral-200)',tags:['Guagua','Chismes'],acts:[
    {label:'Coger la guagua',fx:'Viajar a otro pueblo',cost:0,travel:true},
    {label:'Esperar la guagua y escuchar',fx:'+3 Coco · +2 Felicidad · chismes',cost:1,d:{coco:3,feli:2},ev:.5},
-   {cat:'buscon',label:'Vender agua fría en el tapón',fx:'+$8 · camino de buscón',cost:2,d:{chavos:8}},
+   {cat:'buscon',label:'Vender agua fría en el tapón',fx:'+$8 · camino de joseador',cost:2,d:{chavos:8}},
    {label:'Hablar con Mrs. Cintrón',fx:'Conocer gente · nuevo contacto',cost:0,meet:'cintron'},
    {label:'Hablar con el Agente Rosado',fx:'Conocer gente · nuevo contacto',cost:0,meet:'rosado'}]},
  {id:'techo',label:'El techo del 7',note:'La puerta dice "PROHIBIDO". Nadie le hace caso.',sub:'Desde aquí se ven las torres de Hato Rey y todo el bloque. La única señal buena del caserío.',sw:'var(--color-accent-400)',tags:['Pensar','Señal'],lock:'Yadiel sabe cómo subir.',acts:[
@@ -950,7 +950,7 @@ const DEV={
  jugador:{name:'Dominador',need:3,bonus:'El dominó paga el doble',d:null},
  estudioso:{name:'Coco duro',need:4,bonus:'+2 Coco extra al estudiar',d:{coco:2}},
  artista:{name:'Artista',need:3,bonus:'+2 Respeto al hacer música',d:{resp:2}},
- buscon:{name:'Buscón',need:4,bonus:'+$4 en cada chamba',d:{chavos:4}},
+ buscon:{name:'Joseador',need:4,bonus:'+$4 en cada chamba',d:{chavos:4}},
  calle:{name:'De la calle',need:3,bonus:'+$10 en cada movida · la policía te conoce (+3 Calor)',d:{chavos:10,calor:3}},
  fiestero:{name:'Fiestero',need:3,bonus:'+2 Felicidad al salir',d:{feli:2}},
  familiar:{name:'Familiar',need:3,bonus:'+2 Felicidad con la familia',d:{feli:2}},
@@ -1026,8 +1026,8 @@ const FEST=[
    {label:'Abrir y unirme a la parranda',d:{feli:12,salud:-3},out:'Terminaron en el apto de {abuela} comiendo pasteles a las 5am.'},
    {label:'Darles coquito y que sigan',d:{resp:4,feli:5},out:'Se llevaron la botella completa.'},
    {label:'Hacerme el dormido',d:{feli:-4},out:'Cantaron más alto.'}]}];
-const DEVG={atleta:['Atlético','Atlética','Atlétique'],jugador:['Dominador','Dominadora','Dominadore'],buscon:['Buscón','Buscona','Buscone'],fiestero:['Fiestero','Fiestera','Fiestere']};
-const TG={pelotero:['Pelotero','Pelotera','Pelotere'],rapero:['Rapero','Rapera','Rapere'],estudioso:['Estudioso','Estudiosa','Estudiose'],buscon:['Buscón','Buscona','Buscone']};
+const DEVG={atleta:['Atlético','Atlética','Atlétique'],jugador:['Dominador','Dominadora','Dominadore'],buscon:['Joseador','Joseadora','Joseadore'],fiestero:['Fiestero','Fiestera','Fiestere']};
+const TG={pelotero:['Deportista','Deportista','Deportista'],rapero:['Artista','Artista','Artista'],estudioso:['Estofón','Estofona','Estofone'],buscon:['Joseador','Joseadora','Joseadore']};
 const MAP={techo:{x:4,y:2,w:32,h:9},apto:{x:4,y:13,w:32,h:17},punto:{x:4,y:32,w:32,h:12},colmado:{x:62,y:2,w:34,h:12},panaderia:{x:62,y:16,w:34,h:12},lavanderia:{x:62,y:30,w:34,h:14},
  cancha:{x:4,y:57,w:32,h:16},gimnasio:{x:4,y:75,w:32,h:9},escuela:{x:4,y:86,w:32,h:11},parada:{x:62,y:57,w:34,h:10},taller:{x:62,y:69,w:34,h:13},iglesia:{x:62,y:84,w:34,h:13},
  plaza:{x:4,y:4,w:32,h:39},terminal:{x:62,y:4,w:34,h:18},estudio:{x:62,y:26,w:34,h:17},liga:{x:4,y:58,w:32,h:28},chinchorro:{x:62,y:58,w:34,h:22},
@@ -1052,7 +1052,7 @@ const HOSTS={apto:'abuela',taller:'chago',colmado:'pepe',panaderia:'lydia',igles
 const LOVE_PICS=['yaritza','valeria','sebastian','kiara','josue','joel','iker','genesis','damaris','brayan'];
 const picKey=n=>n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 const LEGEND_ART=['clemente','hupia','jacho','guanina','garita','chupacabra','cofresi'];
-const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 30%'},guanina:{pos:'center 45%'},playa:{src:'img/ev-playa.jpg',pos:'center 55%'},balcon:{src:'img/ev-balcon.jpg',pos:'center 45%'},garita:{pos:'center 60%'},chupacabra:{pos:'center 55%'},cofresi:{pos:'center 45%'}};
+const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 30%'},guanina:{pos:'center 45%'},playa:{src:'img/ev-playa.jpg',pos:'center 55%'},balcon:{src:'img/ev-balcon.jpg',pos:'center 45%'},plaza:{src:'img/ev-plaza.jpg',pos:'center 55%'},frutera:{src:'img/ev-frutera.jpg',pos:'center 50%'},garita:{pos:'center 60%'},chupacabra:{pos:'center 55%'},cofresi:{pos:'center 45%'}};
 // El diccionario del bloque: a word unlocks the first time it shows up in a card, message or activity (+1 coquí).
 const WORDS=[
  {k:'caserio',w:'Caserío',re:'caser[ií]o',m:'Vivienda pública. El gobierno usó la palabra desde los \'40; después la cambió por "residencial" porque la gente de afuera la usaba como insulto.'},
@@ -1069,6 +1069,7 @@ const WORDS=[
  {k:'pichar',w:'Pichar',re:'pich(ar|ando|ó)',m:'Ignorar a alguien.'},
  {k:'bombito',w:'Bombito al pítcher',re:'bombito al p[ií]tcher',m:'Algo facilísimo.'},
  {k:'bairoa',w:'¡Sopla Bairoa!',re:'sopla bairoa',m:'¡Dale duro! Grito de ánimo que popularizó Ramito, el trovador del barrio Bairoa de Caguas, y que adoptaron los fanáticos de los Criollos.'},
+ {k:'joseador',w:'Joseador',re:'josead',m:'El que se busca los chavos como sea: vendiendo, arreglando, revendiendo. Siempre en la jose.'},
  {k:'estofon',w:'Estofón',re:'estof[oó]n',m:'Comelibros, el que saca A en todo.'},
  {k:'aji',w:'Ser un ají',re:'un ají',m:'Nene travieso con energía de más.'},
  {k:'culillo',w:'Culillo',re:'culillo',m:'Inquietud de no poder estarse quieto.'},
@@ -1280,6 +1281,14 @@ const JAIL=[
  {title:'Abuela vino a visitarte',body:'Trajo pastelillos escondidos en la cartera.',ch:[{label:'Prometerle que voy a cambiar',d:{feli:8,calor:-10}},{label:'No mirarla a los ojos',d:{feli:-6}}]},
  {title:'Te ofrecen la cocina',body:'Paga casi nada, pero el tiempo pasa más rápido.',ch:[{label:'Dale',d:{chavos:15,salud:3}},{label:'Prefiero el patio',d:{salud:4,resp:2}}]}];
 const EVENTS=[
+ {art:'plaza',kicker:'La plaza del pueblo · 4pm',title:'Café en la plaza',body:'Debajo del flamboyán, Titi Wanda y Doña Fela se están tomando un cafecito y arreglando el mundo. Te ven pasar y te hacen señas: "¡Ven acá, {mijo}! Siéntate, que te tenemos un chisme."',ch:[
+   {label:'Sentarte a escuchar',d:{coco:2,feli:3},out:'En media hora te enteraste de quién se casa, quién se va pa\' Orlando y quién está velando güira. Doña Fela no deja a nadie vivo.'},
+   {label:'Invitarles otro café',d:{chavos:-4,resp:3,feli:2},out:'"Ay, qué bien criao", dijo Doña Fela. Ahora lo sabe todo el pueblo.'},
+   {label:'"Voy ajorao, otro día"',d:{},out:'"Siempre ajorao. Igualito a tu papá", gritó Titi Wanda.'}]},
+ {art:'frutera',kicker:'La esquina del bloque · 8am',title:'La frutera de la esquina',body:'Doña Cuca montó su kiosko de frutas en la esquina, como todos los sábados: guineos, piñas de Lajas, mangós y una papaya abierta que huele a gloria. "Están choretas este año, {mijo}. ¿Qué te llevas?"',ch:[
+   {label:'Llevarle frutas a Abuela',d:{chavos:-5,salud:3,abuAff:4},out:'Abuela hizo un batido de papaya con leche condensada. Se lo tomó entero ella sola.',outDead:'Compraste una papaya, como hacía Abuela. Te la comiste en el balcón.'},
+   {label:'Ayudarla a montar el kiosko',d:{chavos:6,resp:2},grow:'buscon',out:'Te pagó en chavos y en mangós. "Tienes madera de joseador", te dijo.'},
+   {label:'Un pedazo de piña y seguir',d:{chavos:-1,feli:3},out:'Piña fría a las 8am. No hay mejor manera de empezar el día.'}]},
  {art:'balcon',kicker:'Sábado · 10am',title:'Sábado tranquilo',body:'No hay escuela, no hay chamba, no hay nada que hacer. Desde el balcón se oye una radio en otro edificio y huele a café colao. Las matas de Abuela necesitan agua.',ch:[
    {label:'Regar las matas',d:{feli:4,abuAff:2},out:'Abuela te vio desde la cocina y no dijo nada. Pero sonrió.',outDead:'Le hablaste a las matas como hacía Abuela. Siguen vivas.'},
    {label:'Leer en el balcón',d:{coco:3,feli:2},grow:'orador',out:'Te leíste medio libro sin darte cuenta. Se te pasó la mañana volando.'},
@@ -1459,10 +1468,10 @@ const ITEMS=[
  {id:'regalo',use:true,abu:true,name:'Regalo pa\' Abuela',sub:'Al momento · +10 Afecto de Abuela',c:20,d:{abuAff:10},bg:'var(--color-accent-200)'},
  {id:'medicina',use:true,abu:true,name:'Medicina pa\' Abuela',sub:'Al momento · +15 Salud de Abuela',c:25,d:{abuSalud:15},bg:'var(--color-accent-2-200)'},
  {id:'abogado',use:true,name:'Abogado de oficio',sub:'Al momento · −20 Calor',c:40,d:{calor:-20},bg:'var(--color-neutral-300)'}];
-const SKINS=['#f2cfae','#dcab82','#b98660','#8e5d3e','#5f3c28'];
-const HAIRS=[['rapado','Rapado'],['corto','Corto'],['trenzas','Trenzas'],['afro','Afro'],['mono','Moño'],['largo','Largo']];
+const SKINS=['#f2cfae','#dcab82','#c48f62','#a06a42','#7a4a2c','#4e2f1d'];
+const HAIRS=[['rapado','Fade'],['corto','Corto'],['rizos','Rizos'],['trenzas','Trenzas'],['afro','Afro'],['mono','Moño'],['largo','Largo'],['cola','Cola rizada'],['emo','Emo'],['trenza','Trenza de lado']];
 const HCS=['var(--ink)','#5b3920','#b88a3e','var(--color-accent)','var(--color-accent-2)'];
-const TOPS=[['tee','Camiseta'],['jersey','Jersey'],['hoodie','Hoodie'],['guaya','Guayabera']];
+const TOPS=[['tee','Camiseta'],['jersey','Jersey'],['hoodie','Hoodie'],['guaya','Guayabera'],['polo','Polo'],['abierta','Camisa abierta']];
 const TCS=['var(--color-accent)','var(--color-accent-2)','var(--sun)','var(--ink)','var(--color-surface)'];
 const SHELF=[{id:'malta',name:'Malta',p:1.5},{id:'pan',name:'Pan sobao',p:2},{id:'pastelillo',name:'Pastelillo',p:1.25},{id:'cafe',name:'Café',p:1},{id:'huevos',name:'Huevos',p:3},{id:'hielo',name:'Hielo',p:2.5}];
 const CUST=['Doña Nilda','Wichi','Titi Mayra','Un turista perdido','El cartero','Yadiel','La nena del 5','Don Tito'];
@@ -1473,7 +1482,7 @@ const BR_RANK=[1,3,12,11,10,7,6,5,4,2],BR_PTS={1:11,3:10,12:4,11:3,10:2};
 const cl=v=>Math.max(0,Math.min(100,v));
 
 class Component extends DCLogic {
-  state={look:{skin:2,hair:'corto',hc:0,top:'tee',tc:0,hat:false,chain:false},closet:false,screen:'title',cas:'cantera',name:'',apodo:'',abuName:'',names:{},visited:{},legends:{},words:{},passXP:0,claimed:{},daily:{},fam:'mami',abu:{aff:30,salud:70,dead:false,hosp:false},trait:'pelotero',tab:'barrio',s:{salud:72,feli:65,coco:40,resp:15},chavos:25,animo:5,coquis:40,calor:0,day:1,age:16,turf:{e7:'nadie',e5:'nadie',e3:'rival',cancha:'nadie'},enemies:[],armed:false,pos:{x:49,y:50},dayStart:Date.now(),quests:{},unlocked:{},jobs:{},zone:'bloque',areas:{bloque:true},path:null,dev:{},gender:'chico',likes:'chicas',love:{},partner:null,married:false,gen:1,dead:null,jail:null,mg:null,sheet:null,ev:null,result:null,log:[],toast:null,thread:null,th:{},noAnimo:false,owned:{},pass:false,ad:0,evi:0};
+  state={look:{skin:2,hair:'corto',hc:0,top:'tee',tc:0,hat:false,chain:false,ear:'none',gl:false,st:false,neck:'none'},closet:false,screen:'title',cas:'cantera',name:'',apodo:'',abuName:'',names:{},visited:{},legends:{},words:{},passXP:0,claimed:{},daily:{},fam:'mami',abu:{aff:30,salud:70,dead:false,hosp:false},trait:'pelotero',tab:'barrio',s:{salud:72,feli:65,coco:40,resp:15},chavos:25,animo:5,coquis:40,calor:0,day:1,age:16,turf:{e7:'nadie',e5:'nadie',e3:'rival',cancha:'nadie'},enemies:[],armed:false,pos:{x:49,y:50},dayStart:Date.now(),quests:{},unlocked:{},jobs:{},zone:'bloque',areas:{bloque:true},path:null,dev:{},gender:'chico',likes:'chicas',love:{},partner:null,married:false,gen:1,dead:null,jail:null,mg:null,sheet:null,ev:null,result:null,log:[],toast:null,thread:null,th:{},noAnimo:false,owned:{},pass:false,ad:0,evi:0};
   componentDidMount(){
     this.kd=e=>{const m=this.state.mg;if(!m||m.type!=='chase')return;const v={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]}[e.key];if(v){e.preventDefault();this.move(v[0],v[1])}};window.addEventListener('keydown',this.kd);
     this.ck=setInterval(()=>{if(Date.now()-this.state.dayStart>=DAYMS)this.sleep();else this.forceUpdate()},30000);
@@ -1768,14 +1777,18 @@ class Component extends DCLogic {
       name:st.name,apodo:st.apodo,setName:e=>this.setState({name:e.target.value}),setApodo:e=>this.setState({apodo:e.target.value}),abuName:st.abuName,setAbuName:e=>this.setState({abuName:e.target.value}),
       abuCard:{av:PORTRAITS.includes('abuela')?'var(--color-accent-300) url(img/p-abuela.jpg) center / cover no-repeat':'var(--color-accent-300)',ini:PORTRAITS.includes('abuela')?'':'A',name:this.gx('{abuela}'),dead:st.abu.dead,alive:!st.abu.dead,aff:st.abu.aff,salud:st.abu.salud,affW:st.abu.aff+'%',saludW:st.abu.salud+'%',saludBg:st.abu.salud<30?'var(--color-accent)':'var(--color-accent-2)',stage:st.abu.dead?'Descansa en paz':st.abu.aff>=70?'Su orgullo':st.abu.aff>=40?'Te tiene fe':'Preocupada'},
       initial:(nm||ap||'Y')[0].toUpperCase(),
-      av:{skin:SKINS[st.look.skin],hair:st.look.hair,hc:HCS[st.look.hc],top:st.look.top,tc:TCS[st.look.tc],hat:!!st.look.hat,chain:!!st.look.chain},
+      av:{skin:SKINS[st.look.skin],hair:st.look.hair,hc:HCS[st.look.hc],top:st.look.top,tc:TCS[st.look.tc],hat:!!st.look.hat,chain:!!st.look.chain,ear:st.look.ear||'none',gl:!!st.look.gl,st:!!st.look.st,neck:st.look.neck||'none'},
       closetOn:st.closet,openCloset:()=>this.setState({closet:true}),closeCloset:()=>this.setState({closet:false}),
       skinOpts:SKINS.map((c,i)=>this.swatch(c,st.look.skin===i,'skin',i)),
       hcOpts:HCS.map((c,i)=>this.swatch(c,st.look.hc===i,'hc',i)),
       tcOpts:TCS.map((c,i)=>this.swatch(c,st.look.tc===i,'tc',i)),
       hairOpts:HAIRS.map(([id,label])=>({label,op:1,bg:st.look.hair===id?'var(--sun)':'var(--color-surface)',pick:()=>this.setLook('hair',id)})),
       topOpts:TOPS.map(([id,label])=>({label,op:1,bg:st.look.top===id?'var(--sun)':'var(--color-surface)',pick:()=>this.setLook('top',id)})),
-      extraOpts:[['hat','gorra','Gorra'],['chain','cadena','Cadena']].map(([k,it,label])=>{const own=!!st.owned[it];return {label:own?label:label+' · Tienda',op:own?1:.5,bg:st.look[k]?'var(--sun)':'var(--color-surface)',pick:()=>own?this.setLook(k,!st.look[k]):this.say('Cómprala en la Tienda primero.')}}),displayName:display,
+      extraOpts:[...[['hat','gorra','Gorra'],['chain','cadena','Cadena']].map(([k,it,label])=>{const own=!!st.owned[it];return {label:own?label:label+' · Tienda',op:own?1:.5,bg:st.look[k]?'var(--sun)':'var(--color-surface)',pick:()=>own?this.setLook(k,!st.look[k]):this.say('Cómprala en la Tienda primero.')}}),
+        {label:{none:'Aretes',pantallas:'Pantallitas',argollas:'Argollas'}[st.look.ear||'none'],op:1,bg:(st.look.ear||'none')!=='none'?'var(--sun)':'var(--color-surface)',pick:()=>this.setLook('ear',{none:'pantallas',pantallas:'argollas',argollas:'none'}[st.look.ear||'none'])},
+        {label:'Espejuelos',op:1,bg:st.look.gl?'var(--sun)':'var(--color-surface)',pick:()=>this.setLook('gl',!st.look.gl)},
+        {label:'Mecha roja',op:1,bg:st.look.st?'var(--sun)':'var(--color-surface)',pick:()=>this.setLook('st',!st.look.st)},
+        {label:{none:'Collar',choker:'Choker',cruz:'Crucecita'}[st.look.neck||'none'],op:1,bg:(st.look.neck||'none')!=='none'?'var(--sun)':'var(--color-surface)',pick:()=>this.setLook('neck',{none:'choker',choker:'cruz',cruz:'none'}[st.look.neck||'none'])}],displayName:display,
       traits:TRAITS.map(t=>({...t,name:TG[t.id]?TG[t.id][st.gender==='chica'?1:st.gender==='nb'?2:0]:t.name,bg:t.id===st.trait?'var(--color-accent)':'var(--color-surface)',fg:t.id===st.trait?'var(--color-bg)':'var(--color-text)',select:()=>this.setState({trait:t.id})})),
       start:()=>{const tr=TRAITS.find(t=>t.id===st.trait);const d={...cas.d};Object.keys(tr.d).forEach(k=>d[k]=(d[k]||0)+tr.d[k]);MODE=CAS_TR[cas.id]||'tren';FAM=FAM_IDS[Math.floor(Math.random()*FAM_IDS.length)];ABU_DEAD=false;const dc=DON[tr.id];this.apply(d,{fam:FAM,screen:'hub',tab:'barrio',dev:{[dc]:DEV[dc].need}});this.say(this.gx('{Bienvenido}')+' a '+cas.short+'. '+this.fmt(d).join(' · '))},
       age:st.age,nextAge:st.age+1,day:st.day,chavos:st.chavos,coquis:st.coquis,animo:st.animo,animoMax:max,calor:st.calor,

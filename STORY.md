@@ -253,7 +253,11 @@ New events from the same source:
 - **La dirección**: a job interview in the Milla de Oro goes cold when they read "Res. Las Palmas de Oro".
 - **Se te pegó la frisa**, **El arroz con pegao**, **Brayan brinca el charco** (to Orlando, "allá fuera"), **Las octavitas** (Jan 7: asaltos, coquito, pitorro), and **San Ciriaco** (1899) in Abuela's memory when the hurricane comes.
 
-## 15. Next up
+## 15. Avatar & Dones **(in game)**
+- **Dones** (starting trait): Deportista, Artista, Estofón, Joseador.
+- **Avatar** redrawn to match the reference sheet: real faces, 6 skin tones, 10 hairstyles (fade, corto, rizos, trenzas, afro, moño, largo, cola rizada, emo, trenza de lado), 6 tops (camiseta, jersey, hoodie, guayabera, polo, camisa abierta), free extras (aretes, espejuelos, mecha roja, choker/crucecita) plus gorra and cadena from the Tienda. Several options come from the contact and romance portraits.
+
+## 16. Next up
 - People in each pueblo (contacts, mini-stories per place), not just activities.
 - Orlando as a far trip for the Mami story (flight from the airport).
 - Pay off the saved flags (El Gringo's favor, Agente Rosado's case) in Season 2.
