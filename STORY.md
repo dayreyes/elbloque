@@ -189,7 +189,50 @@ Flags like `gringoDebt` and `rosadoCase` are saved for later seasons to pay off.
 
 Side-story trips (Papi in Bayamón, the Arecibo records, Abuela Toña in Utuado) happen at the real place.
 
-## 11. Next up
+## 11. People in the pueblos **(in game)**
+
+| Pueblo | Contact | What they bring |
+|---|---|---|
+| San Juan | **Guille el guía** | Ghost tours; starts La Garita del Diablo |
+| Bayamón | **Doña Tata** | 40 years of chicharrón; weekend work; the '75 Vampiro de Moca story |
+| Loíza | **Maestra Nilsa** | Bomba lessons, vejigantes, Fiestas de Santiago Apóstol |
+| Arecibo | **Don Wilfredo** | Fisherman; tells Carabalí's story |
+| Utuado | **Don Ciro** | Cafetal foreman; tells El Comecogollo |
+| Ponce | **Chino** | Ceiba Alta; the three-family truce |
+| Caguas | **Doña Inés** | Botánica La Fe (espiritismo, santos de palo, despojos); starts Guanina |
+| Canóvanas | **Don Chuco** | Saw the Chupacabras in '95; the night watch |
+| Cabo Rojo | **Capitán Mito** | Sells a Cofresí treasure map for $10 |
+
+New pueblos: **Caguas** (Montaña de la India, Botánica La Fe, the plaza's ceiba, the ballpark), **Canóvanas** (Don Chuco's finca, the foothills of El Yunque, the alcaldía, the hipódromo with bets), **Cabo Rojo** (Faro Los Morrillos, the salinas, Boquerón, Playa Buyé). San Juan adds **El Castillo** (San Cristóbal) and **El cementerio** (Santa María Magdalena); Utuado adds the **Cueva de los Muertos**.
+
+## 12. Leyendas **(in game)**
+
+A collection in the Vida tab (17). Each pays 5 coquís the first time. A new trait, **Creyente**, grows from chasing legends and choosing to believe.
+
+| Legend | How you find it |
+|---|---|
+| La Garita del Diablo | Guille's night tour at El Castillo → dare to stay alone until midnight (keep Sánchez's button: `botonSanchez`) |
+| La Rogativa | The statue at El Castillo |
+| El tesoro de Cofresí | Mito's map → the cave under Los Morrillos → dig at Buyé (keep the coin: `monedaCofresi`, or sell it) · also his grave at El cementerio |
+| Guanina y Sotomayor → La ceiba | Doña Inés → Montaña de la India at sunset → the plaza's ceiba |
+| El Chupacabras | Don Pepe's roosters (bloque event) → night watch with Don Chuco → the mayor ("Indiana Pérez") and the press |
+| La gárgola de El Yunque | Stay at El Yunque's foothills at dusk |
+| Carabalí | Don Wilfredo, or the Cueva de los Muertos |
+| El Comecogollo | Don Ciro |
+| Las hupías, Los ahorcados, El Jacho | Night events (the guava man with no belly button, the old road, the light over the cane field) |
+| Juan Bobo, La Cucarachita Martina, El Cuco | Everyday events (Abuela, the lavandería, babysitting) |
+| El río Sana Muerto | A neighbor selling "healing" water for Abuela |
+| Roberto Clemente | December 31: Abuela's candle by his photo among the saints |
+
+## 13. Inspiration: *Pa' los caseríos* (Ricardo Currás, 2021)
+
+A first-person piece about growing up in Las Gladiolas, "los castillos" by the Milla de Oro in Hato Rey. Las Palmas de Oro is in that spirit. Themes we use, not text:
+- **The caserío's history**: built to replace the arrabales; families down from the campo; "Mano Dura" in the '90s. Told by Don Pepe ("Cuando llegó la Guardia").
+- **The tools against "la verdadera universidad: la calle"**: family, school, friends, music, reading, oratory. A new trait, **Pico de oro**, grows from reading Abuela's books, the school's oratoria club and writing poems on the roof; key choices also grow it.
+- **The weight, told with restraint**: the cupones and stretching the month, a pana's wake, a cousin caught in addiction (Rafy), Kiko's "es la que hay, papi".
+- **"Sacar la cara" for your people**: the heart of Season 3, *El bloque no se vende*.
+
+## 14. Next up
 - People in each pueblo (contacts, mini-stories per place), not just activities.
 - Orlando as a far trip for the Mami story (flight from the airport).
 - Pay off the saved flags (El Gringo's favor, Agente Rosado's case) in Season 2.

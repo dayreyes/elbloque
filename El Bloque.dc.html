@@ -230,6 +230,15 @@
         </div>
         </sc-for>
       </div>
+      <div style="display:flex; flex-direction:column; gap:6px">
+        <div style="display:flex; justify-content:space-between; align-items:baseline"><h4 style="margin:0">Leyendas</h4><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ legendInfo }}</span></div>
+        <sc-for list="{{ legendList }}" as="l" hint-placeholder-count="2">
+        <div style="display:flex; flex-direction:column; gap:3px; padding:8px 10px; border:2px solid var(--ink); border-radius:4px; background:{{ l.bg }}; opacity:{{ l.op }}">
+          <div style="display:flex; justify-content:space-between; gap:8px; align-items:baseline"><span style="font-family:var(--font-heading); font-weight:900; font-size:17px; text-transform:uppercase; line-height:1">{{ l.name }}</span><span style="font-family:var(--font-mono); font-size:9px; font-weight:700; text-transform:uppercase; white-space:nowrap">{{ l.where }}</span></div>
+          <span style="font-size:12px; line-height:1.4">{{ l.lore }}</span>
+        </div>
+        </sc-for>
+      </div>
       <button class="btn btn-primary" style="height:56px; font-size:18px; justify-content:space-between; padding:0 22px" sc-camel-on-click="{{ birthday }}"><span>Cumplir años</span><span style="font-family:var(--font-body); font-size:13px; font-weight:700">{{ age }} → {{ nextAge }}</span></button>
       <div style="display:flex; flex-direction:column; gap:2px">
         <h4 style="margin:0 0 6px">Tu historia</h4>
@@ -691,7 +700,8 @@ const LOCS=[
  {id:'escuela',maxAge:17,label:'Escuela Superior',note:'Examen de química el jueves.',sub:'Hay aire acondicionado en un salón.',sw:'var(--color-surface)',tags:['Coco','Música'],acts:[
    {label:'Ir a clase',fx:'+6 Coco · −2 Felicidad',cost:2,d:{coco:6,feli:-2},ev:.4},
    {cat:'artista',label:'Grabar en el salón de música',fx:'+4 Felicidad · +3 Respeto · camino de artista',cost:2,d:{feli:4,resp:3}},
-   {cat:'fiestero',label:'Cortar clase',fx:'+5 Felicidad · −4 Coco',cost:1,d:{feli:5,coco:-4}}]},
+   {cat:'fiestero',label:'Cortar clase',fx:'+5 Felicidad · −4 Coco',cost:1,d:{feli:5,coco:-4}},
+   {cat:'orador',label:'Club de oratoria',fx:'+3 Coco · +3 Respeto · camino de Pico de oro',cost:2,d:{coco:3,resp:3}}]},
  {id:'parada',label:'La parada',note:'La guagua pasa "ahorita". Nadie sabe cuándo es ahorita.',sub:'La parada de guagua a la entrada del caserío. Aquí se sabe quién llega y quién se va.',sw:'var(--color-neutral-200)',tags:['Guagua','Chismes'],acts:[
    {label:'Coger la guagua',fx:'Viajar a otro pueblo',cost:0,travel:true},
    {label:'Esperar la guagua y escuchar',fx:'+3 Coco · +2 Felicidad · chismes',cost:1,d:{coco:3,feli:2},ev:.5},
@@ -701,7 +711,8 @@ const LOCS=[
  {id:'techo',label:'El techo del 7',note:'La puerta dice "PROHIBIDO". Nadie le hace caso.',sub:'Desde aquí se ven las torres de Hato Rey y todo el bloque. La única señal buena del caserío.',sw:'var(--color-accent-400)',tags:['Pensar','Señal'],lock:'Yadiel sabe cómo subir.',acts:[
    {label:'Mirar el skyline',fx:'+6 Felicidad',cost:1,d:{feli:6}},
    {label:'Hablar de la vida con Yadiel',fx:'+3 Felicidad · +2 Coco · +2 Respeto',cost:1,d:{feli:3,coco:2,resp:2},ev:.3},
-   {cat:'artista',label:'Escribir rimas',fx:'+3 Felicidad · +3 Respeto · camino de artista',cost:2,d:{feli:3,resp:3}}]},
+   {cat:'artista',label:'Escribir rimas',fx:'+3 Felicidad · +3 Respeto · camino de artista',cost:2,d:{feli:3,resp:3}},
+   {cat:'orador',label:'Escribir un poema sobre el bloque',fx:'+3 Coco · +3 Felicidad · camino de Pico de oro',cost:1,d:{coco:3,feli:3}}]},
  {id:'lavanderia',label:'La lavandería',note:'Una de las secadoras se come las monedas.',sub:'Doña Fela, la hermana de Doña Lydia, lo sabe todo. Y el wifi es gratis.',sw:'var(--color-accent-2-300)',tags:['Wifi','Chismes','Chamba'],acts:[
    {label:'Lavar tu ropa',fx:'−$3 · +4 Felicidad · +2 Salud',cost:1,d:{chavos:-3,feli:4,salud:2}},
    {cat:'estudioso',label:'Estudiar con el wifi gratis',fx:'+5 Coco · camino de estudioso',cost:2,d:{coco:5}},
@@ -719,8 +730,56 @@ const LOCS=[
  {id:'apto',label:'Tu apto · Edif. 7',get note(){return ABU_DEAD?'El apto está muy callado.':'Abuela hizo arroz con gandules.'},sub:'Tercer piso. El ascensor lleva roto desde el 2019.',sw:'var(--color-accent-300)',tags:['Dormir','Familia'],acts:[
    {label:'Dormir',fx:'Llena el Ánimo, baja el Calor',cost:0,sleep:true},
    {abu:true,label:'Comer con Abuela',fx:'+6 Salud · +4 Felicidad · Abuela se alegra',cost:1,d:{salud:6,feli:4,abuAff:3}},
-   {abuDead:true,label:'Mirar las fotos de Abuela',fx:'+4 Felicidad',cost:1,d:{feli:4}}]}];
+   {abuDead:true,label:'Mirar las fotos de Abuela',fx:'+4 Felicidad',cost:1,d:{feli:4}},
+   {cat:'orador',label:'Leer los libros de Abuela',fx:'+4 Coco · +1 Felicidad · camino de Pico de oro',cost:1,d:{coco:4,feli:1}}]}];
 LOCS.push(
+ // ---- San Juan (legends) ----
+ {id:'castillo',zone:'sanjuan',label:'El Castillo',note:'La garita de la esquina tiene su propia leyenda.',sub:'Castillo San Cristóbal. El fuerte más grande que los españoles construyeron en América. De noche hay tours de fantasmas.',sw:'var(--color-accent-300)',tags:['Historia','Leyendas'],acts:[
+   {cat:'estudioso',label:'Recorrer las murallas',fx:'+5 Coco · +2 Felicidad',cost:1,d:{coco:5,feli:2}},
+   {cat:'creyente',label:'Ver la estatua de La Rogativa',fx:'+3 Coco · leyenda',cost:1,d:{coco:3},legend:'rogativa'},
+   {label:'Hablar con Guille, el guía',fx:'Conocer gente · nuevo contacto',cost:0,meet:'guille'}]},
+ {id:'cementerio',zone:'sanjuan',label:'El cementerio',note:'Entre El Morro y el mar.',sub:'Cementerio Santa María Magdalena de Pazzis. Aquí están enterrados próceres, poetas… y, en las afueras, un pirata.',sw:'var(--color-neutral-300)',tags:['Historia','Leyendas'],acts:[
+   {cat:'estudioso',label:'Visitar las tumbas de los próceres',fx:'+4 Coco',cost:1,d:{coco:4}},
+   {cat:'creyente',label:'Buscar dónde enterraron a Cofresí',fx:'+3 Coco · leyenda',cost:1,d:{coco:3},legend:'cofresi'}]},
+ // ---- Caguas ----
+ {id:'montana',zone:'caguas',label:'Montaña de la India',note:'Desde la plaza se ve el perfil de una mujer acostada.',sub:'La montaña de Guanina. El sendero sube entre bambúes.',sw:'var(--color-accent-2)',tags:['Taíno','Leyendas'],acts:[
+   {label:'Caminar el sendero',fx:'+5 Salud · +2 Felicidad',cost:2,d:{salud:5,feli:2}}]},
+ {id:'botanica',zone:'caguas',label:'Botánica La Fe',note:'Huele a incienso, a ruda y a Agua Florida.',sub:'Santos de palo, velas de colores, hierbas y Doña Inés, que sabe leer a la gente.',sw:'var(--color-accent-400)',tags:['Espiritismo','Santos'],acts:[
+   {label:'Darte un despojo',fx:'−$10 · +6 Felicidad · −5 Calor',cost:1,d:{chavos:-10,feli:6,calor:-5}},
+   {abu:true,label:'Comprarle un santo de palo a Abuela',fx:'−$20 · +8 Afecto de Abuela',cost:0,d:{chavos:-20,abuAff:8}},
+   {label:'Hablar con Doña Inés',fx:'Conocer gente · nuevo contacto',cost:0,meet:'ines'}]},
+ {id:'plazacaguas',zone:'caguas',label:'La plaza de Caguas',note:'Una ceiba vieja da sombra a media plaza.',sub:'Viejitos, palomas, piraguas y la catedral.',sw:'var(--color-accent-2-300)',tags:['Plaza','Ceiba'],acts:[
+   {label:'Piragua de tamarindo',fx:'−$2 · +4 Felicidad',cost:0,d:{chavos:-2,feli:4}},
+   {label:'Sentarte debajo de la ceiba',fx:'+3 Felicidad',cost:1,d:{feli:3}}]},
+ {id:'parque',zone:'caguas',label:'El parque de pelota',note:'Liga de invierno. Los Criollos juegan esta noche.',sub:'Gradas de cemento, alcapurrias y gritos al umpire.',sw:'var(--color-accent-300)',tags:['Pelota'],acts:[
+   {label:'Ver un juego de pelota',fx:'−$6 · +6 Felicidad',cost:1,d:{chavos:-6,feli:6}},
+   {cat:'atleta',label:'Tryout de la Doble A',fx:'Minijuego · a 5 tiros',cost:2,mg:'hoops'}]},
+ // ---- Canóvanas ----
+ {id:'finca',zone:'canovanas',label:'La finca de Don Chuco',note:'Le faltan tres cabras desde el \'95.',sub:'Una finca con verjas reforzadas, un perro nervioso y un letrero: "AQUÍ NO HAY NADA PA\' CHUPAR".',sw:'var(--color-accent-2-300)',tags:['Chupacabras','Finca'],acts:[
+   {cat:'buscon',label:'Ayudar con los animales',fx:'+$8 · +2 Salud',cost:2,d:{chavos:8,salud:2}},
+   {label:'Hablar con Don Chuco',fx:'Conocer gente · nuevo contacto',cost:0,meet:'chuco'}]},
+ {id:'yunque',zone:'canovanas',label:'Las faldas de El Yunque',note:'Cuando baja la neblina, todo se oye distinto.',sub:'El bosque lluvioso empieza aquí. Coquíes, ríos y cosas que vuelan de noche.',sw:'var(--color-accent-2)',tags:['Bosque','Leyendas'],acts:[
+   {label:'Bañarte en el río',fx:'+6 Felicidad · +3 Salud',cost:2,d:{feli:6,salud:3}},
+   {cat:'creyente',label:'Quedarte al anochecer',fx:'+3 Coco · algo huele a azufre',cost:1,d:{coco:3},legend:'gargola'}]},
+ {id:'alcaldia',zone:'canovanas',label:'La alcaldía',note:'Venden camisetas del Chupacabras en la entrada.',sub:'El alcalde tiene un sombrero de explorador colgado detrás del escritorio.',sw:'var(--sun)',tags:['Pueblo'],acts:[
+   {cat:'buscon',label:'Vender camisetas del Chupacabras',fx:'+$12',cost:2,d:{chavos:12}}]},
+ {id:'hipodromo',zone:'canovanas',label:'El hipódromo',note:'Los domingos hay carreras.',sub:'Caballos, apuestas y señores con el periódico enrollado gritando números.',sw:'var(--color-accent-300)',tags:['Caballos','Apuestas'],acts:[
+   {label:'Apostarle $10 a un caballo',fx:'30% de ganar $35',cost:1,d:{},gamble:{bet:10,p:.3,win:35}},
+   {cat:'buscon',label:'Limpiar los establos',fx:'+$10 · −2 Salud',cost:2,d:{chavos:10,salud:-2}}]},
+ // ---- Cabo Rojo ----
+ {id:'faro',zone:'caborojo',label:'Faro Los Morrillos',note:'Debajo del acantilado hay una cueva.',sub:'El faro blanco sobre los acantilados más bonitos de la isla. Dicen que Cofresí se escondía abajo.',sw:'var(--color-surface)',tags:['Faro','Cofresí'],acts:[
+   {label:'Ver el atardecer desde el faro',fx:'+7 Felicidad',cost:1,d:{feli:7}}]},
+ {id:'salinas',zone:'caborojo',label:'Las salinas',note:'El agua es rosada. De verdad.',sub:'Lagunas de sal, flamencos de vez en cuando y un calor que no perdona.',sw:'var(--color-accent-200)',tags:['Sal','Naturaleza'],acts:[
+   {cat:'buscon',label:'Trabajar en las salinas',fx:'+$12 · −3 Salud',cost:3,d:{chavos:12,salud:-3}},
+   {cat:'estudioso',label:'Contar aves con los biólogos',fx:'+5 Coco',cost:2,d:{coco:5}}]},
+ {id:'boqueron',zone:'caborojo',label:'Boquerón',note:'Ostiones, botes y salsa los viernes.',sub:'El pueblito de playa. El Capitán Mito alquila su bote y vende mapas "auténticos".',sw:'var(--sun)',tags:['Playa','Botes'],acts:[
+   {label:'Ostiones con limón',fx:'−$6 · +5 Felicidad',cost:0,d:{chavos:-6,feli:5}},
+   {label:'Hablar con el Capitán Mito',fx:'Conocer gente · nuevo contacto',cost:0,meet:'mito'}]},
+ {id:'buye',zone:'caborojo',label:'Playa Buyé',note:'Agua tranquila y arena blanca.',sub:'Una de las playas más bonitas del oeste. Buena pa\' esconder algo.',sw:'var(--color-accent-2-300)',tags:['Playa'],acts:[
+   {label:'Nadar en el agua clarita',fx:'+6 Felicidad · +2 Salud',cost:1,d:{feli:6,salud:2}}]},
+ // ---- Utuado (legend) ----
+ {id:'cuevamuertos',zone:'utuado',label:'Cueva de los Muertos',note:'Nadie del barrio entra de noche.',sub:'Una cueva en el monte donde acorralaron a Carabalí.',ink:true,sw:'var(--color-neutral-700)',tags:['Leyendas'],acts:[
+   {cat:'creyente',label:'Entrar a la cueva',fx:'+4 Coco · −2 Felicidad · leyenda',cost:2,d:{coco:4,feli:-2},legend:'carabali'}]},
  // ---- Bayamón ----
  {id:'carcel',zone:'bayamon',label:'Cárcel de Bayamón',note:'Visitas los sábados. Trae ID y paciencia.',sub:'Institución Correccional. Las paredes son grises por dentro y por fuera.',ink:true,sw:'var(--color-neutral-700)',tags:['Visitas'],acts:[
    {fam:'papi',needQ:'p1',label:'Visitar a {papa}',fx:'+5 Felicidad · +2 Coco',cost:2,d:{feli:5,coco:2}},
@@ -731,7 +790,8 @@ LOCS.push(
    {cat:'buscon',label:'Vender agua en el parking',fx:'+$10',cost:2,d:{chavos:10}}]},
  {id:'chicharron',zone:'bayamon',label:'La chicharronera',note:'La fila llega a la carretera.',sub:'Chicharronera El Gordo, en la Carretera 2. Chicharrón, morcilla y una Medalla fría.',sw:'var(--sun)',tags:['Comida','Chamba'],acts:[
    {label:'Comerte una libra de chicharrón',fx:'−$6 · +6 Felicidad · −2 Salud',cost:0,d:{chavos:-6,feli:6,salud:-2}},
-   {cat:'buscon',label:'Trabajar en el caldero',fx:'+$14 · −2 Salud',cost:2,d:{chavos:14,salud:-2}}]},
+   {cat:'buscon',label:'Trabajar en el caldero',fx:'+$14 · −2 Salud',cost:2,d:{chavos:14,salud:-2}},
+   {label:'Hablar con Doña Tata',fx:'Conocer gente · nuevo contacto',cost:0,meet:'tata'}]},
  {id:'riohondo',zone:'bayamon',label:'Plaza Río Hondo',note:'Aire acondicionado gratis.',sub:'El mall. Tiendas de tenis, el cine y el food court.',sw:'var(--color-accent-300)',tags:['Mall','Compras'],acts:[
    {label:'Janguear en el mall',fx:'+4 Felicidad',cost:1,d:{feli:4}},
    {label:'Ver una película',fx:'−$8 · +6 Felicidad',cost:1,d:{chavos:-8,feli:6}},
@@ -745,7 +805,8 @@ LOCS.push(
    {cat:'atleta',label:'Aprender a surfear',fx:'+4 Salud · +3 Respeto · camino de atleta',cost:2,d:{salud:4,resp:3}}]},
  {id:'bomba',zone:'loiza',label:'Escuela de bomba',note:'El barril primo llama. Tú contestas.',sub:'Los sábados enseñan a tocar y a bailar. El que baila le habla al tambor.',sw:'var(--color-accent)',tags:['Bomba','Música'],acts:[
    {cat:'artista',label:'Clase de baile de bomba',fx:'+5 Felicidad · +3 Respeto · camino de artista',cost:2,d:{feli:5,resp:3}},
-   {cat:'artista',label:'Tocar el barril',fx:'+4 Respeto · +2 Coco',cost:1,d:{resp:4,coco:2}}]},
+   {cat:'artista',label:'Tocar el barril',fx:'+4 Respeto · +2 Coco',cost:1,d:{resp:4,coco:2}},
+   {label:'Hablar con Maestra Nilsa',fx:'Conocer gente · nuevo contacto',cost:0,meet:'nilsa'}]},
  {id:'caretas',zone:'loiza',label:'Taller de caretas',note:'Cuernos, colores y cocos tallados.',sub:'Aquí hacen las caretas de vejigante pa\' las Fiestas de Santiago Apóstol.',sw:'var(--color-accent-400)',tags:['Arte','Tradición'],acts:[
    {cat:'artista',label:'Ayudar a pintar caretas',fx:'+$8 · +3 Coco',cost:2,d:{chavos:8,coco:3}},
    {label:'Comprar una careta pa\'l apto',fx:'−$25 · +6 Felicidad · Abuela se alegra',cost:0,d:{chavos:-25,feli:6,abuAff:3}}]},
@@ -760,7 +821,8 @@ LOCS.push(
    {label:'Tirarte de la piedra al charco',fx:'+7 Felicidad · −3 Salud · +2 Respeto',cost:1,d:{feli:7,salud:-3,resp:2}}]},
  {id:'malecon',zone:'arecibo',label:'El malecón',note:'El faro de Arecibo al fondo.',sub:'Kioskos, pescadores y viento del norte.',sw:'var(--sun)',tags:['Comida','Pesca'],acts:[
    {label:'Comer en los kioskos',fx:'−$5 · +5 Felicidad',cost:0,d:{chavos:-5,feli:5}},
-   {cat:'buscon',label:'Pescar en el rompeolas',fx:'+$6 · +2 Felicidad',cost:2,d:{chavos:6,feli:2}}]},
+   {cat:'buscon',label:'Pescar en el rompeolas',fx:'+$6 · +2 Felicidad',cost:2,d:{chavos:6,feli:2}},
+   {label:'Hablar con Don Wilfredo',fx:'Conocer gente · nuevo contacto',cost:0,meet:'wilfredo'}]},
  // ---- Utuado ----
  {id:'casatona',zone:'utuado',fam:'secreto',label:'Casa de Abuela Toña',note:'Una casa de madera entre montañas.',sub:'Barrio Caonillas. Siempre hay café colao y una silla pa\' ti.',sw:'var(--color-accent-300)',tags:['Familia'],lock:'Todavía no conoces a nadie en Utuado.',acts:[
    {needQ:'s3',label:'Café con Abuela Toña',fx:'+5 Felicidad · +3 Salud',cost:1,d:{feli:5,salud:3}},
@@ -773,7 +835,8 @@ LOCS.push(
    {label:'Caminar el sendero',fx:'+5 Salud · +2 Felicidad',cost:1,d:{salud:5,feli:2}}]},
  {id:'cafetal',zone:'utuado',label:'Hacienda cafetalera',note:'El grano rojo se recoge a mano.',sub:'Café de altura. Pagan por almud recogido.',sw:'var(--color-neutral-500)',tags:['Café','Chamba'],acts:[
    {cat:'buscon',label:'Recoger café',fx:'+$12 · −2 Salud',cost:3,d:{chavos:12,salud:-2}},
-   {abu:true,label:'Comprarle café de la montaña a Abuela',fx:'−$8 · +6 Afecto de Abuela',cost:0,d:{chavos:-8,abuAff:6}}]},
+   {abu:true,label:'Comprarle café de la montaña a Abuela',fx:'−$8 · +6 Afecto de Abuela',cost:0,d:{chavos:-8,abuAff:6}},
+   {label:'Hablar con Don Ciro',fx:'Conocer gente · nuevo contacto',cost:0,meet:'ciro'}]},
  // ---- Ponce ----
  {id:'delicias',zone:'ponce',label:'Plaza Las Delicias',note:'El Parque de Bombas, rojo y negro.',sub:'La plaza más bonita de la isla, según cualquier ponceño.',sw:'var(--color-accent)',tags:['Plaza','Fotos'],acts:[
    {label:'Helado de parcha en la plaza',fx:'−$3 · +5 Felicidad',cost:0,d:{chavos:-3,feli:5}},
@@ -786,7 +849,8 @@ LOCS.push(
    {label:'Tirarle pan a los peces',fx:'+3 Felicidad',cost:1,d:{feli:3}}]},
  {id:'ceibalta',zone:'ponce',label:'Res. Ceiba Alta',note:'La mejor cancha del sur. Tú eres visita.',sub:'Otro caserío, otras reglas. Aquí mandan tres familias.',sw:'var(--color-accent-2)',tags:['Cancha','Calor'],acts:[
    {cat:'atleta',label:'Jugar en la mejor cancha del sur',fx:'Minijuego · a 5 tiros',cost:2,mg:'hoops'},
-   {label:'Conocer al corillo de Ceiba Alta',fx:'+3 Respeto · +2 Calor',cost:1,d:{resp:3,calor:2}}]},
+   {label:'Conocer al corillo de Ceiba Alta',fx:'+3 Respeto · +2 Calor',cost:1,d:{resp:3,calor:2}},
+   {label:'Hablar con Chino',fx:'Conocer gente · nuevo contacto',cost:0,meet:'chino'}]},
  {id:'plaza',zone:'pueblo',label:'La plaza del pueblo',note:'Viejitos jugando dominó y una piragua de frambuesa.',sub:'Frente a la iglesia. Los domingos hay bomba y plena.',sw:'var(--color-accent-2-300)',tags:['Gente','Fiestas'],acts:[
    {label:'Comerte una piragua',fx:'−$2 · +5 Felicidad',cost:0,d:{chavos:-2,feli:5}},
    {label:'Bailar plena en la plaza',fx:'+6 Felicidad · +2 Respeto',cost:2,d:{feli:6,resp:2},ev:.4}]},
@@ -884,8 +948,10 @@ const DEV={
  calle:{name:'De la calle',need:3,bonus:'+$10 en cada movida · la policía te conoce (+3 Calor)',d:{chavos:10,calor:3}},
  fiestero:{name:'Fiestero',need:3,bonus:'+2 Felicidad al salir',d:{feli:2}},
  familiar:{name:'Familiar',need:3,bonus:'+2 Felicidad con la familia',d:{feli:2}},
- mecanico:{name:'Manos de mecánico',need:3,bonus:'+$4 en el taller',d:{chavos:4}}};
-const PLACECAT={cancha:'atleta',liga:'atleta',escuela:'estudioso',yupi:'estudioso',privada:'estudioso',punto:'calle',taller:'mecanico',estudio:'artista',plaza:'fiestero',chinchorro:'fiestero',club:'fiestero',colmado:'buscon',muelle:'buscon',apto:'familiar',panaderia:'familiar',iglesia:'familiar',gimnasio:'atleta',lavanderia:'buscon',parada:'buscon'};
+ mecanico:{name:'Manos de mecánico',need:3,bonus:'+$4 en el taller',d:{chavos:4}},
+ creyente:{name:'Creyente',need:3,bonus:'+2 Coco con cada leyenda · los espíritus te respetan',d:{coco:2}},
+ orador:{name:'Pico de oro',need:3,bonus:'+2 Respeto cuando lees, escribes o hablas en público',d:{resp:2}}};
+const PLACECAT={cuevamuertos:'creyente',cancha:'atleta',liga:'atleta',escuela:'estudioso',yupi:'estudioso',privada:'estudioso',punto:'calle',taller:'mecanico',estudio:'artista',plaza:'fiestero',chinchorro:'fiestero',club:'fiestero',colmado:'buscon',muelle:'buscon',apto:'familiar',panaderia:'familiar',iglesia:'familiar',gimnasio:'atleta',lavanderia:'buscon',parada:'buscon'};
 const LOVE=[
  {id:'emo',places:['estudio'],likes:'artista',dislikes:null,bg:'var(--color-neutral-400)',f:{n:'Kiara',t:'La rockera'},m:{n:'Iker',t:'El rockero'},
   first:['¿Tú eras quien estaba mirando el ensayo?','Ok. El viernes tocamos en un garaje en el pueblo. Vente.'],
@@ -943,6 +1009,9 @@ const FEST=[
    {label:'Ir a Lares con tu tío',d:{coco:5,resp:4,feli:3},out:'Te aprendiste la historia completa de 1868.'},
    {label:'Postear la bandera de Lares',d:{resp:2},out:'Tu post tiene 40 likes.'},
    {label:'Quedarme durmiendo',d:{salud:2},out:'Tu tío no te habló en una semana.'}]},
+ {m:11,dm:4,kicker:'31 de diciembre',title:'La foto de Clemente',body:'Antes de las uvas y del brindis, Abuela prende una vela al lado de la foto de Roberto Clemente, entre la Virgen y San Judas. "Murió un día como hoy, llevando comida y medicinas a Nicaragua. Ese es un santo, aunque Roma no lo diga."',ch:[
+   {label:'Prender una vela con ella',d:{feli:4,abuAff:4},legend:'clemente',out:'"Juega como él y vive como él", te dijo. Después se comió las doce uvas en un minuto.'},
+   {label:'Preguntarle por Clemente',d:{coco:3},legend:'clemente',out:'Te contó de los 3,000 hits, del avión, de la gente esperando en la playa. Lloró un poquito.',outDead:'Prendiste la vela tú solo, al lado de la foto de Clemente y la de Abuela.'}],bodyDead:'Antes de las uvas, prendes la vela que Abuela le prendía a Roberto Clemente todos los 31. Ahora hay dos fotos en la repisa.'},
  {m:11,dm:0,kicker:'Diciembre · Navidad',title:'¡Asalto navideño!',body:'A las 2am tocaron la puerta con panderos y un güiro. Es una parranda.',ch:[
    {label:'Abrir y unirme a la parranda',d:{feli:12,salud:-3},out:'Terminaron en el apto de {abuela} comiendo pasteles a las 5am.'},
    {label:'Darles coquito y que sigan',d:{resp:4,feli:5},out:'Se llevaron la botella completa.'},
@@ -955,13 +1024,36 @@ const MAP={techo:{x:4,y:2,w:32,h:9},apto:{x:4,y:13,w:32,h:17},punto:{x:4,y:32,w:
  carcel:{x:4,y:4,w:32,h:39},coliseo:{x:62,y:4,w:34,h:39},chicharron:{x:4,y:58,w:32,h:38},riohondo:{x:62,y:58,w:34,h:38},
  pinones:{x:4,y:4,w:32,h:39},bomba:{x:62,y:4,w:34,h:20},caretas:{x:62,y:27,w:34,h:16},playa:{x:4,y:58,w:92,h:20},
  hospital:{x:4,y:4,w:32,h:39},observatorio:{x:62,y:4,w:34,h:39},cueva:{x:4,y:58,w:32,h:22},malecon:{x:62,y:58,w:34,h:22},
- casatona:{x:4,y:4,w:32,h:39},cafetal:{x:62,y:4,w:34,h:39},lago:{x:4,y:58,w:32,h:38},tanama:{x:62,y:58,w:34,h:38},
+ casatona:{x:4,y:4,w:32,h:39},cafetal:{x:62,y:4,w:34,h:18},lago:{x:4,y:58,w:32,h:38},tanama:{x:62,y:58,w:34,h:38},
  delicias:{x:4,y:4,w:32,h:39},serralles:{x:62,y:4,w:34,h:39},ceibalta:{x:4,y:58,w:32,h:22},guancha:{x:62,y:58,w:34,h:22},
- yupi:{x:4,y:4,w:32,h:39},privada:{x:62,y:4,w:34,h:39},muelle:{x:4,y:58,w:32,h:24},club:{x:62,y:58,w:34,h:22}};
-const MAPDECOR={bloque:[],pueblo:[{x:62,y:84,w:34,h:12,label:'Iglesia'}],sanjuan:[],bayamon:[],loiza:[],arecibo:[],utuado:[],ponce:[]};
+ montana:{x:4,y:4,w:32,h:39},botanica:{x:62,y:4,w:34,h:39},plazacaguas:{x:4,y:58,w:32,h:38},parque:{x:62,y:58,w:34,h:38},
+ finca:{x:4,y:4,w:32,h:39},yunque:{x:62,y:4,w:34,h:39},alcaldia:{x:4,y:58,w:32,h:38},hipodromo:{x:62,y:58,w:34,h:38},
+ faro:{x:4,y:4,w:32,h:39},salinas:{x:62,y:4,w:34,h:39},boqueron:{x:4,y:58,w:32,h:22},buye:{x:62,y:58,w:34,h:22},
+ castillo:{x:4,y:25,w:32,h:18},cementerio:{x:62,y:25,w:34,h:18},cuevamuertos:{x:62,y:25,w:34,h:18},
+ yupi:{x:4,y:4,w:32,h:18},privada:{x:62,y:4,w:34,h:18},muelle:{x:4,y:58,w:32,h:24},club:{x:62,y:58,w:34,h:22}};
+const MAPDECOR={bloque:[],pueblo:[{x:62,y:84,w:34,h:12,label:'Iglesia'}],sanjuan:[],bayamon:[],loiza:[],arecibo:[],utuado:[],ponce:[],caguas:[],canovanas:[],caborojo:[]};
 const CH=["...#..G",".#.#.#.",".#...#.","...#...","##.#.##",".......",".##.##.",".....#.","..#...."];
 const DAYMS=4*3600*1000;
 const DON={pelotero:'atleta',rapero:'artista',estudioso:'estudioso',buscon:'buscon'};
+// Leyendas: discovered through places, people and events. Each one pays 5 coquís the first time.
+const LEGENDS=[
+ {id:'garita',name:'La Garita del Diablo',where:'Viejo San Juan',lore:'En una noche de tormenta, el soldado Sánchez desapareció de una garita del Castillo San Cristóbal. Solo quedaron su uniforme y un olor a azufre. Dicen que se lo llevó el Diablo.'},
+ {id:'rogativa',name:'La Rogativa',where:'Viejo San Juan',lore:'En 1797 los ingleses sitiaron San Juan. Las mujeres salieron en procesión con antorchas y campanas, y los ingleses creyeron que llegaban refuerzos. Se fueron sin pelear.'},
+ {id:'cofresi',name:'El tesoro de Cofresí',where:'Cabo Rojo',lore:'Roberto Cofresí, el último gran pirata del Caribe, robaba barcos y repartía con los pobres. Lo fusilaron en San Juan en 1825. Su tesoro, dicen, sigue enterrado entre Cabo Rojo y la Isla de Mona.'},
+ {id:'guanina',name:'Guanina y Sotomayor',where:'Caguas',lore:'La princesa taína Guanina avisó a su amado, el español Cristóbal de Sotomayor, de un levantamiento. Los dos murieron en la guerra. Sus perfiles quedaron en la Montaña de la India.'},
+ {id:'ceiba',name:'Lo que susurra la ceiba',where:'Caguas',lore:'Cuando el viento mueve las hojas de una ceiba vieja, son los susurros de los que se quisieron sin permiso. Por eso las parejas se citan debajo de ellas.'},
+ {id:'chupacabra',name:'El Chupacabras',where:'Canóvanas',lore:'En 1995 aparecieron cabras y gallinas desangradas en Canóvanas. La isla entera le puso nombre al culpable en un día. Nadie lo ha atrapado. Todo el mundo tiene un primo que lo vio.'},
+ {id:'gargola',name:'La gárgola de El Yunque',where:'Canóvanas',lore:'Una criatura con alas que huele a azufre, vista al anochecer en las faldas de El Yunque. La leyenda más nueva de la isla.'},
+ {id:'carabali',name:'Carabalí y la Cueva de los Muertos',where:'Utuado',lore:'Carabalí escapó de la esclavitud y peleó desde el monte. Lo acorralaron con perros en una cueva de Utuado. Dicen que de noche los espíritus de los esclavizados salen de esa cueva a maldecir a sus amos.'},
+ {id:'comecogollo',name:'El Comecogollo',where:'Utuado',lore:'Un hombrecito peludo que se come los cogollos de los plátanos en las fincas de la montaña. Salió en los periódicos en los \'70 y nunca más.'},
+ {id:'hupia',name:'Las hupías',where:'De noche, en cualquier camino',lore:'Para los taínos, los muertos salen de noche a comer guayabas. Se parecen a los vivos, pero no tienen ombligo.'},
+ {id:'ahorcados',name:'Los ahorcados',where:'Carreteras viejas',lore:'En las carreteras viejas, de noche, a veces se ven figuras colgando de los árboles. Cuando te acercas, no hay nada.'},
+ {id:'jacho',name:'El Jacho',where:'Los cañaverales',lore:'Centeno quemó una cruz pa\' alumbrarse en la oscuridad. Ahora anda de noche por los campos como una luz, buscando las cenizas.'},
+ {id:'juanbobo',name:'Juan Bobo',where:'Los cuentos de Abuela',lore:'Juan Bobo hace todo lo que le dice su mamá… al pie de la letra. Vistió la puerca pa\' llevarla a misa y cargó agua en una canasta.'},
+ {id:'cucarachita',name:'La Cucarachita Martina',where:'Los cuentos de Abuela',lore:'La Cucarachita Martina se encontró un chavito, se puso bonita y escogió novio entre todos los animales del barrio. Escogió al Ratoncito Pérez, el que hablaba bajito.'},
+ {id:'cuco',name:'El Cuco',where:'Los cuentos de Abuela',lore:'Si no te duermes, viene el Cuco y te lleva. Generaciones de nenes boricuas se acostaron temprano por él.'},
+ {id:'sanamuerto',name:'El río Sana Muerto',where:'Ciales',lore:'En un entierro en Ciales, el ataúd se cayó al río y el muerto se levantó vivito. Desde entonces hay quien busca esa agua pa\' curarse.'},
+ {id:'clemente',name:'Roberto Clemente',where:'31 de diciembre',lore:'El mejor pelotero de la isla murió el 31 de diciembre de 1972 llevando ayuda a Nicaragua. En muchas casas su foto está al lado de los santos.'}];
 // Pueblos you can travel to. Guaguas leave from La parada; públicos need the Terminal del pueblo (Capítulo 1).
 const TRIPS=[
  {id:'bayamon',name:'Bayamón',how:'Guagua',fare:2,blurb:'La ciudad del chicharrón. El coliseo, el mall y la cárcel.',
@@ -980,6 +1072,18 @@ const TRIPS=[
   arrive:{kicker:'Público · 2 horas',title:'Utuado',body:'La carretera sube y sube con curvas que no se acaban. En una, el público tuvo que parar porque un caballo suelto no se quería mover. Hace fresco. Fresco de verdad.',ch:[
    {label:'Bajarte a empujar el caballo',d:{resp:2,salud:-1},out:'El caballo te miró como si el loco fueras tú. Pero se movió.'},
    {label:'Respirar el aire de la montaña',d:{feli:4},out:'Huele a café y a tierra mojada. Nada que ver con el Expreso.'}]}},
+ {id:'caguas',name:'Caguas',how:'Público',fare:4,publico:true,blurb:'El Valle del Turabo. La Montaña de la India, la botánica y la ceiba de la plaza.',
+  arrive:{kicker:'Público · 40 minutos por la 52',title:'Caguas',body:'El público bajó por la 52 y el valle se abrió de golpe, verde y lleno de nubes. La señora del asiento de al lado iba a la botánica "a buscar un despojo pa\' su hija".',ch:[
+   {label:'Preguntarle qué es un despojo',d:{coco:2},out:'"Una limpieza, {mijo}. Pa\' quitarte lo malo de encima." Te dio la dirección de la botánica de Doña Inés.'},
+   {label:'Mirar la montaña por la ventana',d:{feli:2},out:'Una montaña con forma de cara de mujer acostada. La señora sonrió: "Esa es Guanina."'}]}},
+ {id:'canovanas',name:'Canóvanas',how:'Guagua',fare:3,blurb:'La tierra del Chupacabras. El hipódromo y las faldas de El Yunque.',
+  arrive:{kicker:'Guagua · 50 minutos',title:'Canóvanas',body:'En la entrada del pueblo hay una estatua de un Chupacabras con gorra. El chofer la saludó con la mano, como todos los días.',ch:[
+   {label:'Saludarla también',d:{feli:3},out:'Media guagua la saludó. Aquí el Chupacabras es de la familia.'},
+   {label:'Preguntar si es verdad',d:{coco:1},out:'"¿Verdad? Mi tío perdió seis cabras en el \'95", dijo el chofer. "Habla con Don Chuco en su finca. Él lo vio."'}]}},
+ {id:'caborojo',name:'Cabo Rojo',how:'Público',fare:15,publico:true,blurb:'El oeste. Los Morrillos, las salinas, Boquerón y el tesoro de Cofresí.',
+  arrive:{kicker:'Público · 3 horas hasta el oeste',title:'Cabo Rojo',body:'Tres horas y dos públicos después, el mar cambia de color. Aquí el sol baja más lento. En Boquerón venden ostiones con limón en la calle.',ch:[
+   {label:'Comerte una docena de ostiones',d:{chavos:-6,feli:5},out:'El ostionero te contó que Cofresí era de aquí. "Y su tesoro también."'},
+   {label:'Ir directo al faro',d:{salud:2},out:'Caminaste hasta Los Morrillos. Abajo, el acantilado se pierde en el agua.'}]}},
  {id:'ponce',name:'Ponce',how:'Público',fare:12,publico:true,blurb:'La Perla del Sur. La plaza, el castillo, La Guancha y Ceiba Alta.',
   arrive:{kicker:'Público · 2 horas por la 52',title:'Ponce',body:'Bajando la cuesta de la 52 se ve el sur entero, seco y brillante. El chofer, ponceño de cepa, te explicó por qué Ponce es Ponce y San Juan es solo San Juan.',ch:[
    {label:'Darle la razón',d:{feli:2,resp:1},out:'"¡Así se habla!" Te recomendó los pinchos de La Guancha.'},
@@ -1067,6 +1171,39 @@ const QUESTS={
  s3:{title:'Utuado',where:'Casa de Abuela Toña · coge un público',place:'casatona',act:{label:'Tocar la puerta',fx:'Tu familia de sangre · final',cost:1,d:{}},reward:{coquis:10},out:'Tu familia de sangre: conociste a Abuela Toña.',
   card:{kicker:'Barrio Caonillas · Utuado',title:'Abuela Toña',body:'Una casa de madera entre montañas. Abuela Toña, de 90 años, te tocó la cara con las dos manos. "Tienes los ojos de {sangre}." Te enseñó la única foto que tienen de ella. Te dieron café, guineítos y una familia entera.',ch:[
    {label:'Prometer volver',d:{feli:10,coco:2},out:'Tienes dos abuelas ahora. Cuando le contaste a la tuya, dijo: "Mejor. Más gente que te quiera."',outDead:'Tienes otra abuela ahora. Le llevaste a Abuela Toña la foto de tu abuela. Se pusieron las dos en la misma repisa.'}]}},
+ // ---- Legend stories ----
+ g1:{title:'Tour de fantasmas',where:'El Castillo · San Juan',place:'castillo',act:{label:'Hacer el tour de noche con Guille',fx:'Leyenda',cost:1,d:{}},reward:{coquis:5},out:'Guille te contó lo de la garita.',
+  card:{kicker:'Castillo San Cristóbal · 9pm',title:'La Garita del Diablo',body:'Guille alumbra una garita en la esquina de la muralla, sobre el mar. "Aquí estaba de guardia el soldado Sánchez, una noche de tormenta. Al amanecer solo encontraron su uniforme. Y un olor a azufre." Se te queda mirando. "Te reto a quedarte solo ahí hasta la medianoche."',ch:[
+   {label:'Aceptar el reto',d:{resp:2},startQ:'g2',out:'"Valiente o loco. Ya veremos." Guille se fue riéndose con el grupo.'},
+   {label:'"Ni loco"',d:{feli:2},legend:'garita',out:'"El más inteligente del grupo", dijo Guille. El grupo se rió nervioso.'}]}},
+ g2:{title:'Solo en la garita',where:'El Castillo · San Juan',place:'castillo',act:{label:'Quedarte solo en la garita hasta la medianoche',fx:'Leyenda · final',cost:2,d:{}},reward:{coquis:10},out:'Pasaste la noche en la Garita del Diablo.',
+  card:{kicker:'Castillo San Cristóbal · 11:58pm',title:'Medianoche',body:'El viento silba por las troneras. Abajo, el mar revienta contra las piedras. A las 11:58 sientes un olor a fósforo quemado. En el piso de la garita, algo brilla: un botón de metal viejo, con un ancla.',ch:[
+   {label:'Guardarte el botón',d:{coco:3},grow:'creyente',legend:'garita',flag:'botonSanchez',out:'Lo tienes en el bolsillo. Guille lo miró y se puso serio: "Eso no estaba ahí esta tarde."'},
+   {label:'Salir corriendo',d:{feli:3,salud:1},legend:'garita',out:'Corriste hasta la Plaza de Armas. Te comiste un mallorca a la 1am pa\' calmarte.'}]}},
+ gu1:{title:'La Montaña de la India',where:'Montaña de la India · Caguas',place:'montana',act:{label:'Subir al atardecer y mirar bien',fx:'Leyenda',cost:2,d:{}},reward:{coquis:5},out:'Viste el perfil de Guanina.',next:'gu2',
+  card:{kicker:'Montaña de la India · Caguas',title:'Guanina',body:'Desde arriba, el perfil de la montaña es una mujer acostada mirando al cielo. Doña Inés te contó por el camino: Guanina, princesa taína, avisó a su amado español, Sotomayor, que su gente se iba a levantar. Él no huyó. Los dos murieron. "Ella está ahí", dice Inés. "Esperándolo."',ch:[
+   {label:'Creerle a Doña Inés',d:{feli:3},grow:'creyente',legend:'guanina',out:'"Ahora ve a la plaza", te dice. "La ceiba te va a contar el resto."'},
+   {label:'"Es una montaña"',d:{coco:3},legend:'guanina',out:'"Claro que es una montaña", sonríe Inés. "Igual ve a la plaza. Escucha la ceiba."'}]}},
+ gu2:{title:'La ceiba',where:'La plaza de Caguas',place:'plazacaguas',act:{label:'Escuchar la ceiba cuando sopla el viento',fx:'Leyenda · final',cost:1,d:{}},reward:{coquis:10},out:'La ceiba susurró.',
+  card:{kicker:'La plaza de Caguas',title:'Lo que susurra la ceiba',body:'Sopla el viento y las hojas de la ceiba suenan como gente hablando bajito. Un viejito en el banco te dice sin mirarte: "Son los que se quisieron sin permiso. Como Guanina y su español. Por eso los novios se citan aquí."',ch:[
+   {label:'Pensar en alguien',d:{feli:5},legend:'ceiba',out:'Pensaste en una persona. El viejito sonrió como si supiera quién.'},
+   {label:'Sentarte con el viejito',d:{coco:2,feli:2},legend:'ceiba',out:'Te contó cuarenta años de Caguas en una tarde.'}]}},
+ ch1:{title:'Vigilia en Canóvanas',where:'La finca de Don Chuco · Canóvanas',place:'finca',act:{label:'Hacer guardia de noche con Don Chuco',fx:'Leyenda',cost:2,d:{}},reward:{coquis:5},out:'Pasaste la noche esperando al Chupacabras.',meet:'chuco',next:'ch2',
+  card:{kicker:'Finca de Don Chuco · 3:14am',title:'Algo se movió',body:'Dos cafés, una linterna, el perro temblando. A las 3:14 algo se mueve entre las matas. Don Chuco te agarra el brazo: "¡Ahí está!" Alumbras. Dos ojos rojos te miran… y salen corriendo. Una cabra grita. Por la mañana, la cabra está bien. Muy asustada, pero bien.',ch:[
+   {label:'"¡Lo vimos!"',d:{feli:4},grow:'creyente',legend:'chupacabra',out:'Don Chuco te abrazó llorando. "¡Por fin alguien me cree!"'},
+   {label:'"Era un perro realengo"',d:{coco:3},legend:'chupacabra',out:'"Un perro con ojos rojos", dijo Don Chuco. "Sigue creyendo eso."'}]}},
+ ch2:{title:'La evidencia',where:'La alcaldía · Canóvanas',place:'alcaldia',act:{label:'Llevarle la historia al alcalde',fx:'Leyenda · final',cost:1,d:{}},reward:{coquis:10},out:'Saliste en las noticias de Canóvanas.',
+  card:{kicker:'La alcaldía de Canóvanas',title:'Indiana Pérez',body:'El alcalde se puso el sombrero de explorador antes de que terminaras de hablar. Llamó a la prensa. "¡Tenemos testigos!" En una hora había dos cámaras, un señor vendiendo camisetas y Don Chuco dando entrevistas.',ch:[
+   {label:'Vender camisetas con tu cara',d:{chavos:25,resp:3},out:'"EL NENE QUE LO VIO". Se vendieron todas. El alcalde quería un porcentaje.'},
+   {label:'Decirle a la cámara que eran perros',d:{coco:4,resp:-2},out:'El alcalde te quitó el micrófono. Don Chuco no te habla. La cabra está bien.'}]}},
+ co1:{title:'La cueva de Cofresí',where:'Faro Los Morrillos · Cabo Rojo',place:'faro',act:{label:'Bajar a la cueva debajo del faro',fx:'Leyenda',cost:2,d:{}},reward:{coquis:5},out:'La cueva tenía una marca.',next:'co2',
+  card:{kicker:'Debajo de Los Morrillos',title:'La cueva',body:'Bajas agarrado de las piedras con la marea subiendo. Adentro, en la pared, alguien talló hace mucho una R y una C. Y una flecha que apunta al sur, hacia Buyé.',ch:[
+   {label:'Seguir la flecha',d:{coco:2},legend:'cofresi',out:'El mapa del Capitán Mito tenía una X en Buyé. Igualito.'},
+   {label:'Tomarle foto pa\' Mito',d:{feli:2},legend:'cofresi',out:'Mito te contestó con siete emojis de calavera. "¡TE DIJE!"'}]}},
+ co2:{title:'Donde dice la X',where:'Playa Buyé · Cabo Rojo',place:'buye',act:{label:'Cavar donde dice el mapa',fx:'Leyenda · final',cost:2,d:{}},reward:{coquis:10},out:'Encontraste algo en Buyé.',
+  card:{kicker:'Playa Buyé · al amanecer',title:'Algo de metal',body:'Después de una hora cavando, la pala pega con algo. Una botella vieja, verde, tapada con cera. Adentro: una moneda de plata con el sello de España y un papelito que no se puede leer.',ch:[
+   {label:'Quedarte con la moneda',d:{feli:6},grow:'creyente',flag:'monedaCofresi',out:'La tienes colgada en una cadenita. Dicen que trae suerte. O lo contrario.'},
+   {label:'Venderla en el Viejo San Juan',d:{chavos:60},out:'El de la tienda de antigüedades te dio $60 sin pestañear. Seguro valía más.'}]}},
  caja:{title:'Bujías pa\' Chago',giver:'Wichi',where:'Taller de Chago',place:'taller',thread:'wichi',act:{label:'Entregarle la caja a Chago',fx:'Misión · +$10',cost:1,d:{}},reward:{chavos:10,resp:2},out:'Chago te pagó y dijo que vuelvas cuando quieras aprender.',reply:'Gracias bro. Te debo una.'}};
 const HEIRS={chico:['Junior','Kevin','Jadiel'],chica:['Yamilet','Naomi','Keishla'],nb:['Alex','Ariel','Dani']};
 const JAIL=[
@@ -1076,6 +1213,48 @@ const JAIL=[
  {title:'Abuela vino a visitarte',body:'Trajo pastelillos escondidos en la cartera.',ch:[{label:'Prometerle que voy a cambiar',d:{feli:8,calor:-10}},{label:'No mirarla a los ojos',d:{feli:-6}}]},
  {title:'Te ofrecen la cocina',body:'Paga casi nada, pero el tiempo pasa más rápido.',ch:[{label:'Dale',d:{chavos:15,salud:3}},{label:'Prefiero el patio',d:{salud:4,resp:2}}]}];
 const EVENTS=[
+ {kicker:'Colmado Don Pepe · 7am',title:'Le chuparon los gallos a Don Pepe',body:'Don Pepe encontró sus dos gallos de pelea tiesos detrás del colmado. "Ni una gota de sangre", dice. Media fila del colmado ya sabe quién fue.',ch:[
+   {label:'"Fue el Chupacabras"',d:{feli:2},legend:'chupacabra',out:'Don Pepe asintió serio. "Eso mismo dijo Wichi." Wichi dijo que fue una jauría.'},
+   {label:'Ir a Canóvanas a investigar',d:{coco:1},startQ:'ch1',out:'Dicen que en Canóvanas hay un señor, Don Chuco, que lo vio en el \'95.'}]},
+ {kicker:'Tu apto · Edif. 7',title:'Haciendo de Juan Bobo',body:'Abuela te pidió que trajeras "algo pa\' la cena que no se riegue". Llegaste con un caldero de habichuelas… en una bolsa del colmado. Abuela se rió hasta llorar y te contó de Juan Bobo, el que cargaba agua en una canasta.',ch:[
+   {label:'Reírte con ella',d:{feli:5,abuAff:3},legend:'juanbobo',out:'"Y un día vistió la puerca pa\' llevarla a misa", siguió Abuela. Se rieron hasta la novela.'},
+   {label:'"Usted no fue específica"',d:{resp:1,abuAff:1},legend:'juanbobo',out:'"Juan Bobo decía lo mismo", contestó Abuela.'}]},
+ {kicker:'La lavandería',title:'La Cucarachita Martina del 5',body:'Martina, la sobrina de Doña Fela, se encontró $20 barriendo la lavandería. Se compró un traje y ahora tiene tres pretendientes: el corillero de las bocinas, el del carro con aros cromados y Ratón, el callado del 3.',ch:[
+   {label:'"Escoge a Ratón"',d:{feli:3},legend:'cucarachita',out:'Doña Fela aplaudió: "¡Como en el cuento! La Cucarachita escogió al Ratoncito Pérez, el que hablaba bajito."'},
+   {label:'"Quédate con los $20"',d:{coco:2},legend:'cucarachita',out:'"Esa es la versión moderna", dijo Doña Fela. "Me gusta."'}]},
+ {kicker:'Edif. 7 · 10pm',title:'El nene de la vecina no se duerme',body:'Cuidas al nene de la vecina del segundo. Son las 10 y está brincando en el sofá con una sobredosis de malta.',ch:[
+   {label:'"Si no te duermes, viene el Cuco"',d:{resp:1},legend:'cuco',out:'Se durmió en tres minutos. Abuela te miró desde la puerta: "A ti también te funcionaba."'},
+   {label:'Contarle un cuento',d:{feli:3,coco:1},legend:'cuco',out:'Le contaste de Juan Bobo. Se durmió a la mitad, riéndose.'}]},
+ {kicker:'Camino del colmado · 1am',title:'El señor de las guayabas',body:'Bajando de la cancha, un señor flaco te para debajo del palo de guayabas. "¿Tienes una guayaba madura?" Cuando se estira pa\' alcanzar una rama, se le sube la camisa. No tiene ombligo.',ch:[
+   {label:'Darle una guayaba y seguir caminando',d:{feli:-1},grow:'creyente',legend:'hupia',out:'"Gracias, {mijo}." Cuando miraste pa\' atrás, no había nadie. Abuela dice que era una hupía.'},
+   {label:'Correr hasta el apto',d:{salud:1},legend:'hupia',out:'Abuela no se sorprendió: "Las hupías salen a comer guayabas. No le hacen daño a nadie."'}]},
+ {kicker:'Carretera vieja · en el público',title:'Lo que cuelga de los árboles',body:'El público se metió por la carretera vieja pa\' evitar el tapón. En una curva, los faros alumbraron figuras colgando de los árboles. El chofer ni frenó. "Los ahorcados", dijo. "Ya no están."',ch:[
+   {label:'Mirar pa\' atrás',d:{feli:-2,coco:2},legend:'ahorcados',out:'No había nada. Solo ramas. El chofer subió el volumen de la radio.'},
+   {label:'Cerrar los ojos',d:{},legend:'ahorcados',out:'Los abriste cuando el público volvió a la autopista.'}]},
+ {kicker:'Los cañaverales · de noche',title:'Una luz en el campo',body:'Desde la guagua se ve una luz que flota sobre el cañaveral, sola, buscando algo. El señor de atrás se persigna: "El Jacho. Busca las cenizas de la cruz que quemó."',ch:[
+   {label:'Persignarte también',d:{feli:1},grow:'creyente',legend:'jacho',out:'La luz se apagó cuando la guagua pasó. El señor asintió.'},
+   {label:'"Es un carro en la finca"',d:{coco:2},legend:'jacho',out:'"Un carro sin ruido y sin carretera", contestó el señor.'}]},
+ {kicker:'Edificio 7',title:'El agua del Sana Muerto',body:'La vecina del cuarto vende botellitas de "agua del río Sana Muerto, de Ciales". Dice que un muerto se levantó en ese río. Abuela está mirando las botellas con interés.',ch:[
+   {label:'Comprarle una a Abuela',d:{chavos:-5,abuSalud:3,abuAff:3},legend:'sanamuerto',out:'Abuela se la tomó con fe. Dice que se siente mejor. Puede ser.'},
+   {label:'"Eso es agua de la pluma"',d:{coco:2},legend:'sanamuerto',out:'La vecina se ofendió. Abuela compró una igual cuando no estabas.'}]},
+ {kicker:'Colmado Don Pepe',title:'Cuando llegó la Guardia',body:'Don Pepe saca una foto vieja: soldados con rifles en la entrada del caserío, en los \'90. "Mano Dura, le decían. Cercaron el bloque. Revisaban a todo el mundo, culpable o no. A mi hijo lo tiraron al piso por llegar tarde del trabajo."',ch:[
+   {label:'"¿Y funcionó?"',d:{coco:3},out:'"Se fueron los soldados y el punto seguía ahí. Lo que cambió fue cómo nos miraba la gente de afuera."'},
+   {label:'Escuchar toda la historia',d:{coco:2,resp:2},out:'Te contó cuando construyeron el caserío, con gente que bajó del campo y salió de los arrabales. "Esto era un sueño, {mijo}. Todavía puede serlo."'}]},
+ {kicker:'Tu apto · día 1 del mes',title:'Llegaron los cupones',body:'Abuela tiene la tarjeta del PAN en una mano y la libreta de cuentas en la otra. Hay que estirar el mes.',ch:[
+   {label:'Ayudarla con las cuentas',d:{coco:3,abuAff:3},out:'Arroz, habichuelas, huevos, leche. Te diste cuenta de todo lo que ella hace pa\' que nunca falte.'},
+   {label:'Darle de tus chavos',d:{chavos:-15,abuAff:6},out:'No quería aceptarlos. Los aceptó. Esa noche hubo pollo.'}]},
+ {kicker:'Detrás del Edif. 3',title:'"Es la que hay, papi"',body:'Kiko te espera a la salida de la escuela. "Tú eres inteligente, pero la escuela no paga la luz. El punto sí. Es la que hay, papi."',ch:[
+   {label:'Irte a la biblioteca',d:{coco:4},grow:'orador',out:'Kiko se encogió de hombros. "Tú sabrás." Pero te miró como si quisiera ir contigo.'},
+   {label:'Irte a hacer música en el techo',d:{feli:3,resp:2},out:'Escribiste dieciséis barras sobre Kiko. Nunca se las enseñaste.'},
+   {label:'"Explícame cómo es"',d:{chavos:15,calor:6},out:'Kiko sonrió. "Así se habla." Esa noche no dormiste bien.'}]},
+ {kicker:'Funeraria del pueblo',title:'El velorio de un pana',body:'Mataron a Jonathan, el del 5, que jugaba pickup contigo. Tenía 19. Su mamá no deja de tocar el ataúd. Toda la cancha está aquí.',ch:[
+   {label:'Abrazar a su mamá',d:{feli:-6,resp:3},out:'"Tú eras su pana", te dijo. "Hazme el favor de llegar a viejo."'},
+   {label:'Prometerte que no vas a terminar así',d:{feli:-4,coco:3},grow:'orador',out:'Esa noche escribiste una página entera. La guardaste en el libro de Abuela.'},
+   {label:'Buscar a los que fueron',d:{resp:5,calor:10,feli:-5},out:'Yeyo te frenó en la escalera. "Esto no es tuyo. No lo hagas tuyo."'}]},
+ {kicker:'Mensaje de Titi Wanda',title:'Tu primo Rafy',body:'Rafy, el hijo mayor de Titi Wanda, volvió a pedir chavos. Todo el mundo sabe pa\' qué. Titi Wanda sufre en silencio.',ch:[
+   {label:'Llevarlo a un programa de rehabilitación',d:{feli:-2,resp:3},out:'Lo dejaste en la puerta. Duró una semana. La segunda vez fue él solo.'},
+   {label:'No darle nada',d:{feli:-3},out:'Rafy te miró como si no te conociera. Titi Wanda te dio las gracias bajito.'},
+   {label:'Darle $10',d:{chavos:-10,feli:-2},out:'Te dio un abrazo flaco. Sabes lo que hiciste. Él también.'}]},
  {kicker:'Edificio 7 · 6:40 am',title:'Abuela está mareada',body:'La encontraste sentada en la cocina, sudando frío. Dice que es la presión, que no es nada. El glucómetro está en la gaveta, sin usar.',ch:[
    {label:'Llevarla al CDT',d:{chavos:-15,abuSalud:15,abuAff:5},out:'Tenía el azúcar en 380. La doctora la regañó. Abuela la regañó de vuelta.'},
    {label:'Medirle el azúcar y darle la insulina',d:{abuSalud:8,abuAff:3,coco:1},out:'Aprendiste a usar el glucómetro. Abuela dice que tienes manos de enfermero.'},
@@ -1129,6 +1308,33 @@ THREADS.push(
  {id:'kiko',hidden:true,name:'Kiko (Edif. 3)',ini:'K',bg:'var(--color-accent-300)',msgs:['Te vi en la cancha. Tienes cara de que necesitas chavos.','Pasa por el punto detrás del 3. Sin compromiso.'],replies:[
    {t:'¿Dónde queda?',d:{},a:'Ya te dije. Detrás del 3. Ven solo.',unlock:'punto'},
    {t:'No estoy en eso',d:{resp:-1},a:'Ok. La oferta sigue.',unlock:'punto'}]},
+ {id:'guille',hidden:true,name:'Guille el guía',ini:'G',bg:'var(--color-accent-300)',msgs:['¡Wepa! Hago el tour de fantasmas del Viejo San Juan los viernes.','A los del país les cobro la mitad. ¿Te apuntas?'],replies:[
+   {t:'Me apunto',d:{},a:'¡Eso! Nos vemos en el Castillo San Cristóbal al anochecer.',startQ:'g1'},
+   {t:'Eso es pa\' turistas',d:{},a:'Eso dicen todos hasta que pasan por la garita.',startQ:'g1'}]},
+ {id:'ines',hidden:true,name:'Doña Inés (botánica)',ini:'I',bg:'var(--color-accent-400)',msgs:['Tienes una energía pesada, {mijo}. Pero buena.','¿Tú conoces la historia de Guanina? Sube a la montaña al atardecer y mira bien.'],replies:[
+   {t:'Cuéntemela',d:{coco:1},a:'Mejor la vives. Sube a la montaña. Después vienes y me cuentas.',startQ:'gu1'},
+   {t:'Yo no creo en eso',d:{},a:'No hace falta creer pa\' que algo sea verdad. Sube igual.',startQ:'gu1'}]},
+ {id:'chuco',hidden:true,name:'Don Chuco (Canóvanas)',ini:'C',bg:'var(--color-accent-2-300)',msgs:['Yo lo vi. En el \'95. Ojos rojos, espinas en la espalda y un olor a azufre.','Esta noche hay luna llena. Si quieres verlo, trae linterna y café.'],replies:[
+   {t:'Esta noche voy',d:{},a:'Trae dos cafés. Yo no duermo desde el \'95.',startQ:'ch1'},
+   {t:'Eso eran perros',d:{coco:1},a:'Eso dijo el gobierno. Ven y me lo dices en la cara a las 3am.',startQ:'ch1'}]},
+ {id:'mito',hidden:true,name:'Capitán Mito',ini:'M',bg:'var(--sun)',msgs:['Mi tatarabuelo navegó con Cofresí. Tengo el mapa original. Bueno, una copia de la copia.','Te lo dejo en $10 porque me caes bien.'],replies:[
+   {t:'Dame el mapa',d:{chavos:-10},a:'La X está debajo de Los Morrillos. Empieza por la cueva. Y no le digas a nadie.',startQ:'co1'},
+   {t:'Eso es un tumbe',d:{resp:1},a:'¡Tumbe! Bueno, si cambias de idea, aquí estoy hasta que baje el sol.'}]},
+ {id:'tata',hidden:true,name:'Doña Tata (Bayamón)',ini:'T',bg:'var(--sun)',msgs:['Cuarenta años friendo chicharrón en la Carretera 2. Yo he visto de todo.','Si quieres chamba los fines de semana, aquí hay caldero pa\' ti.'],replies:[
+   {t:'Cuente conmigo',d:{chavos:5},a:'Ven el sábado. Trae camiseta vieja que el aceite salta.'},
+   {t:'¿Usted ha visto qué?',d:{coco:2},a:'En el \'75 en Moca hablaban de un vampiro que mataba animales. Mi papá decía que eran los perros. Mi mamá ponía ajo en la puerta.'}]},
+ {id:'nilsa',hidden:true,name:'Maestra Nilsa (bomba)',ini:'N',bg:'var(--color-accent)',msgs:['El barril no se toca con las manos, se toca con la historia.','En julio son las Fiestas de Santiago Apóstol. Vente a ver los vejigantes.'],replies:[
+   {t:'¿Me enseña?',d:{resp:2},a:'Los sábados a las 10. Descalzo. Y respeta el primo.'},
+   {t:'¿Qué son los vejigantes?',d:{coco:2},a:'Máscaras de coco con cuernos. Representan a los moros en la fiesta de Santiago. Aquí los hicimos nuestros.'}]},
+ {id:'wilfredo',hidden:true,name:'Don Wilfredo (pescador)',ini:'W',bg:'var(--color-accent-2-200)',msgs:['Cuarenta años pescando en este rompeolas. El mar me ha contado cosas.','¿Tú has oído de Carabalí?'],replies:[
+   {t:'Cuéntemelo',d:{coco:2},a:'Escapó de la esclavitud y peleó desde el monte. Lo acorralaron en una cueva en Utuado. Si vas, entra con respeto.',legend:'carabali'},
+   {t:'Otro día',d:{},a:'Aquí estaré. El mar no se va pa\' ningún lado.'}]},
+ {id:'ciro',hidden:true,name:'Don Ciro (cafetal)',ini:'C',bg:'var(--color-neutral-400)',msgs:['Aquí se recoge a mano, grano por grano. Así sabe mejor.','Y cuida los plátanos de la orilla, que el Comecogollo anda suelto.'],replies:[
+   {t:'¿El qué?',d:{coco:1},a:'Un hombrecito peludo que se come los cogollos de los plátanos. Salió en el periódico en los \'70. Yo nunca lo he visto, pero los cogollos amanecen mordidos.',legend:'comecogollo'},
+   {t:'¿Hay chamba?',d:{chavos:5},a:'En temporada siempre. Ven temprano.'}]},
+ {id:'chino',hidden:true,name:'Chino (Ceiba Alta)',ini:'C',bg:'var(--color-accent-2)',msgs:['Aquí mandan tres familias desde los \'90. Una tregua que nadie firmó.','Tú eres de afuera. Juega, gana o pierde, y vete tranquilo.'],replies:[
+   {t:'Vengo en paz',d:{resp:2},a:'Así me gusta. La cancha es de todo el mundo.'},
+   {t:'¿Y si gano?',d:{resp:3,calor:2},a:'Si ganas, te invito una Medalla. Si ganas mucho, no vuelvas.'}]},
  {id:'cintron',hidden:true,name:'Mrs. Cintrón',ini:'C',bg:'var(--color-surface)',msgs:['You are in my third period class, right? Siempre llegas tarde.','Tienes potencial. Los martes doy tutorías gratis en la biblioteca.'],replies:[
    {t:'Yes, Mrs. Allí estaré',d:{coco:3},a:'Good. Trae lápiz. Y no llegues tarde.'},
    {t:'Lo voy a pensar',d:{},a:'Thinking is good. Doing is better.'}]},
@@ -1179,7 +1385,7 @@ const BR_RANK=[1,3,12,11,10,7,6,5,4,2],BR_PTS={1:11,3:10,12:4,11:3,10:2};
 const cl=v=>Math.max(0,Math.min(100,v));
 
 class Component extends DCLogic {
-  state={look:{skin:2,hair:'corto',hc:0,top:'tee',tc:0,hat:false,chain:false},closet:false,screen:'title',cas:'cantera',name:'',apodo:'',abuName:'',names:{},visited:{},passXP:0,claimed:{},daily:{},fam:'mami',abu:{aff:30,salud:70,dead:false,hosp:false},trait:'pelotero',tab:'barrio',s:{salud:72,feli:65,coco:40,resp:15},chavos:25,animo:5,coquis:40,calor:0,day:1,age:16,turf:{e7:'nadie',e5:'nadie',e3:'rival',cancha:'nadie'},enemies:[],armed:false,pos:{x:49,y:50},dayStart:Date.now(),quests:{},unlocked:{},jobs:{},zone:'bloque',areas:{bloque:true},path:null,dev:{},gender:'chico',likes:'chicas',love:{},partner:null,married:false,gen:1,dead:null,jail:null,mg:null,sheet:null,ev:null,result:null,log:[],toast:null,thread:null,th:{},noAnimo:false,owned:{},pass:false,ad:0,evi:0};
+  state={look:{skin:2,hair:'corto',hc:0,top:'tee',tc:0,hat:false,chain:false},closet:false,screen:'title',cas:'cantera',name:'',apodo:'',abuName:'',names:{},visited:{},legends:{},passXP:0,claimed:{},daily:{},fam:'mami',abu:{aff:30,salud:70,dead:false,hosp:false},trait:'pelotero',tab:'barrio',s:{salud:72,feli:65,coco:40,resp:15},chavos:25,animo:5,coquis:40,calor:0,day:1,age:16,turf:{e7:'nadie',e5:'nadie',e3:'rival',cancha:'nadie'},enemies:[],armed:false,pos:{x:49,y:50},dayStart:Date.now(),quests:{},unlocked:{},jobs:{},zone:'bloque',areas:{bloque:true},path:null,dev:{},gender:'chico',likes:'chicas',love:{},partner:null,married:false,gen:1,dead:null,jail:null,mg:null,sheet:null,ev:null,result:null,log:[],toast:null,thread:null,th:{},noAnimo:false,owned:{},pass:false,ad:0,evi:0};
   componentDidMount(){
     this.kd=e=>{const m=this.state.mg;if(!m||m.type!=='chase')return;const v={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]}[e.key];if(v){e.preventDefault();this.move(v[0],v[1])}};window.addEventListener('keydown',this.kd);
     this.ck=setInterval(()=>{if(Date.now()-this.state.dayStart>=DAYMS)this.sleep();else this.forceUpdate()},30000);
@@ -1193,7 +1399,7 @@ class Component extends DCLogic {
     document.addEventListener('visibilitychange',this.onHide);window.addEventListener('pagehide',this.save);
   }
   componentDidUpdate(){clearTimeout(this.svt);this.svt=setTimeout(this.save,400)}
-  continueLife(){const v=readSave();if(!v)return this.setState({hasSave:false});MODE=CAS_TR[v.cas]||'tren';FAM=v.fam||'mami';const abu=v.abu||this.fresh.abu;ABU_DEAD=!!abu.dead;this.setState({...v,visited:v.visited||{},abuName:v.abuName||'',names:v.names||{},passXP:v.passXP||0,claimed:v.claimed||{},daily:v.daily||{},abu,screen:'hub',hasSave:true});
+  continueLife(){const v=readSave();if(!v)return this.setState({hasSave:false});MODE=CAS_TR[v.cas]||'tren';FAM=v.fam||'mami';const abu=v.abu||this.fresh.abu;ABU_DEAD=!!abu.dead;this.setState({...v,visited:v.visited||{},legends:v.legends||{},abuName:v.abuName||'',names:v.names||{},passXP:v.passXP||0,claimed:v.claimed||{},daily:v.daily||{},abu,screen:'hub',hasSave:true});
     if(v.quests&&v.quests.pan==='done'&&v.quests.caja==='done'&&!v.quests.foto)setTimeout(()=>this.startQuest('foto'),3000)}
   newLife(){ABU_DEAD=false;this.setState({...this.fresh,dayStart:Date.now(),hasSave:this.state.hasSave})}
   componentWillUnmount(){this.save();clearTimeout(this.svt);document.removeEventListener('visibilitychange',this.onHide);window.removeEventListener('pagehide',this.save);clearInterval(this.cmi);clearTimeout(this.bt);window.removeEventListener('keydown',this.kd);clearInterval(this.ck);clearInterval(this.ci);clearTimeout(this.tt);clearInterval(this.ai);clearInterval(this.hi);clearTimeout(this.dt);}
@@ -1222,6 +1428,9 @@ class Component extends DCLogic {
     this.apply({chavos:-t.fare,animo:-1},{travel:false,sheet:null,zone:t.id,pos:{x:49,y:50},visited:{...(st.visited||{}),[t.id]:true}});
     this.say(t.how+' a '+t.name+' · −$'+t.fare);
     if(first){this.addLog('Primera vez en '+t.name+'.');setTimeout(()=>this.setState({ev:t.arrive,result:null}),500)}}
+  learn(id){if((this.state.legends||{})[id])return;const L=LEGENDS.find(x=>x.id===id);if(!L)return;
+    this.setState(s=>({legends:{...(s.legends||{}),[id]:true},coquis:s.coquis+5}));this.addLog('Nueva leyenda: '+L.name+'.');
+    clearTimeout(this.lgt);this.lgt=setTimeout(()=>this.say('Nueva leyenda: '+L.name+' · +5 coquís'),1100)}
   startQuest(k){const q=QUESTS[k];if(this.state.quests[k])return;
     this.setState(s=>({quests:{...s.quests,[k]:'active'},unlocked:{...s.unlocked,[q.place]:true}}));
     if(q.intro&&q.thread&&!(q.thread==='abuela'&&ABU_DEAD))this.pushMsg(q.thread,q.intro);
@@ -1243,7 +1452,9 @@ class Component extends DCLogic {
     if(st.animo<a.cost){this.setState({noAnimo:true,sheet:null});return}
     if(a.daily&&(st.daily||{})[a.daily]){this.setState({sheet:null});return this.say('Ya te tomaste uno hoy. Vuelve mañana.')}
     if(a.daily)this.setState(s=>({daily:{...(s.daily||{}),[a.daily]:true}}));
-    let d=a.d||{};if(a.crime&&!ABU_DEAD)d={...d,abuAff:(d.abuAff||0)-2};const cat=a.cat||(a.crime?'calle':PLACECAT[st.sheet]);
+    let d=a.d||{};if(a.crime&&!ABU_DEAD)d={...d,abuAff:(d.abuAff||0)-2};
+    if(a.gamble){if(st.chavos<a.gamble.bet){this.setState({sheet:null});return this.say('No te da pa\' la apuesta.')}const w=Math.random()<a.gamble.p;d={...d,chavos:w?a.gamble.win:-a.gamble.bet};setTimeout(()=>this.say(w?'¡Ganó tu caballo! +$'+a.gamble.win:'Tu caballo llegó último. −$'+a.gamble.bet),60)}
+    if(a.legend)this.learn(a.legend);const cat=a.cat||(a.crime?'calle':PLACECAT[st.sheet]);
     if(cat&&!a.nodev&&!a.qid&&!a.mg&&DEV[cat]&&this.has(cat)&&DEV[cat].d)d=this.merge(d,DEV[cat].d);
     if((d.chavos||0)<0&&st.chavos<-d.chavos){this.say('No te dan los chavos pa\' eso.');return}
     if(a.love)return this.romance(a);
@@ -1314,6 +1525,8 @@ class Component extends DCLogic {
   pushMsg(id,t){this.setState(s=>s.th[id]?{th:{...s.th,[id]:{...s.th[id],msgs:[...s.th[id].msgs,{me:false,t}],unread:true}}}:null)}
   onReply(r,id){
     if(r.aff!=null&&id&&id.indexOf('love_')===0){const k=id.slice(5);this.setState(s=>({love:{...s.love,[k]:{...s.love[k],aff:Math.min(100,Math.max(0,s.love[k].aff+r.aff))}}}));this.say((r.aff>=0?'+':'')+r.aff+' Afecto');return}
+    if(r.legend)this.learn(r.legend);
+    if(r.startQ)setTimeout(()=>this.startQuest(r.startQ),800);
     if(r.quest){const q=QUESTS[r.quest];this.setState(s=>({quests:{...s.quests,[r.quest]:'active'},unlocked:{...s.unlocked,[q.place]:true}}));this.say('Nueva misión: '+q.title+' · se abrió '+q.where);return}
     if(r.unlock){this.setState(s=>({unlocked:{...s.unlocked,[r.unlock]:true}}));this.say('Nuevo lugar: '+LOCS.find(l=>l.id===r.unlock).label);if(Object.keys(r.d).length)this.apply(r.d);return}
     if(r.job){this.setState(s=>({jobs:{...s.jobs,[r.job]:true}}));this.say('Nueva chamba en Chamba: Ayudante de horno');if(Object.keys(r.d).length)this.apply(r.d);return}
@@ -1423,7 +1636,7 @@ class Component extends DCLogic {
       if(salud<30&&!a.hosp){this.setState(s=>({abu:{...s.abu,hosp:true}}));return setTimeout(()=>this.setState({ev:ABU_HOSP,result:null}),800)}}
     const nd=this.state.day+1,f=this.fest(nd);if(f)setTimeout(()=>this.setState({ev:f,result:null}),800);else if(Math.random()<.5)setTimeout(()=>this.fireEvent(),800);
   }
-  pick(c){let d=c.d||{},out=this.gx(ABU_DEAD&&c.outDead?c.outDead:c.out);if(c.startQ)this.setState({pendingQ:c.startQ});const extra={},st=this.state;
+  pick(c){let d=c.d||{},out=this.gx(ABU_DEAD&&c.outDead?c.outDead:c.out);if(c.startQ)this.setState({pendingQ:c.startQ});if(c.legend)this.learn(c.legend);if(c.grow)this.grow(c.grow);const extra={},st=this.state;
     if(c.flag)extra[c.flag]=true;
     if(st.ev&&st.ev.hurricane&&st.prep){d={...d,salud:(d.salud||0)+6};out+=' Los suministros que compraste salvaron la semana.'}
     if(c.path){const n=c.need||{},beca=n.orCoco&&st.s.coco>=n.orCoco;let ok=true;
@@ -1487,6 +1700,8 @@ class Component extends DCLogic {
         tag:(st.visited||{})[t.id]?'':'Nuevo',hasTag:!(st.visited||{})[t.id]&&!lk}}),
       areaTitle:([...AREAS,...TRIPS].find(a=>a.id===st.zone)||AREAS[0]).name,
       chapter:(()=>{const isDone=k=>k==='_path'?!!st.path:k==='_never'?false:st.quests[k]==='done';const c=CHAPTERS.find(c=>!c.q.every(isDone))||CHAPTERS[CHAPTERS.length-1];return {n:c.n,title:c.title,hint:c.hint,done:c.q.filter(isDone).length,total:c.q.length}})(),
+      legendInfo:Object.keys(st.legends||{}).length+' de '+LEGENDS.length,
+      legendList:LEGENDS.map(L=>{const k=!!(st.legends||{})[L.id];return {name:k?L.name:'???',where:L.where,lore:k?L.lore:'Todavía no la conoces.',bg:k?'var(--color-surface)':'var(--color-neutral-200)',op:k?1:.7}}),
       devList:Object.keys(DEV).filter(k=>st.dev[k]).sort((a,b)=>(st.dev[b]>=DEV[b].need)-(st.dev[a]>=DEV[a].need)).map(k=>{const n=st.dev[k],ok=n>=DEV[k].need;return {name:this.dn(k),bonus:ok?DEV[k].bonus:'Sigue así pa\' desbloquearlo',prog:ok?'Activo':n+' de '+DEV[k].need,bg:ok?'var(--sun)':'var(--color-surface)'}}),
       devCount:Object.keys(DEV).filter(k=>(st.dev[k]||0)>=DEV[k].need).length,
       genders:[['chico','Chico'],['chica','Chica'],['nb','No binarie']].map(([id,label])=>({label,bg:st.gender===id?'var(--sun)':'var(--color-surface)',pick:()=>this.setState({gender:id})})),
@@ -1500,7 +1715,7 @@ class Component extends DCLogic {
         const q=Object.keys(QUESTS).some(k=>st.quests[k]==='active'&&QUESTS[k].place===l.id),hr=!lk&&!ag&&LOVE.some(L=>L.places.includes(l.id));
         return {...P,label:lk?'???':ag?l.label.split(' ')[0]+' · '+l.minAge+'+':l.label,bg:lk?'repeating-linear-gradient(135deg, var(--color-neutral-200) 0 8px, var(--color-neutral-300) 8px 16px)':ag?'var(--color-neutral-300)':l.ink?'var(--ink)':l.sw,quest:q&&!lk,heart:hr,
           go:()=>{if(lk)return this.say(l.lock);if(ag)return this.say('Tienes '+st.age+'. Vuelve a los '+l.minAge+'.');this.setState({pos:{x:P.x+P.w/2,y:P.y+P.h/2}});clearTimeout(this.mt);this.mt=setTimeout(()=>this.setState({sheet:l.id}),460)}}}),
-      mapDecor:MAPDECOR[st.zone]||[],mapH:st.zone==='bloque'?540:380,mapWater:['sanjuan','loiza','arecibo','ponce'].includes(st.zone),waterLabel:{sanjuan:'Bahía',loiza:'Océano Atlántico',arecibo:'Océano Atlántico',ponce:'Mar Caribe'}[st.zone]||'',px:st.pos.x,py:st.pos.y,
+      mapDecor:MAPDECOR[st.zone]||[],mapH:st.zone==='bloque'?540:380,mapWater:['sanjuan','loiza','arecibo','ponce','caborojo'].includes(st.zone),waterLabel:{sanjuan:'Bahía',loiza:'Océano Atlántico',arecibo:'Océano Atlántico',ponce:'Mar Caribe',caborojo:'Mar Caribe'}[st.zone]||'',px:st.pos.x,py:st.pos.y,
       dayLeft:(()=>{const ms=Math.max(0,DAYMS-(Date.now()-st.dayStart));return Math.floor(ms/3600000)+'h '+Math.floor(ms%3600000/60000)+'m'})(),
       mgChase:mg.type==='chase',
       chase:mg.type==='chase'?{msg:mg.msg,playing:!mg.over,over:!!mg.over,endLabel:mg.win==='win'?'Cobrar $60':'Ir preso',
