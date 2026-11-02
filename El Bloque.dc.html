@@ -1003,7 +1003,7 @@ const FEST=[
  {m:5,dm:0,kicker:'1 de junio',title:'Empieza la temporada de huracanes',body:'En el colmado ya no queda agua embotellada ni pilas. Don Pepe subió el precio de las velas.',ch:[
    {label:'Comprar agua, pilas y comida enlatada',d:{chavos:-15,salud:3},out:'Abuela aprobó. Ahora tienes un gabinete lleno de salchichas Vienna.',flag:'prep'},
    {label:'Ná, eso no pasa nada',d:{feli:2},out:'Ojalá tengas razón.'}]},
- {m:6,dm:0,kicker:'Julio · Verano',title:'Día de playa',body:'Hace 95 grados. El corillo alquiló una guagua pa\' la playa.',ch:[
+ {m:6,dm:0,art:'playa',kicker:'Julio · Verano',title:'Día de playa',body:'Hace 95 grados. El corillo alquiló una guagua pa\' la playa.',ch:[
    {label:'Ir a la playa con el corillo',d:{feli:10,salud:4,chavos:-8},out:'Te quemaste la espalda, pero valió la pena.'},
    {label:'Chinchorrear en el balneario',d:{feli:7,chavos:-5},out:'Te comiste tres alcapurrias y un bacalaíto.'},
    {label:'Alquilar sillas de playa a turistas',d:{chavos:30,feli:2},out:'Los turistas dejan buena propina.'}]},
@@ -1049,8 +1049,10 @@ const DON={pelotero:'atleta',rapero:'artista',estudioso:'estudioso',buscon:'busc
 const PORTRAITS=['abuela','rosado','mito','chago','chuco','pepe','ines','lydia','guille','kiko','cintron','ramon','wichi','yadiel'];
 // Who runs each place: their portrait shows next to the place name.
 const HOSTS={apto:'abuela',taller:'chago',colmado:'pepe',panaderia:'lydia',iglesia:'ramon',gimnasio:'rosado',boqueron:'mito',finca:'chuco',botanica:'ines',castillo:'guille',lavanderia:'fela'};
+const LOVE_PICS=['yaritza','valeria','sebastian','kiara','josue'];
+const picKey=n=>n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 const LEGEND_ART=['clemente','hupia','jacho','guanina','garita','chupacabra','cofresi'];
-const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 30%'},guanina:{pos:'center 45%'},garita:{pos:'center 60%'},chupacabra:{pos:'center 55%'},cofresi:{pos:'center 45%'}};
+const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 30%'},guanina:{pos:'center 45%'},playa:{src:'img/ev-playa.jpg',pos:'center 55%'},balcon:{src:'img/ev-balcon.jpg',pos:'center 45%'},garita:{pos:'center 60%'},chupacabra:{pos:'center 55%'},cofresi:{pos:'center 45%'}};
 // El diccionario del bloque: a word unlocks the first time it shows up in a card, message or activity (+1 coquí).
 const WORDS=[
  {k:'caserio',w:'Caserío',re:'caser[ií]o',m:'Vivienda pública. El gobierno usó la palabra desde los \'40; después la cambió por "residencial" porque la gente de afuera la usaba como insulto.'},
@@ -1278,6 +1280,10 @@ const JAIL=[
  {title:'Abuela vino a visitarte',body:'Trajo pastelillos escondidos en la cartera.',ch:[{label:'Prometerle que voy a cambiar',d:{feli:8,calor:-10}},{label:'No mirarla a los ojos',d:{feli:-6}}]},
  {title:'Te ofrecen la cocina',body:'Paga casi nada, pero el tiempo pasa más rápido.',ch:[{label:'Dale',d:{chavos:15,salud:3}},{label:'Prefiero el patio',d:{salud:4,resp:2}}]}];
 const EVENTS=[
+ {art:'balcon',kicker:'Sábado · 10am',title:'Sábado tranquilo',body:'No hay escuela, no hay chamba, no hay nada que hacer. Desde el balcón se oye una radio en otro edificio y huele a café colao. Las matas de Abuela necesitan agua.',ch:[
+   {label:'Regar las matas',d:{feli:4,abuAff:2},out:'Abuela te vio desde la cocina y no dijo nada. Pero sonrió.',outDead:'Le hablaste a las matas como hacía Abuela. Siguen vivas.'},
+   {label:'Leer en el balcón',d:{coco:3,feli:2},grow:'orador',out:'Te leíste medio libro sin darte cuenta. Se te pasó la mañana volando.'},
+   {label:'Dormir hasta el mediodía',d:{salud:3},out:'Te levantaste con la marca de la almohada en la cara. Valió la pena.'}]},
  {kicker:'Tu apto · una caja vieja',title:'La revista El Caserío',body:'Debajo de los álbumes, Abuela guarda una revista amarilla de 1946: "El Caserío". Fotos de familias saliendo de casitas en zocos sobre el mangle, sin luz ni agua. Del otro lado, edificios nuevos con baño, cocina y patio. "Mi mamá llegó así, del campo al arrabal y del arrabal aquí", dice Abuela. "Esto era un milagro. Después la gente de afuera empezó a decir \'gente de caserío\' como insulto, y el gobierno le cambió el nombre a \'residencial\'. Como si el nombre fuera el problema."',ch:[
    {label:'Llevarla a la clase de Mrs. Cintrón',d:{coco:4,resp:2},grow:'orador',out:'Hiciste una presentación. Nadie en el salón sabía esa historia. Mrs. Cintrón te pidió una copia.'},
    {label:'Guardarla con cuidado',d:{feli:3,abuAff:3},out:'Abuela te la regaló. "Pa\' que no se te olvide de dónde vienes."'}],bodyDead:'En una caja de Abuela hay una revista amarilla de 1946: "El Caserío". Familias saliendo de casitas en zocos sobre el mangle; edificios nuevos con baño, cocina y luz. En el margen, en la letra de Abuela: "Mamá llegó así." Después la gente de afuera empezó a decir "gente de caserío" como insulto, y el gobierno le cambió el nombre a "residencial".'},
@@ -1800,7 +1806,7 @@ class Component extends DCLogic {
       loveList:Object.keys(st.love).map(k=>{const L=LOVE.find(x=>x.id===k),p=this.who(L),c=st.love[k],mine=st.partner===k;
         const stage=mine?(st.married?'Casados':(p.g==='f'?'Novia':'Novio')):c.aff>=60?'Le gustas':c.aff>=30?'Saliendo':'Conocidos';
         const pl=LOCS.find(l=>l.id===L.places[0]);
-        return {name:p.n,title:p.t,where:pl.label,ini:p.n[0],av:L.bg,w:c.aff+'%',stage,bg:mine?'var(--sun)':'var(--color-surface)',open:()=>this.setState(x=>({thread:'love_'+k,th:{...x.th,['love_'+k]:{...x.th['love_'+k],unread:false}}}))}}),
+        const lp=LOVE_PICS.includes(picKey(p.n));return {name:p.n,title:p.t,where:pl.label,ini:lp?'':p.n[0],av:lp?L.bg+' url(img/p-'+picKey(p.n)+'.jpg) center / cover no-repeat':L.bg,w:c.aff+'%',stage,bg:mine?'var(--sun)':'var(--color-surface)',open:()=>this.setState(x=>({thread:'love_'+k,th:{...x.th,['love_'+k]:{...x.th['love_'+k],unread:false}}}))}}),
       mapBldg:LOCS.filter(l=>(l.zone||'bloque')===st.zone&&!(l.fam&&l.fam!==FAM)&&!(l.maxAge&&st.age>l.maxAge)&&!(l.path&&!l.path.includes(st.path))&&MAP[l.id]).map(l=>{const P=MAP[l.id],ag=l.minAge&&st.age<l.minAge,lk=l.lock&&!st.unlocked[l.id];
         const q=Object.keys(QUESTS).some(k=>st.quests[k]==='active'&&QUESTS[k].place===l.id),hr=!lk&&!ag&&LOVE.some(L=>L.places.includes(l.id));
         return {...P,label:lk?'???':ag?l.label.split(' ')[0]+' · '+l.minAge+'+':l.label,bg:lk?'repeating-linear-gradient(135deg, var(--color-neutral-200) 0 8px, var(--color-neutral-300) 8px 16px)':ag?'var(--color-neutral-300)':l.ink?'var(--ink)':l.sw,quest:q&&!lk,heart:hr,
@@ -1849,7 +1855,7 @@ class Component extends DCLogic {
       jobs:JOBS.map(j=>{const r=j.req||{};const lock=(r.path&&st.path!==r.path)?'Escoge trabajar al graduarte':(r.job&&!st.jobs[r.job])?'Habla con Doña Lydia':(r.age&&st.age<r.age)?'Necesitas '+r.age+' años':(r.resp&&st.s.resp<r.resp)?'Necesitas '+r.resp+' Respeto':'';
         const pay=j.id==='beats'&&st.trait==='rapero'?j.pay*2:j.pay;
         return {...j,pay,hot:!!j.calor,open:!lock,locked:!!lock,lockText:lock,op:lock?.6:1,work:()=>this.run({cat:j.id==='beats'?'artista':'buscon',cost:j.cost,d:{chavos:pay,calor:j.calor||0},ev:.25})}}),
-      threads:[...THREADS.filter(t=>st.th[t.id]),...Object.keys(st.th).filter(k=>st.th[k].meta).map(k=>({id:k,...st.th[k].meta}))].map(t=>{const s=st.th[t.id]||{msgs:[],unread:false},pic=PORTRAITS.includes(t.id);return {...t,av:pic?t.bg+' url(img/p-'+t.id+'.jpg) center / cover no-repeat':t.bg,label:pic?'':t.ini,preview:this.gx((s.msgs[s.msgs.length-1]||{}).t||''),unread:s.unread,open:()=>this.setState(x=>({thread:t.id,th:{...x.th,[t.id]:{...x.th[t.id],unread:false}}}))}}),
+      threads:[...THREADS.filter(t=>st.th[t.id]),...Object.keys(st.th).filter(k=>st.th[k].meta).map(k=>({id:k,...st.th[k].meta}))].map(t=>{const s=st.th[t.id]||{msgs:[],unread:false},lv=t.id.indexOf('love_')===0?LOVE.find(x=>'love_'+x.id===t.id):null,pk=lv?picKey(this.who(lv).n):t.id,pic=lv?LOVE_PICS.includes(pk):PORTRAITS.includes(t.id);return {...t,av:pic?t.bg+' url(img/p-'+pk+'.jpg) center / cover no-repeat':t.bg,label:pic?'':t.ini,preview:this.gx((s.msgs[s.msgs.length-1]||{}).t||''),unread:s.unread,open:()=>this.setState(x=>({thread:t.id,th:{...x.th,[t.id]:{...x.th[t.id],unread:false}}}))}}),
       noThread:!th,hasThread:!!th,closeThread:()=>this.setState({thread:null}),
       thread:th?{name:thMeta.name,msgs:th.msgs.map(m=>({t:this.gx(m.t),align:m.me?'flex-end':'flex-start',bg:m.me?'var(--color-accent)':'var(--color-surface)',fg:m.me?'var(--color-bg)':'var(--color-text)'})),
         replies:th.replies.map(r=>({t:r.t,send:()=>{const id=st.thread;
@@ -1867,7 +1873,7 @@ class Component extends DCLogic {
       buyPass:()=>{if(st.pass)return;if(st.coquis<250)return this.say('Te faltan '+(250-st.coquis)+' coquís.');this.setState({pass:true,coquis:st.coquis-250});this.say('Pase activo. ¡Wepa!')},
       packs:PACKS.map(p=>({...p,best:!!p.best,buy:()=>{this.apply({coquis:p.n});this.say('Compra simulada: +'+p.n+' coquís')}})),
       items:ITEMS.filter(it=>!(it.abu&&ABU_DEAD)).map(it=>({...it,owned:!it.use&&!!st.owned[it.id],label:!it.use&&st.owned[it.id]?'Tuyo':it.c+' coquís',buy:()=>{if(st.coquis<it.c)return this.say('Te faltan '+(it.c-st.coquis)+' coquís.');if(it.use){this.apply(it.d,{coquis:st.coquis-it.c});return this.say(it.name+' · '+this.fmt(it.d).join(' · '))}this.setState({coquis:st.coquis-it.c,owned:{...st.owned,[it.id]:true},look:{...st.look,...(it.id==='gorra'?{hat:true}:it.id==='cadena'?{chain:true}:{})}});this.say(it.name+' es tuyo.')}})),
-      hasEvent:!!st.ev,ev:{...ev,hasArt:LEGEND_ART.includes(ev.art),artBg:ev.art?'url(img/leg-'+ev.art+'.jpg) '+((ART[ev.art]||{}).pos||'center')+' / cover no-repeat':'none',title:this.gx(ev.title||''),body:this.gx(ABU_DEAD&&ev.bodyDead?ev.bodyDead:(ev.body||''))},evChoosing:!!st.ev&&!st.result,evDone:!!st.result,
+      hasEvent:!!st.ev,ev:{...ev,hasArt:LEGEND_ART.includes(ev.art)||!!(ART[ev.art]||{}).src,artBg:ev.art?'url('+((ART[ev.art]||{}).src||'img/leg-'+ev.art+'.jpg')+') '+((ART[ev.art]||{}).pos||'center')+' / cover no-repeat':'none',title:this.gx(ev.title||''),body:this.gx(ABU_DEAD&&ev.bodyDead?ev.bodyDead:(ev.body||''))},evChoosing:!!st.ev&&!st.result,evDone:!!st.result,
       evChoices:(ev.ch||[]).map(c=>({label:this.gx(c.label),pick:()=>this.pick(c)})),
       result:st.result?{text:st.result.text,chips:Object.keys(st.result.d).filter(k=>st.result.d[k]).map(k=>{const v=st.result.d[k],good=k==='calor'?v<0:v>0;return {t:this.fmt({[k]:v})[0],bg:good?'var(--color-accent-2-200)':'var(--color-accent-200)',fg:good?'var(--color-accent-2-800)':'var(--color-accent-800)'}})}:{chips:[]},
       closeEvent:()=>{const q=st.pendingQ,names=st.pendingNames||[];this.setState({ev:null,result:null,pendingQ:null});if(names.length)this.nextName();if(q)setTimeout(()=>this.startQuest(q),names.length?300:600)},
