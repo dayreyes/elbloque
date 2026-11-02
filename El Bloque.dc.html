@@ -1049,8 +1049,8 @@ const DON={pelotero:'atleta',rapero:'artista',estudioso:'estudioso',buscon:'busc
 const PORTRAITS=['abuela','rosado','mito','chago','chuco','pepe','ines','lydia','guille','kiko','cintron','ramon','wichi','yadiel'];
 // Who runs each place: their portrait shows next to the place name.
 const HOSTS={apto:'abuela',taller:'chago',colmado:'pepe',panaderia:'lydia',iglesia:'ramon',gimnasio:'rosado',boqueron:'mito',finca:'chuco',botanica:'ines',castillo:'guille',lavanderia:'fela'};
-const LEGEND_ART=['clemente','hupia','jacho','guanina','garita'];
-const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 20%'},guanina:{pos:'center 45%'},garita:{pos:'center 60%'}};
+const LEGEND_ART=['clemente','hupia','jacho','guanina','garita','chupacabra'];
+const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 30%'},guanina:{pos:'center 45%'},garita:{pos:'center 60%'},chupacabra:{pos:'center 55%'}};
 // El diccionario del bloque: a word unlocks the first time it shows up in a card, message or activity (+1 coquí).
 const WORDS=[
  {k:'caserio',w:'Caserío',re:'caser[ií]o',m:'Vivienda pública. El gobierno usó la palabra desde los \'40; después la cambió por "residencial" porque la gente de afuera la usaba como insulto.'},
@@ -1254,7 +1254,7 @@ const QUESTS={
    {label:'Pensar en alguien',d:{feli:5},legend:'ceiba',out:'Pensaste en una persona. El viejito sonrió como si supiera quién.'},
    {label:'Sentarte con el viejito',d:{coco:2,feli:2},legend:'ceiba',out:'Te contó cuarenta años de Caguas en una tarde.'}]}},
  ch1:{title:'Vigilia en Canóvanas',where:'La finca de Don Chuco · Canóvanas',place:'finca',act:{label:'Hacer guardia de noche con Don Chuco',fx:'Leyenda',cost:2,d:{}},reward:{coquis:5},out:'Pasaste la noche esperando al Chupacabras.',meet:'chuco',next:'ch2',
-  card:{kicker:'Finca de Don Chuco · 3:14am',title:'Algo se movió',body:'Dos cafés, una linterna, el perro temblando. A las 3:14 algo se mueve entre las matas. Don Chuco te agarra el brazo: "¡Ahí está!" Alumbras. Dos ojos rojos te miran… y salen corriendo. Una cabra grita. Por la mañana, la cabra está bien. Muy asustada, pero bien.',ch:[
+  card:{art:'chupacabra',kicker:'Finca de Don Chuco · 3:14am',title:'Algo se movió',body:'Dos cafés, una linterna, el perro temblando. A las 3:14 algo se mueve entre las matas. Don Chuco te agarra el brazo: "¡Ahí está!" Alumbras. Dos ojos rojos te miran… y salen corriendo. Una cabra grita. Por la mañana, la cabra está bien. Muy asustada, pero bien.',ch:[
    {label:'"¡Lo vimos!"',d:{feli:4},grow:'creyente',legend:'chupacabra',out:'Don Chuco te abrazó llorando. "¡Por fin alguien me cree!"'},
    {label:'"Era un perro realengo"',d:{coco:3},legend:'chupacabra',out:'"Un perro con ojos rojos", dijo Don Chuco. "Sigue creyendo eso."'}]}},
  ch2:{title:'La evidencia',where:'La alcaldía · Canóvanas',place:'alcaldia',act:{label:'Llevarle la historia al alcalde',fx:'Leyenda · final',cost:1,d:{}},reward:{coquis:10},out:'Saliste en las noticias de Canóvanas.',
