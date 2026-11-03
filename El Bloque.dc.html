@@ -153,6 +153,7 @@
         <div sc-camel-on-click="{{ a.go }}" style="cursor:pointer; padding:7px 8px; border:2.5px solid var(--ink); border-radius:4px; background:{{ a.bg }}; color:{{ a.fg }}; opacity:{{ a.op }}; display:flex; flex-direction:column; gap:1px"><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:15px; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ a.name }}</span><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:9px">{{ a.sub }}</span></div>
         </sc-for>
       </div>
+      <sc-if value="{{ hasTown }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="Vista del pueblo" style="aspect-ratio:16 / 7; border:3px solid var(--ink); border-radius:4px; box-shadow:var(--shadow-md); background:{{ townBg }}"></div></sc-if>
       <div style="position:relative; height:{{ mapH }}px; border:3px solid var(--ink); border-radius:4px; background:var(--color-accent-2-200); overflow:hidden; box-shadow:var(--shadow-md)">
         <div style="position:absolute; left:-4px; right:-4px; top:46%; height:8%; background:var(--color-neutral-800); border:3px solid var(--ink)"><div style="position:absolute; left:0; right:0; top:50%; margin-top:-1.5px; border-top:3px dashed var(--sun)"></div></div>
         <div style="position:absolute; top:-4px; bottom:-4px; left:40%; width:18%; background:var(--color-neutral-800); border:3px solid var(--ink)"><div style="position:absolute; top:0; bottom:0; left:50%; margin-left:-1.5px; border-left:3px dashed var(--sun)"></div></div>
@@ -1048,6 +1049,8 @@ const PORTRAITS=['abuela','rosado','mito','chago','chuco','pepe','ines','lydia',
 const HOSTS={apto:'abuela',taller:'chago',colmado:'pepe',panaderia:'lydia',iglesia:'ramon',gimnasio:'rosado',boqueron:'mito',finca:'chuco',botanica:'ines',castillo:'guille',lavanderia:'fela'};
 const LOVE_PICS=['yaritza','valeria','sebastian','kiara','josue','joel','iker','genesis','damaris','brayan'];
 const picKey=n=>n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+// Pueblo scenes in img/town-<zone>.jpg: arrival card art and banner above the map.
+const TOWN_ART=['sanjuan','pueblo','caguas','ponce','caborojo'];
 const LEGEND_ART=['clemente','hupia','jacho','guanina','garita','chupacabra','cofresi'];
 const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 30%'},guanina:{pos:'center 45%'},playa:{src:'img/ev-playa.jpg',pos:'center 55%'},balcon:{src:'img/ev-balcon.jpg',pos:'center 45%'},plaza:{src:'img/ev-plaza.jpg',pos:'center 55%'},frutera:{src:'img/ev-frutera.jpg',pos:'center 50%'},garita:{pos:'center 60%'},chupacabra:{pos:'center 55%'},cofresi:{pos:'center 45%'}};
 // El diccionario del bloque: a word unlocks the first time it shows up in a card, message or activity (+1 coquí).
@@ -1525,7 +1528,7 @@ class Component extends DCLogic {
     const first=!(st.visited||{})[t.id];
     this.apply({chavos:-t.fare,animo:-1},{travel:false,sheet:null,zone:t.id,pos:{x:49,y:50},visited:{...(st.visited||{}),[t.id]:true}});
     this.say(t.how+' a '+t.name+' · −$'+t.fare);
-    if(first){this.addLog('Primera vez en '+t.name+'.');setTimeout(()=>this.setState({ev:t.arrive,result:null}),500)}}
+    if(first){this.addLog('Primera vez en '+t.name+'.');setTimeout(()=>this.setState({ev:TOWN_ART.includes(t.id)?{...t.arrive,art:'town-'+t.id}:t.arrive,result:null}),500)}}
   learn(id){if((this.state.legends||{})[id])return;const L=LEGENDS.find(x=>x.id===id);if(!L)return;
     this.setState(s=>({legends:{...(s.legends||{}),[id]:true},coquis:s.coquis+5}));this.addLog('Nueva leyenda: '+L.name+'.');
     clearTimeout(this.lgt);this.lgt=setTimeout(()=>this.say('Nueva leyenda: '+L.name+' · +5 coquís'),1100)}
@@ -1836,7 +1839,7 @@ class Component extends DCLogic {
         const q=Object.keys(QUESTS).some(k=>st.quests[k]==='active'&&QUESTS[k].place===l.id),hr=!lk&&!ag&&LOVE.some(L=>L.places.includes(l.id));
         return {...P,label:lk?'???':ag?l.label.split(' ')[0]+' · '+l.minAge+'+':l.label,bg:lk?'repeating-linear-gradient(135deg, var(--color-neutral-200) 0 8px, var(--color-neutral-300) 8px 16px)':ag?'var(--color-neutral-300)':l.ink?'var(--ink)':l.sw,quest:q&&!lk,heart:hr,
           go:()=>{if(lk)return this.say(l.lock);if(ag)return this.say('Tienes '+st.age+'. Vuelve a los '+l.minAge+'.');this.setState({pos:{x:P.x+P.w/2,y:P.y+P.h/2}});clearTimeout(this.mt);this.mt=setTimeout(()=>this.setState({sheet:l.id}),460)}}}),
-      mapDecor:MAPDECOR[st.zone]||[],mapH:st.zone==='bloque'?540:380,mapWater:['sanjuan','loiza','arecibo','ponce','caborojo'].includes(st.zone),waterLabel:{sanjuan:'Bahía',loiza:'Océano Atlántico',arecibo:'Océano Atlántico',ponce:'Mar Caribe',caborojo:'Mar Caribe'}[st.zone]||'',px:st.pos.x,py:st.pos.y,
+      mapDecor:MAPDECOR[st.zone]||[],hasTown:TOWN_ART.includes(st.zone),townBg:'url(img/town-'+st.zone+'.jpg) center / cover no-repeat',mapH:st.zone==='bloque'?540:380,mapWater:['sanjuan','loiza','arecibo','ponce','caborojo'].includes(st.zone),waterLabel:{sanjuan:'Bahía',loiza:'Océano Atlántico',arecibo:'Océano Atlántico',ponce:'Mar Caribe',caborojo:'Mar Caribe'}[st.zone]||'',px:st.pos.x,py:st.pos.y,
       dayLeft:(()=>{const ms=Math.max(0,DAYMS-(Date.now()-st.dayStart));return Math.floor(ms/3600000)+'h '+Math.floor(ms%3600000/60000)+'m'})(),
       mgChase:mg.type==='chase',
       chase:mg.type==='chase'?{msg:mg.msg,playing:!mg.over,over:!!mg.over,endLabel:mg.win==='win'?'Cobrar $60':'Ir preso',
@@ -1900,7 +1903,7 @@ class Component extends DCLogic {
       buyPass:()=>{if(st.pass)return;if(st.coquis<250)return this.say('Te faltan '+(250-st.coquis)+' coquís.');this.setState({pass:true,coquis:st.coquis-250});this.say('Pase activo. ¡Wepa!')},
       packs:PACKS.map(p=>({...p,best:!!p.best,buy:()=>{this.apply({coquis:p.n});this.say('Compra simulada: +'+p.n+' coquís')}})),
       items:ITEMS.filter(it=>!(it.abu&&ABU_DEAD)).map(it=>({...it,owned:!it.use&&!!st.owned[it.id],label:!it.use&&st.owned[it.id]?'Tuyo':it.c+' coquís',buy:()=>{if(st.coquis<it.c)return this.say('Te faltan '+(it.c-st.coquis)+' coquís.');if(it.use){this.apply(it.d,{coquis:st.coquis-it.c});return this.say(it.name+' · '+this.fmt(it.d).join(' · '))}this.setState({coquis:st.coquis-it.c,owned:{...st.owned,[it.id]:true},look:{...st.look,...(it.id==='gorra'?{hat:true}:it.id==='cadena'?{chain:true}:{})}});this.say(it.name+' es tuyo.')}})),
-      hasEvent:!!st.ev,ev:{...ev,hasArt:LEGEND_ART.includes(ev.art)||!!(ART[ev.art]||{}).src,artBg:ev.art?'url('+((ART[ev.art]||{}).src||'img/leg-'+ev.art+'.jpg')+') '+((ART[ev.art]||{}).pos||'center')+' / cover no-repeat':'none',title:this.gx(ev.title||''),body:this.gx(ABU_DEAD&&ev.bodyDead?ev.bodyDead:(ev.body||''))},evChoosing:!!st.ev&&!st.result,evDone:!!st.result,
+      hasEvent:!!st.ev,ev:{...ev,hasArt:LEGEND_ART.includes(ev.art)||!!(ART[ev.art]||{}).src||/^town-/.test(ev.art||''),artBg:ev.art?'url('+((ART[ev.art]||{}).src||(/^town-/.test(ev.art)?'img/'+ev.art+'.jpg':'img/leg-'+ev.art+'.jpg'))+') '+((ART[ev.art]||{}).pos||'center')+' / cover no-repeat':'none',title:this.gx(ev.title||''),body:this.gx(ABU_DEAD&&ev.bodyDead?ev.bodyDead:(ev.body||''))},evChoosing:!!st.ev&&!st.result,evDone:!!st.result,
       evChoices:(ev.ch||[]).map(c=>({label:this.gx(c.label),pick:()=>this.pick(c)})),
       result:st.result?{text:st.result.text,chips:Object.keys(st.result.d).filter(k=>st.result.d[k]).map(k=>{const v=st.result.d[k],good=k==='calor'?v<0:v>0;return {t:this.fmt({[k]:v})[0],bg:good?'var(--color-accent-2-200)':'var(--color-accent-200)',fg:good?'var(--color-accent-2-800)':'var(--color-accent-800)'}})}:{chips:[]},
       closeEvent:()=>{const q=st.pendingQ,names=st.pendingNames||[];this.setState({ev:null,result:null,pendingQ:null});if(names.length)this.nextName();if(q)setTimeout(()=>this.startQuest(q),names.length?300:600)},
