@@ -523,7 +523,8 @@
   </sc-if>
 
   <sc-if value="{{ mgTuning }}" hint-placeholder-val="{{ false }}">
-  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 8px) 18px 26px; gap:10px">
+  <div style="position:absolute; inset:0; isolation:isolate; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 8px) 18px 26px; gap:10px">
+    <div role="img" aria-label="Taller de Chago" style="position:absolute; inset:0; z-index:-1; background:url(img/mg-taller.jpg) center / cover no-repeat; opacity:.22; pointer-events:none"></div>
     <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Taller de Chago</span>
     <h2 style="margin:0; font-size:30px">{{ tun.title }}</h2>
     <div style="border:2.5px solid var(--ink); border-radius:4px; background:var(--color-surface); box-shadow:var(--shadow-sm); padding:10px 12px; display:flex; flex-direction:column; gap:4px"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">{{ tun.client }} quiere:</span><span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:22px; line-height:1">{{ tun.want }}</span><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:9.5px; text-transform:none">{{ tun.req }}</span></div>
@@ -1477,7 +1478,7 @@ const CUST=['Doña Nilda','Wichi','Titi Mayra','Un turista perdido','El cartero'
 const PARTS=[{id:'turbo',name:'Turbo',c:40,v:3,e:0,r:1},{id:'escape',name:'Escape',c:25,v:1,e:1,r:3},{id:'aros',name:'Aros cromados',c:30,v:0,e:3,r:0},{id:'susp',name:'Suspensión bajita',c:20,v:1,e:2,r:0},{id:'bocinas',name:'Bocinas',c:35,v:0,e:1,r:3},{id:'tintes',name:'Tintes',c:15,v:0,e:1,r:0},{id:'neon',name:'Luces neón',c:20,v:0,e:2,r:1}];
 const CLIENTS=[{n:'Kevin, el del 5',want:'Rápido pa\' la autopista',min:{v:4},maxR:4,b:70},{n:'Doña Nilda',want:'Bonito pero calladito',min:{e:4},maxR:1,b:60},{n:'DJ Brujo',want:'Que se oiga desde el pueblo',min:{r:6,e:3},maxR:99,b:100}];
 // Face-card art in img/ (bri-<sota|caballo|rey>-<suit>.png); others use the blank face + suit symbol.
-const CARD_ART=['sota-oros','sota-copas','sota-bastos','sota-espadas','caballo-oros','caballo-copas','caballo-espadas','caballo-bastos'];
+const CARD_ART=['sota-oros','sota-copas','sota-bastos','sota-espadas','caballo-oros','caballo-copas','caballo-espadas','caballo-bastos','rey-oros','rey-copas','rey-espadas','rey-bastos'];
 const SUITS=[['oros','Oros','var(--sun)'],['copas','Copas','var(--color-accent)'],['espadas','Espadas','var(--color-accent-2)'],['bastos','Bastos','var(--color-neutral-600)']];
 const BR_RANK=[1,3,12,11,10,7,6,5,4,2],BR_PTS={1:11,3:10,12:4,11:3,10:2};
 const cl=v=>Math.max(0,Math.min(100,v));
