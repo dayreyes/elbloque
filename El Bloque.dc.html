@@ -484,7 +484,8 @@
   </sc-if>
 
   <sc-if value="{{ mgChase }}" hint-placeholder-val="{{ false }}">
-  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 8px) 18px 26px; gap:10px">
+  <div style="position:absolute; inset:0; isolation:isolate; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 8px) 18px 26px; gap:10px">
+    <div role="img" aria-label="Las calles del caserío" style="position:absolute; inset:0; z-index:-1; background:url(img/mg-chase.jpg) center / cover no-repeat; opacity:.3; pointer-events:none"></div>
     <span class="tag tag-accent" style="align-self:flex-start">Misión · Persecución</span>
     <h2 style="margin:0; font-size:30px">Pa'l taller de Chago</h2>
     <div style="display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); border:3px solid var(--ink); box-shadow:var(--shadow-md); background:var(--color-neutral-800)">
@@ -502,7 +503,8 @@
   </sc-if>
 
   <sc-if value="{{ mgColmado }}" hint-placeholder-val="{{ false }}">
-  <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 8px) 18px 26px; gap:10px">
+  <div style="position:absolute; inset:0; isolation:isolate; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 8px) 18px 26px; gap:10px">
+    <div role="img" aria-label="Colmado Don Pepe" style="position:absolute; inset:0; z-index:-1; background:url(img/mg-colmado.jpg) center / cover no-repeat; opacity:.22; pointer-events:none"></div>
     <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Atender el colmado</span>
     <div style="display:flex; justify-content:space-between; align-items:baseline"><h2 style="margin:0; font-size:30px">Cliente {{ col.n }} de 5</h2><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Vendido: {{ col.score }}</span></div>
     <div style="height:12px; border:2.5px solid var(--ink); background:var(--color-neutral-200)"><div style="height:100%; width:{{ col.left }}%; background:{{ col.barc }}"></div></div>
