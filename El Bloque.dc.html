@@ -1051,7 +1051,7 @@ const LOVE_PICS=['yaritza','valeria','sebastian','kiara','josue','joel','iker','
 const picKey=n=>n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 // Pueblo scenes in img/town-<zone>.jpg: arrival card art and banner above the map.
 const TOWN_ART=['sanjuan','pueblo','caguas','ponce','caborojo','canovanas','bayamon','utuado','loiza','arecibo'];
-const LEGEND_ART=['clemente','hupia','jacho','guanina','garita','chupacabra','cofresi','sanamuerto','cuco','cucarachita','juanbobo','comecogollo'];
+const LEGEND_ART=['clemente','hupia','jacho','guanina','garita','chupacabra','cofresi','sanamuerto','cuco','cucarachita','juanbobo','comecogollo','ahorcados','ceiba','rogativa','carabali','gargola'];
 const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 30%'},guanina:{pos:'center 45%'},playa:{src:'img/ev-playa.jpg',pos:'center 55%'},balcon:{src:'img/ev-balcon.jpg',pos:'center 45%'},plaza:{src:'img/ev-plaza.jpg',pos:'center 55%'},frutera:{src:'img/ev-frutera.jpg',pos:'center 50%'},garita:{pos:'center 60%'},chupacabra:{pos:'center 55%'},cofresi:{pos:'center 45%'}};
 // El diccionario del bloque: a word unlocks the first time it shows up in a card, message or activity (+1 coquí).
 const WORDS=[
@@ -1253,7 +1253,7 @@ const QUESTS={
    {label:'Creerle a Doña Inés',d:{feli:3},grow:'creyente',legend:'guanina',out:'"Ahora ve a la plaza", te dice. "La ceiba te va a contar el resto."'},
    {label:'"Es una montaña"',d:{coco:3},legend:'guanina',out:'"Claro que es una montaña", sonríe Inés. "Igual ve a la plaza. Escucha la ceiba."'}]}},
  gu2:{title:'La ceiba',where:'La plaza de Caguas',place:'plazacaguas',act:{label:'Escuchar la ceiba cuando sopla el viento',fx:'Leyenda · final',cost:1,d:{}},reward:{coquis:10},out:'La ceiba susurró.',
-  card:{kicker:'La plaza de Caguas',title:'Lo que susurra la ceiba',body:'Sopla el viento y las hojas de la ceiba suenan como gente hablando bajito. Un viejito en el banco te dice sin mirarte: "Son los que se quisieron sin permiso. Como Guanina y su español. Por eso los novios se citan aquí."',ch:[
+  card:{art:'ceiba',kicker:'La plaza de Caguas',title:'Lo que susurra la ceiba',body:'Sopla el viento y las hojas de la ceiba suenan como gente hablando bajito. Un viejito en el banco te dice sin mirarte: "Son los que se quisieron sin permiso. Como Guanina y su español. Por eso los novios se citan aquí."',ch:[
    {label:'Pensar en alguien',d:{feli:5},legend:'ceiba',out:'Pensaste en una persona. El viejito sonrió como si supiera quién.'},
    {label:'Sentarte con el viejito',d:{coco:2,feli:2},legend:'ceiba',out:'Te contó cuarenta años de Caguas en una tarde.'}]}},
  ch1:{title:'Vigilia en Canóvanas',where:'La finca de Don Chuco · Canóvanas',place:'finca',act:{label:'Hacer guardia de noche con Don Chuco',fx:'Leyenda',cost:2,d:{}},reward:{coquis:5},out:'Pasaste la noche esperando al Chupacabras.',meet:'chuco',next:'ch2',
@@ -1324,7 +1324,7 @@ const EVENTS=[
  {kicker:'Camino del colmado · 1am',art:'hupia',title:'El señor de las guayabas',body:'Bajando de la cancha, un señor flaco te para debajo del palo de guayabas. "¿Tienes una guayaba madura?" Cuando se estira pa\' alcanzar una rama, se le sube la camisa. No tiene ombligo.',ch:[
    {label:'Darle una guayaba y seguir caminando',d:{feli:-1},grow:'creyente',legend:'hupia',out:'"Gracias, {mijo}." Cuando miraste pa\' atrás, no había nadie. Abuela dice que era una hupía.'},
    {label:'Correr hasta el apto',d:{salud:1},legend:'hupia',out:'Abuela no se sorprendió: "Las hupías salen a comer guayabas. No le hacen daño a nadie."'}]},
- {kicker:'Carretera vieja · en el público',title:'Lo que cuelga de los árboles',body:'El público se metió por la carretera vieja pa\' evitar el tapón. En una curva, los faros alumbraron figuras colgando de los árboles. El chofer ni frenó. "Los ahorcados", dijo. "Ya no están."',ch:[
+ {kicker:'Carretera vieja · en el público',art:'ahorcados',title:'Lo que cuelga de los árboles',body:'El público se metió por la carretera vieja pa\' evitar el tapón. En una curva, los faros alumbraron figuras colgando de los árboles. El chofer ni frenó. "Los ahorcados", dijo. "Ya no están."',ch:[
    {label:'Mirar pa\' atrás',d:{feli:-2,coco:2},legend:'ahorcados',out:'No había nada. Solo ramas. El chofer subió el volumen de la radio.'},
    {label:'Cerrar los ojos',d:{},legend:'ahorcados',out:'Los abriste cuando el público volvió a la autopista.'}]},
  {kicker:'Los cañaverales · de noche',art:'jacho',title:'Una luz en el campo',body:'Desde la guagua se ve una luz que flota sobre el cañaveral, sola, buscando algo. El señor de atrás se persigna: "El Jacho. Busca las cenizas de la cruz que quemó."',ch:[
