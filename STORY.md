@@ -255,7 +255,7 @@ New events from the same source:
 
 ## 15. Avatar & Dones **(in game)**
 - **Dones** (starting trait): Deportista, Artista, Estofón, Joseador.
-- **Avatar** redrawn to match the reference sheet: real faces, 6 skin tones, 10 hairstyles (fade, corto, rizos, trenzas, afro, moño, largo, cola rizada, emo, trenza de lado), 6 tops (camiseta, jersey, hoodie, guayabera, polo, camisa abierta), free extras (aretes, espejuelos, mecha roja, choker/crucecita) plus gorra and cadena from the Tienda. Several options come from the contact and romance portraits.
+- **Avatar**: the 16 illustrated characters from the avatar reference sheet (`img/av-0..15.jpg`). Pick one on the create screen or in the clóset; default follows Chico/Chica/No binarie until you choose. Three looks unlock with the Gorra (1) and the Cadena (2) from the Tienda.
 
 ## 16. Next up
 - People in each pueblo (contacts, mini-stories per place), not just activities.

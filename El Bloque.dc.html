@@ -88,8 +88,8 @@
         <h2 style="margin:0; font-size:30px">¿Quién eres tú?</h2>
       </div>
       <div style="display:flex; align-items:center; gap:16px">
-        <dc-import name="Avatar" size="104" bg="var(--color-accent-2-200)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" earrings="{{ av.ear }}" glasses="{{ av.gl }}" streak="{{ av.st }}" neck="{{ av.neck }}" hint-size="104px,104px"></dc-import>
-        <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-start"><span style="font-size:13px; line-height:1.4">Piel, pelo y fit. Lo que compres en la Tienda sale en el clóset.</span><button class="btn btn-secondary" style="height:40px" sc-camel-on-click="{{ openCloset }}">Editar look</button></div>
+        <dc-import name="Avatar" size="104" bg="var(--color-accent-2-200)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" pic="{{ av.pic }}" chain="{{ av.chain }}" earrings="{{ av.ear }}" glasses="{{ av.gl }}" streak="{{ av.st }}" neck="{{ av.neck }}" hint-size="104px,104px"></dc-import>
+        <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-start"><span style="font-size:13px; line-height:1.4">16 looks pa' escoger. Algunos se desbloquean en la Tienda.</span><button class="btn btn-secondary" style="height:40px" sc-camel-on-click="{{ openCloset }}">Editar look</button></div>
       </div>
       <div class="field"><label>Nombre</label><input class="input" style="height:44px" placeholder="Yariel" value="{{ name }}" sc-camel-on-change="{{ setName }}"></div>
       <div class="field"><label>Apodo en el bloque</label><input class="input" style="height:44px" placeholder="El Flaco" value="{{ apodo }}" sc-camel-on-change="{{ setApodo }}"></div>
@@ -124,7 +124,7 @@
   <sc-if value="{{ isHub }}" hint-placeholder-val="{{ false }}">
   <div style="flex:1; min-height:0; display:flex; flex-direction:column">
     <div style="flex:none; padding:6px 18px 10px; display:flex; align-items:center; gap:10px">
-      <div sc-camel-on-click="{{ openCloset }}" style="cursor:pointer; display:flex"><dc-import name="Avatar" size="42" bg="var(--sun)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" earrings="{{ av.ear }}" glasses="{{ av.gl }}" streak="{{ av.st }}" neck="{{ av.neck }}" hint-size="42px,42px"></dc-import></div>
+      <div sc-camel-on-click="{{ openCloset }}" style="cursor:pointer; display:flex"><dc-import name="Avatar" size="42" bg="var(--sun)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" pic="{{ av.pic }}" chain="{{ av.chain }}" earrings="{{ av.ear }}" glasses="{{ av.gl }}" streak="{{ av.st }}" neck="{{ av.neck }}" hint-size="42px,42px"></dc-import></div>
       <div style="flex:1; min-width:0; display:flex; flex-direction:column; line-height:1.2">
         <span style="font-family:var(--font-heading); font-size:17px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ displayName }}</span>
         <span style="font-size:11px; color:var(--color-neutral-700); white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ age }} años · {{ monthName }} · {{ casShort }}</span>
@@ -167,7 +167,7 @@
           <sc-if value="{{ b.heart }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; top:-9px; left:-9px; width:24px; height:24px; border:2.5px solid var(--ink); background:var(--color-accent); color:var(--paper); display:grid; place-items:center; font-size:13px">♥</span></sc-if>
         </div>
         </sc-for>
-        <div style="position:absolute; left:{{ px }}%; top:{{ py }}%; width:36px; height:36px; margin:-18px 0 0 -18px; display:flex; box-shadow:3px 3px 0 var(--ink); transition:left .45s ease, top .45s ease; pointer-events:none"><dc-import name="Avatar" size="36" bg="var(--color-accent)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" earrings="{{ av.ear }}" glasses="{{ av.gl }}" streak="{{ av.st }}" neck="{{ av.neck }}" hint-size="36px,36px"></dc-import></div>
+        <div style="position:absolute; left:{{ px }}%; top:{{ py }}%; width:36px; height:36px; margin:-18px 0 0 -18px; display:flex; box-shadow:3px 3px 0 var(--ink); transition:left .45s ease, top .45s ease; pointer-events:none"><dc-import name="Avatar" size="36" bg="var(--color-accent)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" pic="{{ av.pic }}" chain="{{ av.chain }}" earrings="{{ av.ear }}" glasses="{{ av.gl }}" streak="{{ av.st }}" neck="{{ av.neck }}" hint-size="36px,36px"></dc-import></div>
       </div>
       <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase"><span>Toca un lugar pa' entrar</span><span>Nuevo día en {{ dayLeft }}</span></div>
       <div style="border:2.5px solid var(--ink); background:var(--ink); color:var(--paper); padding:12px 14px; display:flex; flex-direction:column; gap:6px; box-shadow:var(--shadow-sm)">
@@ -605,21 +605,13 @@
     <div sc-camel-on-click="{{ closeCloset }}" style="flex:1; min-height:40px"></div>
     <div style="background:var(--paper); border-top:3px solid var(--ink); padding:16px 18px 28px; display:flex; flex-direction:column; gap:9px; overflow:auto; max-height:86%">
       <div style="display:flex; gap:14px; align-items:center; padding-bottom:4px">
-        <dc-import name="Avatar" size="112" bg="var(--color-accent-2-200)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" chain="{{ av.chain }}" earrings="{{ av.ear }}" glasses="{{ av.gl }}" streak="{{ av.st }}" neck="{{ av.neck }}" hint-size="112px,112px"></dc-import>
-        <div style="display:flex; flex-direction:column; gap:4px"><h3 style="margin:0">El clóset</h3><span style="font-size:12.5px; line-height:1.4">Gorra y cadena se desbloquean en la Tienda.</span></div>
+        <dc-import name="Avatar" size="112" bg="var(--color-accent-2-200)" skin="{{ av.skin }}" hair="{{ av.hair }}" hair-color="{{ av.hc }}" top="{{ av.top }}" top-color="{{ av.tc }}" hat="{{ av.hat }}" pic="{{ av.pic }}" chain="{{ av.chain }}" earrings="{{ av.ear }}" glasses="{{ av.gl }}" streak="{{ av.st }}" neck="{{ av.neck }}" hint-size="112px,112px"></dc-import>
+        <div style="display:flex; flex-direction:column; gap:4px"><h3 style="margin:0">El clóset</h3><span style="font-size:12.5px; line-height:1.4">Escoge quién eres. Algunos looks se desbloquean en la Tienda.</span></div>
       </div>
-      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Piel</span>
-      <div style="display:flex; flex-wrap:wrap; gap:8px"><sc-for list="{{ skinOpts }}" as="o" hint-placeholder-count="5"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; width:36px; height:36px; border:2.5px solid var(--ink); border-radius:4px; background:{{ o.c }}; box-shadow:{{ o.sh }}; transform:{{ o.tf }}; transition:transform .1s"></div></sc-for></div>
-      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Pelo</span>
-      <div style="display:flex; flex-wrap:wrap; gap:6px"><sc-for list="{{ hairOpts }}" as="o" hint-placeholder-count="4"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; padding:8px 10px; border:2.5px solid var(--ink); border-radius:4px; background:{{ o.bg }}; opacity:{{ o.op }}; font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:15px; line-height:1">{{ o.label }}</div></sc-for></div>
-      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Color de pelo</span>
-      <div style="display:flex; flex-wrap:wrap; gap:8px"><sc-for list="{{ hcOpts }}" as="o" hint-placeholder-count="5"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; width:36px; height:36px; border:2.5px solid var(--ink); border-radius:4px; background:{{ o.c }}; box-shadow:{{ o.sh }}; transform:{{ o.tf }}; transition:transform .1s"></div></sc-for></div>
-      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Ropa</span>
-      <div style="display:flex; flex-wrap:wrap; gap:6px"><sc-for list="{{ topOpts }}" as="o" hint-placeholder-count="4"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; padding:8px 10px; border:2.5px solid var(--ink); border-radius:4px; background:{{ o.bg }}; opacity:{{ o.op }}; font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:15px; line-height:1">{{ o.label }}</div></sc-for></div>
-      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Color de ropa</span>
-      <div style="display:flex; flex-wrap:wrap; gap:8px"><sc-for list="{{ tcOpts }}" as="o" hint-placeholder-count="5"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; width:36px; height:36px; border:2.5px solid var(--ink); border-radius:4px; background:{{ o.c }}; box-shadow:{{ o.sh }}; transform:{{ o.tf }}; transition:transform .1s"></div></sc-for></div>
-      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Extras</span>
-      <div style="display:flex; flex-wrap:wrap; gap:6px"><sc-for list="{{ extraOpts }}" as="o" hint-placeholder-count="4"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; padding:8px 10px; border:2.5px solid var(--ink); border-radius:4px; background:{{ o.bg }}; opacity:{{ o.op }}; font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:15px; line-height:1">{{ o.label }}</div></sc-for></div>
+      <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase">Tu look</span>
+      <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px">
+        <sc-for list="{{ lookOpts }}" as="o" hint-placeholder-count="8"><div sc-camel-on-click="{{ o.pick }}" style="cursor:pointer; display:flex; flex-direction:column; gap:3px; opacity:{{ o.op }}; transform:{{ o.tf }}"><div role="img" aria-label="{{ o.name }}" style="aspect-ratio:1; border:{{ o.bd }}; border-radius:4px; background:{{ o.bg }}; box-shadow:{{ o.sh }}"></div><span style="font-family:var(--font-mono); font-size:9px; font-weight:700; text-transform:uppercase; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ o.name }}</span></div></sc-for>
+      </div>
       <button class="btn btn-primary" style="height:50px; font-size:18px; margin-top:6px" sc-camel-on-click="{{ closeCloset }}">Listo</button>
     </div>
   </div>
@@ -1459,8 +1451,8 @@ const PASS_TIERS=[
  {free:{coquis:40},prem:{coquis:150,label:'Bocina dorada · 150 coquís'}}];
 const PACKS=[{n:80,price:'$0.99'},{n:500,price:'$4.99',best:true},{n:1200,price:'$9.99'}];
 const ITEMS=[
- {id:'gorra',name:'Gorra Flamboyán',sub:'Cosmético · sale en tu avatar',c:30,bg:'var(--color-accent-400)'},
- {id:'cadena',name:'Cadena dorada',sub:'Cosmético · sale en tu avatar',c:60,bg:'var(--sun)'},
+ {id:'gorra',name:'Gorra Flamboyán',sub:'Cosmético · desbloquea un look en el clóset',c:30,bg:'var(--color-accent-400)'},
+ {id:'cadena',name:'Cadena dorada',sub:'Cosmético · desbloquea dos looks en el clóset',c:60,bg:'var(--sun)'},
  {id:'abanico',name:'Abanico pa\'l apto',sub:'Mejora · dormir te deja con +1 Ánimo extra',c:90,bg:'var(--color-neutral-400)'},
  {id:'colchon',name:'Colchón nuevo',sub:'Mejora · +1 Ánimo máximo',c:120,bg:'var(--color-accent-2-300)'},
  {id:'tenis',name:'Tenis nuevos',sub:'Mejora · +1 Ánimo máximo',c:150,bg:'var(--color-accent-300)'},
@@ -1468,6 +1460,8 @@ const ITEMS=[
  {id:'regalo',use:true,abu:true,name:'Regalo pa\' Abuela',sub:'Al momento · +10 Afecto de Abuela',c:20,d:{abuAff:10},bg:'var(--color-accent-200)'},
  {id:'medicina',use:true,abu:true,name:'Medicina pa\' Abuela',sub:'Al momento · +15 Salud de Abuela',c:25,d:{abuSalud:15},bg:'var(--color-accent-2-200)'},
  {id:'abogado',use:true,name:'Abogado de oficio',sub:'Al momento · −20 Calor',c:40,d:{calor:-20},bg:'var(--color-neutral-300)'}];
+// The 16 looks from the avatar reference sheet. Some unlock with Tienda items.
+const LOOKS=[{n:'Fade'},{n:'Largo'},{n:'Rizos',need:'cadena'},{n:'Moño'},{n:'Gorra pa\' tras',need:'gorra'},{n:'Cola rizada'},{n:'Guayabera'},{n:'Trenzas'},{n:'Ondas'},{n:'Hoodie'},{n:'Afro'},{n:'Rizos y cadena',need:'cadena'},{n:'Cornrows'},{n:'Moño alto'},{n:'Hoodie rojo'},{n:'Espejuelos'}];
 const SKINS=['#f2cfae','#dcab82','#c48f62','#a06a42','#7a4a2c','#4e2f1d'];
 const HAIRS=[['rapado','Fade'],['corto','Corto'],['rizos','Rizos'],['trenzas','Trenzas'],['afro','Afro'],['mono','Moño'],['largo','Largo'],['cola','Cola rizada'],['emo','Emo'],['trenza','Trenza de lado']];
 const HCS=['var(--ink)','#5b3920','#b88a3e','var(--color-accent)','var(--color-accent-2)'];
@@ -1777,8 +1771,9 @@ class Component extends DCLogic {
       name:st.name,apodo:st.apodo,setName:e=>this.setState({name:e.target.value}),setApodo:e=>this.setState({apodo:e.target.value}),abuName:st.abuName,setAbuName:e=>this.setState({abuName:e.target.value}),
       abuCard:{av:PORTRAITS.includes('abuela')?'var(--color-accent-300) url(img/p-abuela.jpg) center / cover no-repeat':'var(--color-accent-300)',ini:PORTRAITS.includes('abuela')?'':'A',name:this.gx('{abuela}'),dead:st.abu.dead,alive:!st.abu.dead,aff:st.abu.aff,salud:st.abu.salud,affW:st.abu.aff+'%',saludW:st.abu.salud+'%',saludBg:st.abu.salud<30?'var(--color-accent)':'var(--color-accent-2)',stage:st.abu.dead?'Descansa en paz':st.abu.aff>=70?'Su orgullo':st.abu.aff>=40?'Te tiene fe':'Preocupada'},
       initial:(nm||ap||'Y')[0].toUpperCase(),
-      av:{skin:SKINS[st.look.skin],hair:st.look.hair,hc:HCS[st.look.hc],top:st.look.top,tc:TCS[st.look.tc],hat:!!st.look.hat,chain:!!st.look.chain,ear:st.look.ear||'none',gl:!!st.look.gl,st:!!st.look.st,neck:st.look.neck||'none'},
+      av:{skin:SKINS[st.look.skin],hair:st.look.hair,hc:HCS[st.look.hc],top:st.look.top,tc:TCS[st.look.tc],pic:st.look.pic==null?(st.gender==='chica'?1:st.gender==='nb'?6:0):st.look.pic,hat:!!st.look.hat,chain:!!st.look.chain,ear:st.look.ear||'none',gl:!!st.look.gl,st:!!st.look.st,neck:st.look.neck||'none'},
       closetOn:st.closet,openCloset:()=>this.setState({closet:true}),closeCloset:()=>this.setState({closet:false}),
+      lookOpts:LOOKS.map((L,i)=>{const lk=L.need&&!st.owned[L.need],on=(st.look.pic==null?(st.gender==='chica'?1:st.gender==='nb'?6:0):st.look.pic)===i;return {bg:'var(--paper) url(img/av-'+i+'.jpg) center top / cover no-repeat',name:lk?'Tienda':L.n,op:lk?.45:1,sh:on?'4px 4px 0 var(--ink)':'none',bd:on?'3px solid var(--color-accent)':'2.5px solid var(--ink)',tf:on?'translate(-2px,-2px)':'none',pick:()=>lk?this.say('Desbloquéalo comprando la '+(L.need==='gorra'?'Gorra Flamboyán':'Cadena dorada')+' en la Tienda.'):this.setState(x=>({look:{...x.look,pic:i,picked:true}}))}}),
       skinOpts:SKINS.map((c,i)=>this.swatch(c,st.look.skin===i,'skin',i)),
       hcOpts:HCS.map((c,i)=>this.swatch(c,st.look.hc===i,'hc',i)),
       tcOpts:TCS.map((c,i)=>this.swatch(c,st.look.tc===i,'tc',i)),
@@ -1813,7 +1808,7 @@ class Component extends DCLogic {
       legendList:LEGENDS.map(L=>{const k=!!(st.legends||{})[L.id];return {hasArt:k&&LEGEND_ART.includes(L.id),artBg:'url(img/leg-'+L.id+'.jpg) '+((ART[L.id]||{}).pos||'center')+' / cover no-repeat',name:k?L.name:'???',where:L.where,lore:k?L.lore:'Todavía no la conoces.',bg:k?'var(--color-surface)':'var(--color-neutral-200)',op:k?1:.7}}),
       devList:Object.keys(DEV).filter(k=>st.dev[k]).sort((a,b)=>(st.dev[b]>=DEV[b].need)-(st.dev[a]>=DEV[a].need)).map(k=>{const n=st.dev[k],ok=n>=DEV[k].need;return {name:this.dn(k),bonus:ok?DEV[k].bonus:'Sigue así pa\' desbloquearlo',prog:ok?'Activo':n+' de '+DEV[k].need,bg:ok?'var(--sun)':'var(--color-surface)'}}),
       devCount:Object.keys(DEV).filter(k=>(st.dev[k]||0)>=DEV[k].need).length,
-      genders:[['chico','Chico'],['chica','Chica'],['nb','No binarie']].map(([id,label])=>({label,bg:st.gender===id?'var(--sun)':'var(--color-surface)',pick:()=>this.setState({gender:id})})),
+      genders:[['chico','Chico'],['chica','Chica'],['nb','No binarie']].map(([id,label])=>({label,bg:st.gender===id?'var(--sun)':'var(--color-surface)',pick:()=>this.setState(x=>({gender:id,look:x.look.picked?x.look:{...x.look,pic:id==='chica'?1:id==='nb'?6:0}}))})),
       likesOpts:[['chicas','Chicas'],['chicos','Chicos'],['todos','Todes']].map(([id,label])=>({label,bg:st.likes===id?'var(--sun)':'var(--color-surface)',pick:()=>this.setState({likes:id})})),
       hasLove:Object.keys(st.love).length>0,
       loveList:Object.keys(st.love).map(k=>{const L=LOVE.find(x=>x.id===k),p=this.who(L),c=st.love[k],mine=st.partner===k;
