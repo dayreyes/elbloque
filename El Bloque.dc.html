@@ -462,7 +462,7 @@
   <sc-if value="{{ mgHoops }}" hint-placeholder-val="{{ false }}">
   <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 12px) 22px 34px; gap:16px">
     <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Pickup</span>
-    <h2 style="margin:0">A 5 tiros contra Yadiel</h2>
+    <div style="display:flex; align-items:center; gap:12px"><div role="img" aria-label="Yadiel" style="width:58px; height:58px; flex:none; border:2.5px solid var(--ink); border-radius:50%; box-shadow:var(--shadow-sm); background:url(img/mg-yadiel.jpg) 45% 20% / 190% no-repeat"></div><h2 style="margin:0; font-size:28px">A 5 tiros contra Yadiel</h2></div>
     <div style="display:grid; grid-template-columns:1fr 1fr; border:2.5px solid var(--ink); box-shadow:var(--shadow-md)">
       <div style="padding:12px; display:flex; flex-direction:column; background:var(--sun)"><span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Tú</span><span style="font-family:var(--font-heading); font-weight:900; font-size:44px; line-height:.9">{{ hoops.made }}</span></div>
       <div style="padding:12px; display:flex; flex-direction:column; border-left:2.5px solid var(--ink)"><span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Yadiel</span><span style="font-family:var(--font-heading); font-weight:900; font-size:44px; line-height:.9">{{ hoops.opp }}</span></div>
@@ -541,23 +541,23 @@
     <h2 style="margin:0; font-size:30px">Contra Don Tito</h2>
     <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase"><span>Tú: {{ bri.my }} pts</span><span>Don Tito: {{ bri.opp }} pts</span><span>Mazo: {{ bri.deckN }}</span></div>
     <div style="flex:1; min-height:0; position:relative; border:3px solid var(--ink); border-radius:4px; background:var(--color-accent-2-700); display:flex; gap:14px; align-items:center; justify-content:center; padding:14px">
-      <div style="position:absolute; left:10px; top:10px; display:flex; flex-direction:column; gap:4px"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">Triunfo</span><div style="width:54px; height:76px; flex:none; box-sizing:border-box; border:3px solid var(--ink); border-radius:6px; background:var(--paper); box-shadow:var(--shadow-sm); display:flex; flex-direction:column; justify-content:space-between; padding:5px">
+      <div style="position:absolute; left:10px; top:10px; display:flex; flex-direction:column; gap:4px"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">Triunfo</span><div style="width:54px; height:76px; flex:none; box-sizing:border-box; border:3px solid var(--ink); border-radius:6px; background:var(--paper); box-shadow:var(--shadow-sm); outline:1.5px solid var(--color-accent); outline-offset:-6px; display:flex; flex-direction:column; justify-content:space-between; padding:6px">
           <span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:20px; line-height:1; color:var(--ink)">{{ bri.trump.n }}</span>
-          <div style="height:15px; border:2px solid var(--ink); background:{{ bri.trump.col }}"></div>
-          <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:8.5px; line-height:1.1; color:var(--ink)">{{ bri.trump.name }}</span>
+          <div style="flex:1 1 auto; min-height:50%; margin:2px -2px; background:{{ bri.trump.icon }}"></div>
+          <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:8.5px; line-height:1.1; color:var(--ink)">{{ bri.trump.lab }}</span>
         </div></div>
       <span style="position:absolute; right:10px; top:10px; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">Don Tito · {{ bri.oppN }} cartas</span>
-      <sc-for list="{{ bri.table }}" as="c" hint-placeholder-count="0"><div style="display:flex; flex-direction:column; gap:4px; align-items:center"><div style="width:78px; height:110px; flex:none; box-sizing:border-box; border:3px solid var(--ink); border-radius:6px; background:var(--paper); box-shadow:var(--shadow-sm); display:flex; flex-direction:column; justify-content:space-between; padding:5px">
+      <sc-for list="{{ bri.table }}" as="c" hint-placeholder-count="0"><div style="display:flex; flex-direction:column; gap:4px; align-items:center"><div style="width:78px; height:110px; flex:none; box-sizing:border-box; border:3px solid var(--ink); border-radius:6px; background:var(--paper); box-shadow:var(--shadow-sm); outline:1.5px solid var(--color-accent); outline-offset:-6px; display:flex; flex-direction:column; justify-content:space-between; padding:6px">
           <span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:30px; line-height:1; color:var(--ink)">{{ c.n }}</span>
-          <div style="height:22px; border:2px solid var(--ink); background:{{ c.col }}"></div>
-          <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:8.5px; line-height:1.1; color:var(--ink)">{{ c.name }}</span>
+          <div style="flex:1 1 auto; min-height:50%; margin:2px -2px; background:{{ c.icon }}"></div>
+          <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:8.5px; line-height:1.1; color:var(--ink)">{{ c.lab }}</span>
         </div><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">{{ c.who }}</span></div></sc-for>
     </div>
     <div style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:18px; line-height:1.05; min-height:38px; text-wrap:pretty">{{ bri.msg }}</div>
-    <div style="display:flex; gap:10px; justify-content:center; min-height:110px"><sc-for list="{{ bri.hand }}" as="c" hint-placeholder-count="3"><div sc-camel-on-click="{{ c.play }}" style="cursor:pointer; opacity:{{ c.op }}" style-active="transform:translateY(-4px)"><div style="width:84px; height:118px; flex:none; box-sizing:border-box; border:3px solid var(--ink); border-radius:6px; background:var(--paper); box-shadow:var(--shadow-sm); display:flex; flex-direction:column; justify-content:space-between; padding:5px">
+    <div style="display:flex; gap:10px; justify-content:center; min-height:110px"><sc-for list="{{ bri.hand }}" as="c" hint-placeholder-count="3"><div sc-camel-on-click="{{ c.play }}" style="cursor:pointer; opacity:{{ c.op }}" style-active="transform:translateY(-4px)"><div style="width:84px; height:118px; flex:none; box-sizing:border-box; border:3px solid var(--ink); border-radius:6px; background:var(--paper); box-shadow:var(--shadow-sm); outline:1.5px solid var(--color-accent); outline-offset:-6px; display:flex; flex-direction:column; justify-content:space-between; padding:6px">
           <span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:32px; line-height:1; color:var(--ink)">{{ c.n }}</span>
-          <div style="height:24px; border:2px solid var(--ink); background:{{ c.col }}"></div>
-          <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:8.5px; line-height:1.1; color:var(--ink)">{{ c.name }}</span>
+          <div style="flex:1 1 auto; min-height:50%; margin:2px -2px; background:{{ c.icon }}"></div>
+          <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:8.5px; line-height:1.1; color:var(--ink)">{{ c.lab }}</span>
         </div></div></sc-for></div>
     <sc-if value="{{ bri.over }}" hint-placeholder-val="{{ false }}"><button class="btn btn-primary" style="height:54px; font-size:19px" sc-camel-on-click="{{ endMg }}">Seguir</button></sc-if>
   </div>
@@ -566,7 +566,7 @@
   <sc-if value="{{ mgDomino }}" hint-placeholder-val="{{ false }}">
   <div style="position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; padding:calc(var(--sat) + 12px) 18px 30px; gap:12px">
     <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Dominó</span>
-    <h2 style="margin:0">Mano contra Don Pepe</h2>
+    <div style="display:flex; align-items:center; gap:12px"><div role="img" aria-label="Don Pepe" style="width:58px; height:58px; flex:none; border:2.5px solid var(--ink); border-radius:50%; box-shadow:var(--shadow-sm); background:url(img/mg-pepe.jpg) 50% 18% / 175% no-repeat"></div><h2 style="margin:0">Mano contra Don Pepe</h2></div>
     <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase"><span>Don Pepe: {{ dom.oppN }} fichas</span><span>Puntas: {{ dom.ends }}</span></div>
     <div style="flex:1; min-height:0; overflow:auto; border:2.5px solid var(--ink); outline:9px solid #7a4a2c; outline-offset:-11px; box-shadow:var(--shadow-md); background:var(--color-accent-2-700); padding:18px; display:flex; flex-wrap:wrap; gap:4px; align-content:flex-start; justify-content:center">
       <sc-for list="{{ dom.board }}" as="t" hint-placeholder-count="0"><div style="width:{{ t.bw }}px; height:{{ t.bh }}px; display:grid; place-items:center"><div style="position:relative; width:27px; height:50px; transform:{{ t.rot }}; background:url(img/dom-tile.png) center / 100% 100% no-repeat"><sc-for list="{{ t.p }}" as="q" hint-placeholder-count="0"><div style="position:absolute; left:{{ q.x }}%; top:{{ q.y }}%; width:20%; aspect-ratio:1; transform:translate(-50%,-50%); background:url(img/dom-pip.png) center / contain no-repeat"></div></sc-for></div></div></sc-for>
@@ -1686,7 +1686,7 @@ class Component extends DCLogic {
     const n={...m,paid:m.paid+pay,ok:m.ok+(ok?1:0),ruido:m.ruido+s.r,msg};
     this.setState({mg:m.i+1>=CLIENTS.length?{...n,over:true}:{...n,i:m.i+1,sel:{}}})}
   sn(s){return SUITS.find(x=>x[0]===s)[1]}
-  card(c){if(!c||!c.s)return {};return {n:{1:'As',10:'S',11:'C',12:'R'}[c.n]||String(c.n),name:({1:'As',10:'Sota',11:'Caballo',12:'Rey'}[c.n]||c.n)+' de '+this.sn(c.s),col:SUITS.find(x=>x[0]===c.s)[2]}}
+  card(c){if(!c||!c.s)return {};return {n:{1:'As',10:'S',11:'C',12:'R'}[c.n]||String(c.n),name:({1:'As',10:'Sota',11:'Caballo',12:'Rey'}[c.n]||c.n)+' de '+this.sn(c.s),col:SUITS.find(x=>x[0]===c.s)[2],icon:'url(img/bri-'+c.s+'.png) center / contain no-repeat',lab:this.sn(c.s)}}
   rk(c){return BR_RANK.indexOf(c.n)}
   beats(b,a,tr){return b.s===a.s?this.rk(b)<this.rk(a):b.s===tr}
   pts(c){return BR_PTS[c.n]||0}
