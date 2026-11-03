@@ -464,16 +464,21 @@
     <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Pickup</span>
     <h2 style="margin:0">A 5 tiros contra Yadiel</h2>
     <div style="display:grid; grid-template-columns:1fr 1fr; border:2.5px solid var(--ink); box-shadow:var(--shadow-md)">
-      <div style="padding:12px; display:flex; flex-direction:column; background:var(--sun)"><span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Tú</span><span style="font-family:var(--font-heading); font-weight:900; font-size:64px; line-height:.9">{{ hoops.made }}</span></div>
-      <div style="padding:12px; display:flex; flex-direction:column; border-left:2.5px solid var(--ink)"><span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Yadiel</span><span style="font-family:var(--font-heading); font-weight:900; font-size:64px; line-height:.9">{{ hoops.opp }}</span></div>
+      <div style="padding:12px; display:flex; flex-direction:column; background:var(--sun)"><span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Tú</span><span style="font-family:var(--font-heading); font-weight:900; font-size:44px; line-height:.9">{{ hoops.made }}</span></div>
+      <div style="padding:12px; display:flex; flex-direction:column; border-left:2.5px solid var(--ink)"><span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Yadiel</span><span style="font-family:var(--font-heading); font-weight:900; font-size:44px; line-height:.9">{{ hoops.opp }}</span></div>
     </div>
-    <span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Tiro {{ hoops.shotN }} de 5 · para la raya en lo verde</span>
-    <div style="position:relative; height:60px; border:2.5px solid var(--ink); background:var(--color-surface)">
-      <div style="position:absolute; top:0; bottom:0; left:{{ hoops.zl }}%; width:{{ hoops.zw }}%; background:var(--color-accent-2)"></div>
-      <div style="position:absolute; top:-10px; bottom:-10px; width:6px; margin-left:-3px; left:{{ hoops.x }}%; background:var(--ink)"></div>
+    <span style="font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase">Tiro {{ hoops.shotN }} de 5 · tira cuando la bola esté debajo del aro</span>
+    <div style="position:relative; flex:1; min-height:280px; overflow:hidden; border:2.5px solid var(--ink); box-shadow:var(--shadow-md); background:var(--color-accent-2-200)">
+      <div style="position:absolute; left:4%; bottom:38%; width:20%; height:34%; background:var(--color-neutral-300); border:2.5px solid var(--ink); border-bottom:none"></div>
+      <div style="position:absolute; right:5%; bottom:38%; width:18%; height:44%; background:var(--color-neutral-200); border:2.5px solid var(--ink); border-bottom:none"></div>
+      <div style="position:absolute; left:0; right:0; bottom:0; height:38%; background:var(--color-neutral-700); border-top:2.5px solid var(--ink)"><div style="position:absolute; left:28%; right:28%; top:0; bottom:0; background:var(--color-accent-700); border-left:3px solid var(--paper); border-right:3px solid var(--paper)"></div><div style="position:absolute; left:20%; right:20%; top:42%; height:3px; background:var(--paper)"></div></div>
+      <div style="position:absolute; left:{{ hoops.hx }}%; top:3%; width:46%; aspect-ratio:1; transform:translateX(-50%); background:url(img/bb-hoop.png) center top / contain no-repeat"></div>
+      <sc-if value="{{ hoops.aim }}" hint-placeholder-val="{{ true }}"><div style="position:absolute; left:{{ hoops.ax }}%; top:30%; bottom:22%; width:0; border-left:3px dashed var(--paper); opacity:.7"></div></sc-if>
+      <div style="position:absolute; left:{{ hoops.bl }}%; top:{{ hoops.bt }}%; width:62px; aspect-ratio:1; transform:translate(-50%,-50%) scale({{ hoops.bs }}); opacity:{{ hoops.bo }}; transition:{{ hoops.btr }}; background:url(img/bb-ball.png) center / contain no-repeat"></div>
+      <sc-if value="{{ hoops.lined }}" hint-placeholder-val="{{ false }}"><span class="tag tag-neutral" style="position:absolute; left:50%; bottom:8px; transform:translateX(-50%)">¡Ahora!</span></sc-if>
     </div>
-    <div style="flex:1; font-family:var(--font-heading); font-weight:800; font-size:26px; text-transform:uppercase; line-height:1.05; text-wrap:pretty">{{ hoops.msg }}</div>
-    <sc-if value="{{ hoops.playing }}" hint-placeholder-val="{{ true }}"><button class="btn btn-primary" style="height:68px; font-size:28px" sc-camel-on-click="{{ shoot }}">Tirar</button></sc-if>
+    <div style="font-family:var(--font-heading); font-weight:800; font-size:22px; text-transform:uppercase; line-height:1.05; min-height:46px; text-wrap:pretty">{{ hoops.msg }}</div>
+    <sc-if value="{{ hoops.playing }}" hint-placeholder-val="{{ true }}"><button class="btn btn-primary" style="height:64px; font-size:28px" disabled="{{ hoops.noShoot }}" sc-camel-on-click="{{ shoot }}">Tirar</button></sc-if>
     <sc-if value="{{ hoops.over }}" hint-placeholder-val="{{ false }}"><button class="btn btn-primary" style="height:58px; font-size:20px" sc-camel-on-click="{{ endMg }}">Seguir</button></sc-if>
   </div>
   </sc-if>
@@ -563,12 +568,12 @@
     <span class="tag tag-accent-2" style="align-self:flex-start">Minijuego · Dominó</span>
     <h2 style="margin:0">Mano contra Don Pepe</h2>
     <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase"><span>Don Pepe: {{ dom.oppN }} fichas</span><span>Puntas: {{ dom.ends }}</span></div>
-    <div style="flex:1; min-height:0; overflow:auto; border:2.5px solid var(--ink); background:var(--color-accent-2-700); padding:12px; display:flex; flex-wrap:wrap; gap:5px; align-content:flex-start">
-      <sc-for list="{{ dom.board }}" as="t" hint-placeholder-count="0"><div style="display:flex; border:2px solid var(--ink); background:var(--color-surface); font-family:var(--font-mono); font-size:14px; font-weight:700"><span style="padding:3px 6px">{{ t.a }}</span><span style="padding:3px 6px; border-left:1.5px solid var(--ink)">{{ t.b }}</span></div></sc-for>
+    <div style="flex:1; min-height:0; overflow:auto; border:2.5px solid var(--ink); outline:9px solid #7a4a2c; outline-offset:-11px; box-shadow:var(--shadow-md); background:var(--color-accent-2-700); padding:18px; display:flex; flex-wrap:wrap; gap:4px; align-content:flex-start; justify-content:center">
+      <sc-for list="{{ dom.board }}" as="t" hint-placeholder-count="0"><div style="width:{{ t.bw }}px; height:{{ t.bh }}px; display:grid; place-items:center"><div style="position:relative; width:27px; height:50px; transform:{{ t.rot }}; background:url(img/dom-tile.png) center / 100% 100% no-repeat"><sc-for list="{{ t.p }}" as="q" hint-placeholder-count="0"><div style="position:absolute; left:{{ q.x }}%; top:{{ q.y }}%; width:20%; aspect-ratio:1; transform:translate(-50%,-50%); background:url(img/dom-pip.png) center / contain no-repeat"></div></sc-for></div></div></sc-for>
     </div>
     <div style="font-family:var(--font-heading); font-weight:800; font-size:20px; text-transform:uppercase; line-height:1.05; min-height:42px; text-wrap:pretty">{{ dom.msg }}</div>
     <div style="display:flex; flex-wrap:wrap; gap:7px">
-      <sc-for list="{{ dom.hand }}" as="t" hint-placeholder-count="7"><div sc-camel-on-click="{{ t.play }}" style="cursor:pointer; width:40px; display:flex; flex-direction:column; align-items:stretch; text-align:center; border:2.5px solid var(--ink); border-radius:4px; background:{{ t.bg }}; opacity:{{ t.op }}; box-shadow:var(--shadow-sm); font-family:var(--font-mono); font-size:17px; font-weight:700"><span style="padding:7px 0">{{ t.a }}</span><span style="padding:7px 0; border-top:2px solid var(--ink)">{{ t.b }}</span></div></sc-for>
+      <sc-for list="{{ dom.hand }}" as="t" hint-placeholder-count="7"><div sc-camel-on-click="{{ t.play }}" role="button" aria-label="Ficha" style="cursor:pointer; width:42px; height:78px; opacity:{{ t.op }}; transform:{{ t.lift }}; transition:transform .15s"><div style="position:relative; width:100%; height:100%; background:url(img/dom-tile.png) center / 100% 100% no-repeat"><sc-for list="{{ t.p }}" as="q" hint-placeholder-count="0"><div style="position:absolute; left:{{ q.x }}%; top:{{ q.y }}%; width:20%; aspect-ratio:1; transform:translate(-50%,-50%); background:url(img/dom-pip.png) center / contain no-repeat"></div></sc-for></div></div></sc-for>
     </div>
     <sc-if value="{{ dom.canPass }}" hint-placeholder-val="{{ false }}"><button class="btn btn-secondary" style="height:52px" sc-camel-on-click="{{ domPass }}">No llevo · Paso</button></sc-if>
     <sc-if value="{{ dom.over }}" hint-placeholder-val="{{ false }}"><button class="btn btn-primary" style="height:56px; font-size:20px" sc-camel-on-click="{{ endMg }}">Seguir</button></sc-if>
@@ -1636,12 +1641,19 @@ class Component extends DCLogic {
   nextGen(){const s=this.state,h=this.heir();this.setState({dead:null,name:h,apodo:'',age:16,day:1,gen:s.gen+1,s:{salud:75,feli:55,coco:40,resp:Math.round(s.s.resp*.6)},calor:Math.round(s.calor*.5),animo:this.max(),armed:false,dev:{},love:{},partner:null,married:false,tab:'barrio',log:[{d:'Gen '+(s.gen+1),t:'Eres '+h+(s.partner?', '+this.gx('{hijo}')+' de '+this.dispName()+' y '+this.who(LOVE.find(x=>x.id===s.partner)).n:'')+'. Heredaste los chavos, la fama y los enemigos de tu familia.'}]});
     if(s.partner){const P=this.who(LOVE.find(x=>x.id===s.partner)),dead=this.dispName();this.setState(x=>({th:{...x.th,padre:{meta:{name:(P.g==='f'?'Mami':'Papi')+' ('+P.n+')',ini:P.n[0],bg:'var(--sun)'},msgs:[{me:false,t:'Te pareces tanto a '+dead+'...'},{me:false,t:'Aquí estoy pa\' lo que necesites, {mijo}'}],replies:[{t:'Bendición',d:{feli:5},a:'Dios te bendiga. Ven a comer el domingo.'},{t:'Estoy bien',d:{},a:'Ok. Te quiero.'}],unread:true}}}))}}
   startHoops(){const opp=2+Math.floor(Math.random()*3);
-    this.setState({mg:{type:'hoops',shot:0,made:0,opp,x:0,dir:1,zw:30,zl:35,msg:'Yadiel metió '+opp+' de 5. Te toca.',over:false,win:null}});if(this.has('atleta'))this.setState(s=>({mg:{...s.mg,zw:38,zl:31}}));
-    clearInterval(this.hi);this.hi=setInterval(()=>{const m=this.state.mg;if(!m||m.type!=='hoops'||m.over)return;let x=m.x+m.dir*(1.8+m.shot*.55),dir=m.dir;if(x>=100){x=100;dir=-1}if(x<=0){x=0;dir=1}this.setState({mg:{...m,x,dir}})},16)}
-  shoot(){const m=this.state.mg;if(!m||m.over)return;const ok=m.x>=m.zl&&m.x<=m.zl+m.zw,shot=m.shot+1,made=m.made+(ok?1:0),zw=Math.max(12,m.zw-5);
-    let n={...m,shot,made,zw,zl:8+Math.random()*(84-zw),msg:ok?'¡Swish!':'Clank. Le diste al aro.'};
-    if(shot>=5){clearInterval(this.hi);const win=made>m.opp?'win':made<m.opp?'lose':'tie';n={...n,over:true,win,msg:win==='win'?'Le ganaste '+made+'-'+m.opp+'. Yadiel pide revancha.':win==='lose'?'Perdiste '+made+'-'+m.opp+'. Te van a vacilar toa la semana.':'Empate '+made+'-'+m.opp+'.'}}
-    this.setState({mg:n})}
+    // The ball slides along the bottom, the hoop drifts at the top. Shoot when they line up.
+    this.setState({mg:{type:'hoops',shot:0,made:0,opp,x:50,dir:1,hx:50,hdir:1,tol:this.has('atleta')?9:7,fly:null,msg:'Yadiel metió '+opp+' de 5. Cuadra la bola con el canasto.',over:false,win:null}});
+    clearInterval(this.hi);this.hi=setInterval(()=>{const m=this.state.mg;if(!m||m.type!=='hoops'||m.over||m.fly)return;
+      let x=m.x+m.dir*(1.3+m.shot*.35),dir=m.dir;if(x>=90){x=90;dir=-1}if(x<=10){x=10;dir=1}
+      let hx=m.hx,hdir=m.hdir;if(m.shot>=1){hx+=hdir*(.35+m.shot*.18);if(hx>=78){hx=78;hdir=-1}if(hx<=22){hx=22;hdir=1}}
+      this.setState({mg:{...m,x,dir,hx,hdir}})},16)}
+  shoot(){const m=this.state.mg;if(!m||m.over||m.fly)return;const ok=Math.abs(m.x-m.hx)<=m.tol;
+    this.setState({mg:{...m,fly:'up',ok,sx:m.x}});
+    clearTimeout(this.ht);this.ht=setTimeout(()=>{this.setState(s=>({mg:{...s.mg,fly:ok?'in':'out',msg:ok?'¡Swish! Sonaron las cadenas.':'Clank. Le diste al aro.'}}));
+      this.ht=setTimeout(()=>{const n0=this.state.mg;if(!n0||n0.type!=='hoops')return;const shot=n0.shot+1,made=n0.made+(ok?1:0);
+        let n={...n0,shot,made,fly:null,tol:Math.max(4,n0.tol-.6),x:10+Math.random()*80};
+        if(shot>=5){clearInterval(this.hi);const win=made>n0.opp?'win':made<n0.opp?'lose':'tie';n={...n,over:true,win,msg:win==='win'?'Le ganaste '+made+'-'+n0.opp+'. Yadiel pide revancha.':win==='lose'?'Perdiste '+made+'-'+n0.opp+'. Te van a vacilar toa la semana.':'Empate '+made+'-'+n0.opp+'.'}}
+        this.setState({mg:n})},650)},560)}
   startChase(){const cops=[{r:0,c:0},{r:3,c:4}];if(this.state.calor>40)cops.push({r:5,c:6});
     this.setState({mg:{type:'chase',p:{r:8,c:0},cops,t:0,over:false,win:null,msg:'Llega al taller de Chago sin que te cojan.'}});
     clearInterval(this.ci);this.ci=setInterval(()=>this.copStep(),700)}
@@ -1704,6 +1716,9 @@ class Component extends DCLogic {
     else if(t[0]===R||t[1]===R){const o=t[0]===R?t[1]:t[0];b.push([R,o]);R=o}
     else{const o=t[0]===L?t[1]:t[0];b.unshift([o,L]);L=o}
     return {board:b,L,R}}
+  // Pip layout on the real tile image: % positions inside img/dom-tile.png (face 2.8–88% wide; halves split at 48%).
+  domFace(a,b){const L={0:[],1:[[1,1]],2:[[0,0],[2,2]],3:[[0,0],[1,1],[2,2]],4:[[0,0],[2,0],[0,2],[2,2]],5:[[0,0],[2,0],[1,1],[0,2],[2,2]],6:[[0,0],[2,0],[0,1],[2,1],[0,2],[2,2]]};
+    const half=(v,y0,h)=>L[v].map(([c,r])=>({x:2.8+85.4*(.24+.26*c),y:y0+h*(.24+.26*r)}));return [...half(a,1.2,46),...half(b,48.8,44.6)]}
   pips(h){return h.reduce((s,t)=>s+t[0]+t[1],0)}
   domBlock(m){const a=this.pips(m.me),b=this.pips(m.opp);return {...m,over:true,win:a<b?'win':a>b?'lose':'tie',msg:'Tranque. Tú '+a+' puntos, Don Pepe '+b+'.'}}
   domPlay(i){const m=this.state.mg;if(!m||m.over||m.turn!=='me')return;const t=m.me[i];if(!this.fits(t,m))return;
@@ -1847,10 +1862,12 @@ class Component extends DCLogic {
       turfCount:Object.values(st.turf).filter(v=>v==='tu').length,
       gen:st.gen,armedText:st.armed?'Sí':'No',enemyText:st.enemies.length?st.enemies.join(', '):'Ninguno',
       mgHoops:mg.type==='hoops',mgDomino:mg.type==='domino',
-      hoops:{made:mg.made,opp:mg.opp,shotN:Math.min(5,(mg.shot||0)+1),x:mg.x,zl:mg.zl,zw:mg.zw,msg:mg.msg,playing:mg.type==='hoops'&&!mg.over,over:!!mg.over},
+      hoops:(()=>{if(mg.type!=='hoops')return {};const f=mg.fly,bx=f?mg.sx:mg.x;
+        const ball=f==='up'?{l:bx,t:27,sc:.52,op:1,tr:'top .56s cubic-bezier(.2,.7,.4,1), transform .56s'}:f==='in'?{l:mg.hx,t:42,sc:.48,op:0,tr:'all .6s ease-in'}:f==='out'?{l:bx+(bx<mg.hx?-16:16),t:52,sc:.62,op:1,tr:'all .6s ease-out'}:{l:bx,t:84,sc:1,op:1,tr:'none'};
+        return {made:mg.made,opp:mg.opp,shotN:Math.min(5,(mg.shot||0)+1),msg:mg.msg,playing:!mg.over,over:!!mg.over,hx:mg.hx,bl:ball.l,bt:ball.t,bs:ball.sc,bo:ball.op,btr:ball.tr,aim:!f,ax:bx,noShoot:!!f,lined:Math.abs(mg.x-mg.hx)<=mg.tol&&!f}})(),
       shoot:()=>this.shoot(),endMg:()=>this.endMg(),domPass:()=>this.domPass(),
-      dom:mg.type==='domino'?{oppN:mg.opp.length,ends:mg.board.length?mg.L+' · '+mg.R:'—',board:mg.board.map(t=>({a:t[0],b:t[1]})),msg:mg.msg,
-        hand:mg.me.map((t,i)=>{const ok=!mg.over&&mg.turn==='me'&&this.fits(t,mg);return {a:t[0],b:t[1],bg:ok?'var(--sun)':'var(--color-surface)',op:ok?1:.45,play:()=>this.domPlay(i)}}),
+      dom:mg.type==='domino'?{oppN:mg.opp.length,ends:mg.board.length?mg.L+' · '+mg.R:'—',board:mg.board.map(t=>{const d=t[0]===t[1];return {p:this.domFace(t[0],t[1]),bw:d?27:50,bh:d?50:27,rot:d?'none':'rotate(-90deg)'}}),msg:mg.msg,
+        hand:mg.me.map((t,i)=>{const ok=!mg.over&&mg.turn==='me'&&this.fits(t,mg);return {p:this.domFace(t[0],t[1]),lift:ok?'translateY(-8px)':'none',op:ok?1:.5,play:()=>this.domPlay(i)}}),
         canPass:!mg.over&&mg.turn==='me'&&!mg.me.some(t=>this.fits(t,mg)),over:!!mg.over}:{board:[],hand:[]},
       inJail:!!jl,jail:jl?{years:jl.years,title:jc?jc.title:'Sales libre',body:jc?jc.body:'Pasaron '+jl.years+' años. El bloque no es el mismo.',n:Math.min(jl.i+1,jl.cards.length),total:jl.cards.length}:{},
       jailChoices:jl?(jc?jc.ch.map(c=>({label:c.label,pick:()=>this.jailPick(c)})):[{label:'Volver al bloque',pick:()=>this.release()}]):[],
