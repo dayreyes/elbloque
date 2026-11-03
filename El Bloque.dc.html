@@ -1051,7 +1051,7 @@ const LOVE_PICS=['yaritza','valeria','sebastian','kiara','josue','joel','iker','
 const picKey=n=>n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 // Pueblo scenes in img/town-<zone>.jpg: arrival card art and banner above the map.
 const TOWN_ART=['sanjuan','pueblo','caguas','ponce','caborojo','canovanas','bayamon','utuado','loiza','arecibo'];
-const LEGEND_ART=['clemente','hupia','jacho','guanina','garita','chupacabra','cofresi'];
+const LEGEND_ART=['clemente','hupia','jacho','guanina','garita','chupacabra','cofresi','sanamuerto','cuco','cucarachita','juanbobo','comecogollo'];
 const ART={clemente:{pos:'center 40%'},hupia:{pos:'center 35%'},jacho:{pos:'center 30%'},guanina:{pos:'center 45%'},playa:{src:'img/ev-playa.jpg',pos:'center 55%'},balcon:{src:'img/ev-balcon.jpg',pos:'center 45%'},plaza:{src:'img/ev-plaza.jpg',pos:'center 55%'},frutera:{src:'img/ev-frutera.jpg',pos:'center 50%'},garita:{pos:'center 60%'},chupacabra:{pos:'center 55%'},cofresi:{pos:'center 45%'}};
 // El diccionario del bloque: a word unlocks the first time it shows up in a card, message or activity (+1 coquí).
 const WORDS=[
@@ -1312,13 +1312,13 @@ const EVENTS=[
  {kicker:'Colmado Don Pepe · 7am',title:'Le chuparon los gallos a Don Pepe',body:'Don Pepe encontró sus dos gallos de pelea tiesos detrás del colmado. "Ni una gota de sangre. Y esos gallos nunca pidieron cacao en la gallera", dice. Se formó un titingó en el colmado. Media fila ya sabe quién fue.',ch:[
    {label:'"Fue el Chupacabras"',d:{feli:2},legend:'chupacabra',out:'Don Pepe asintió serio. "Eso mismo dijo Wichi." Wichi dijo que fue una jauría.'},
    {label:'Ir a Canóvanas a investigar',d:{coco:1},startQ:'ch1',out:'Dicen que en Canóvanas hay un señor, Don Chuco, que lo vio en el \'95.'}]},
- {kicker:'Tu apto · Edif. 7',title:'Haciendo de Juan Bobo',body:'Abuela te pidió que trajeras "algo pa\' la cena que no se riegue". Llegaste con un caldero de habichuelas… en una bolsa del colmado. Abuela se rió hasta llorar y te contó de Juan Bobo, el que cargaba agua en una canasta.',ch:[
+ {kicker:'Tu apto · Edif. 7',art:'juanbobo',title:'Haciendo de Juan Bobo',body:'Abuela te pidió que trajeras "algo pa\' la cena que no se riegue". Llegaste con un caldero de habichuelas… en una bolsa del colmado. Abuela se rió hasta llorar y te contó de Juan Bobo, el que cargaba agua en una canasta.',ch:[
    {label:'Reírte con ella',d:{feli:5,abuAff:3},legend:'juanbobo',out:'"Y un día vistió la puerca pa\' llevarla a misa", siguió Abuela. Se rieron hasta la novela.'},
    {label:'"Usted no fue específica"',d:{resp:1,abuAff:1},legend:'juanbobo',out:'"Juan Bobo decía lo mismo", contestó Abuela.'}]},
- {kicker:'La lavandería',title:'La Cucarachita Martina del 5',body:'Martina, la sobrina de Doña Fela, se encontró $20 barriendo la lavandería. Se compró un traje y ahora tiene tres pretendientes: el corillero de las bocinas, el del carro con aros cromados y Ratón, el callado del 3.',ch:[
+ {kicker:'La lavandería',art:'cucarachita',title:'La Cucarachita Martina del 5',body:'Martina, la sobrina de Doña Fela, se encontró $20 barriendo la lavandería. Se compró un traje y ahora tiene tres pretendientes: el corillero de las bocinas, el del carro con aros cromados y Ratón, el callado del 3.',ch:[
    {label:'"Escoge a Ratón"',d:{feli:3},legend:'cucarachita',out:'Doña Fela aplaudió: "¡Como en el cuento! La Cucarachita escogió al Ratoncito Pérez, el que hablaba bajito."'},
    {label:'"Quédate con los $20"',d:{coco:2},legend:'cucarachita',out:'"Esa es la versión moderna", dijo Doña Fela. "Me gusta."'}]},
- {kicker:'Edif. 7 · 10pm',title:'El nene de la vecina no se duerme',body:'Cuidas al nene de la vecina del segundo. Son las 10 y está brincando en el sofá con una sobredosis de malta. Es un ají, un sajorí. Tiene un culillo que no se aguanta.',ch:[
+ {kicker:'Edif. 7 · 10pm',art:'cuco',title:'El nene de la vecina no se duerme',body:'Cuidas al nene de la vecina del segundo. Son las 10 y está brincando en el sofá con una sobredosis de malta. Es un ají, un sajorí. Tiene un culillo que no se aguanta.',ch:[
    {label:'"Si no te duermes, viene el Cuco"',d:{resp:1},legend:'cuco',out:'Se durmió en tres minutos. Abuela te miró desde la puerta: "A ti también te funcionaba."'},
    {label:'Contarle un cuento',d:{feli:3,coco:1},legend:'cuco',out:'Le contaste de Juan Bobo. Se durmió a la mitad, riéndose.'}]},
  {kicker:'Camino del colmado · 1am',art:'hupia',title:'El señor de las guayabas',body:'Bajando de la cancha, un señor flaco te para debajo del palo de guayabas. "¿Tienes una guayaba madura?" Cuando se estira pa\' alcanzar una rama, se le sube la camisa. No tiene ombligo.',ch:[
@@ -1330,7 +1330,7 @@ const EVENTS=[
  {kicker:'Los cañaverales · de noche',art:'jacho',title:'Una luz en el campo',body:'Desde la guagua se ve una luz que flota sobre el cañaveral, sola, buscando algo. El señor de atrás se persigna: "El Jacho. Busca las cenizas de la cruz que quemó."',ch:[
    {label:'Persignarte también',d:{feli:1},grow:'creyente',legend:'jacho',out:'La luz se apagó cuando la guagua pasó. El señor asintió.'},
    {label:'"Es un carro en la finca"',d:{coco:2},legend:'jacho',out:'"Un carro sin ruido y sin carretera", contestó el señor.'}]},
- {kicker:'Edificio 7',title:'El agua del Sana Muerto',body:'La vecina del cuarto vende botellitas de "agua del río Sana Muerto, de Ciales". Dice que un muerto se levantó en ese río. Abuela está mirando las botellas con interés.',ch:[
+ {kicker:'Edificio 7',art:'sanamuerto',title:'El agua del Sana Muerto',body:'La vecina del cuarto vende botellitas de "agua del río Sana Muerto, de Ciales". Dice que un muerto se levantó en ese río. Abuela está mirando las botellas con interés.',ch:[
    {label:'Comprarle una a Abuela',d:{chavos:-5,abuSalud:3,abuAff:3},legend:'sanamuerto',out:'Abuela se la tomó con fe. Dice que se siente mejor. Puede ser.'},
    {label:'"Eso es agua de la pluma"',d:{coco:2},legend:'sanamuerto',out:'La vecina se ofendió. Abuela compró una igual cuando no estabas.'}]},
  {kicker:'Colmado Don Pepe',title:'Cuando llegó la Guardia',body:'Don Pepe saca una foto vieja: soldados con rifles en la entrada del caserío, en los \'90. "Mano Dura, le decían. Cercaron el bloque. Revisaban a todo el mundo, culpable o no. A mi hijo lo tiraron al piso por llegar tarde del trabajo."',ch:[
