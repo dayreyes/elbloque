@@ -541,24 +541,24 @@
     <h2 style="margin:0; font-size:30px">Contra Don Tito</h2>
     <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase"><span>Tú: {{ bri.my }} pts</span><span>Don Tito: {{ bri.opp }} pts</span><span>Mazo: {{ bri.deckN }}</span></div>
     <div style="flex:1; min-height:0; position:relative; border:3px solid var(--ink); border-radius:4px; background:var(--color-accent-2-700); display:flex; gap:14px; align-items:center; justify-content:center; padding:14px">
-      <div style="position:absolute; left:10px; top:10px; display:flex; flex-direction:column; gap:4px"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">Triunfo</span><div style="width:54px; height:76px; flex:none; box-sizing:border-box; border:3px solid var(--ink); border-radius:6px; background:var(--paper); box-shadow:var(--shadow-sm); outline:1.5px solid var(--color-accent); outline-offset:-6px; display:flex; flex-direction:column; justify-content:space-between; padding:6px">
+      <div style="position:absolute; left:10px; top:10px; display:flex; flex-direction:column; gap:4px"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">Triunfo</span><div style="width:54px; height:76px; flex:none; box-sizing:border-box; border-radius:6px; background:{{ bri.trump.bg }}; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; justify-content:space-between; padding:11% 12%"><sc-if value="{{ bri.trump.plain }}" hint-placeholder-val="{{ true }}">
           <span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:20px; line-height:1; color:var(--ink)">{{ bri.trump.n }}</span>
           <div style="flex:1 1 auto; min-height:50%; margin:2px -2px; background:{{ bri.trump.icon }}"></div>
           <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:8.5px; line-height:1.1; color:var(--ink)">{{ bri.trump.lab }}</span>
-        </div></div>
-      <span style="position:absolute; right:10px; top:10px; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">Don Tito · {{ bri.oppN }} cartas</span>
-      <sc-for list="{{ bri.table }}" as="c" hint-placeholder-count="0"><div style="display:flex; flex-direction:column; gap:4px; align-items:center"><div style="width:78px; height:110px; flex:none; box-sizing:border-box; border:3px solid var(--ink); border-radius:6px; background:var(--paper); box-shadow:var(--shadow-sm); outline:1.5px solid var(--color-accent); outline-offset:-6px; display:flex; flex-direction:column; justify-content:space-between; padding:6px">
+        </sc-if></div></div>
+      <div style="position:absolute; right:10px; top:10px; display:flex; flex-direction:column; align-items:flex-end; gap:4px"><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">Don Tito</span><div style="display:flex; padding-left:10px"><sc-for list="{{ bri.backs }}" as="k" hint-placeholder-count="3"><div style="width:30px; height:45px; margin-left:-10px; border-radius:4px; box-shadow:2px 2px 0 var(--ink); background:url(img/bri-back.png) center / 100% 100% no-repeat"></div></sc-for></div></div>
+      <sc-for list="{{ bri.table }}" as="c" hint-placeholder-count="0"><div style="display:flex; flex-direction:column; gap:4px; align-items:center"><div style="width:78px; height:110px; flex:none; box-sizing:border-box; border-radius:6px; background:{{ c.bg }}; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; justify-content:space-between; padding:11% 12%"><sc-if value="{{ c.plain }}" hint-placeholder-val="{{ true }}">
           <span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:30px; line-height:1; color:var(--ink)">{{ c.n }}</span>
           <div style="flex:1 1 auto; min-height:50%; margin:2px -2px; background:{{ c.icon }}"></div>
           <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:8.5px; line-height:1.1; color:var(--ink)">{{ c.lab }}</span>
-        </div><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">{{ c.who }}</span></div></sc-for>
+        </sc-if></div><span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; color:var(--paper)">{{ c.who }}</span></div></sc-for>
     </div>
     <div style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:18px; line-height:1.05; min-height:38px; text-wrap:pretty">{{ bri.msg }}</div>
-    <div style="display:flex; gap:10px; justify-content:center; min-height:110px"><sc-for list="{{ bri.hand }}" as="c" hint-placeholder-count="3"><div sc-camel-on-click="{{ c.play }}" style="cursor:pointer; opacity:{{ c.op }}" style-active="transform:translateY(-4px)"><div style="width:84px; height:118px; flex:none; box-sizing:border-box; border:3px solid var(--ink); border-radius:6px; background:var(--paper); box-shadow:var(--shadow-sm); outline:1.5px solid var(--color-accent); outline-offset:-6px; display:flex; flex-direction:column; justify-content:space-between; padding:6px">
+    <div style="display:flex; gap:10px; justify-content:center; min-height:110px"><sc-for list="{{ bri.hand }}" as="c" hint-placeholder-count="3"><div sc-camel-on-click="{{ c.play }}" style="cursor:pointer; opacity:{{ c.op }}" style-active="transform:translateY(-4px)"><div style="width:84px; height:118px; flex:none; box-sizing:border-box; border-radius:6px; background:{{ c.bg }}; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; justify-content:space-between; padding:11% 12%"><sc-if value="{{ c.plain }}" hint-placeholder-val="{{ true }}">
           <span style="font-family:var(--font-heading); font-weight:900; text-transform:uppercase; font-size:32px; line-height:1; color:var(--ink)">{{ c.n }}</span>
           <div style="flex:1 1 auto; min-height:50%; margin:2px -2px; background:{{ c.icon }}"></div>
           <span style="font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; font-size:8.5px; line-height:1.1; color:var(--ink)">{{ c.lab }}</span>
-        </div></div></sc-for></div>
+        </sc-if></div></div></sc-for></div>
     <sc-if value="{{ bri.over }}" hint-placeholder-val="{{ false }}"><button class="btn btn-primary" style="height:54px; font-size:19px" sc-camel-on-click="{{ endMg }}">Seguir</button></sc-if>
   </div>
   </sc-if>
@@ -1476,6 +1476,8 @@ const SHELF=[{id:'malta',name:'Malta',p:1.5},{id:'pan',name:'Pan sobao',p:2},{id
 const CUST=['Doña Nilda','Wichi','Titi Mayra','Un turista perdido','El cartero','Yadiel','La nena del 5','Don Tito'];
 const PARTS=[{id:'turbo',name:'Turbo',c:40,v:3,e:0,r:1},{id:'escape',name:'Escape',c:25,v:1,e:1,r:3},{id:'aros',name:'Aros cromados',c:30,v:0,e:3,r:0},{id:'susp',name:'Suspensión bajita',c:20,v:1,e:2,r:0},{id:'bocinas',name:'Bocinas',c:35,v:0,e:1,r:3},{id:'tintes',name:'Tintes',c:15,v:0,e:1,r:0},{id:'neon',name:'Luces neón',c:20,v:0,e:2,r:1}];
 const CLIENTS=[{n:'Kevin, el del 5',want:'Rápido pa\' la autopista',min:{v:4},maxR:4,b:70},{n:'Doña Nilda',want:'Bonito pero calladito',min:{e:4},maxR:1,b:60},{n:'DJ Brujo',want:'Que se oiga desde el pueblo',min:{r:6,e:3},maxR:99,b:100}];
+// Face-card art in img/ (bri-<sota|caballo|rey>-<suit>.png); others use the blank face + suit symbol.
+const CARD_ART=['sota-oros','sota-copas','sota-bastos'];
 const SUITS=[['oros','Oros','var(--sun)'],['copas','Copas','var(--color-accent)'],['espadas','Espadas','var(--color-accent-2)'],['bastos','Bastos','var(--color-neutral-600)']];
 const BR_RANK=[1,3,12,11,10,7,6,5,4,2],BR_PTS={1:11,3:10,12:4,11:3,10:2};
 const cl=v=>Math.max(0,Math.min(100,v));
@@ -1686,7 +1688,7 @@ class Component extends DCLogic {
     const n={...m,paid:m.paid+pay,ok:m.ok+(ok?1:0),ruido:m.ruido+s.r,msg};
     this.setState({mg:m.i+1>=CLIENTS.length?{...n,over:true}:{...n,i:m.i+1,sel:{}}})}
   sn(s){return SUITS.find(x=>x[0]===s)[1]}
-  card(c){if(!c||!c.s)return {};return {n:{1:'As',10:'S',11:'C',12:'R'}[c.n]||String(c.n),name:({1:'As',10:'Sota',11:'Caballo',12:'Rey'}[c.n]||c.n)+' de '+this.sn(c.s),col:SUITS.find(x=>x[0]===c.s)[2],icon:'url(img/bri-'+c.s+'.png) center / contain no-repeat',lab:this.sn(c.s)}}
+  card(c){if(!c||!c.s)return {};return {n:{1:'As',10:'S',11:'C',12:'R'}[c.n]||String(c.n),name:({1:'As',10:'Sota',11:'Caballo',12:'Rey'}[c.n]||c.n)+' de '+this.sn(c.s),col:SUITS.find(x=>x[0]===c.s)[2],icon:'url(img/bri-'+c.s+'.png) center / contain no-repeat',lab:this.sn(c.s),...(()=>{const k={10:'sota',11:'caballo',12:'rey'}[c.n]+'-'+c.s,art=CARD_ART.includes(k);return {plain:!art,bg:'url(img/bri-'+(art?k:'face')+'.png) center / 100% 100% no-repeat'}})()}}
   rk(c){return BR_RANK.indexOf(c.n)}
   beats(b,a,tr){return b.s===a.s?this.rk(b)<this.rk(a):b.s===tr}
   pts(c){return BR_PTS[c.n]||0}
@@ -1855,7 +1857,7 @@ class Component extends DCLogic {
         stats:[{k:'Velocidad',v:s.v,bg:'var(--color-surface)'},{k:'Estilo',v:s.e,bg:'var(--color-surface)'},{k:'Ruido',v:s.r,bg:s.r>C.maxR?'var(--color-accent-300)':'var(--color-surface)'},{k:'Costo',v:'$'+s.c,bg:s.c>C.b?'var(--color-accent-300)':'var(--color-surface)'}],
         parts:PARTS.map(p=>({name:p.name,cost:'$'+p.c,fx:[p.v?'+'+p.v+' Vel':'',p.e?'+'+p.e+' Estilo':'',p.r?'+'+p.r+' Ruido':''].filter(Boolean).join(' · '),bg:mg.sel[p.id]?'var(--sun)':'var(--color-surface)',toggle:()=>this.tunToggle(p.id)})),
         msg:mg.msg,playing:!mg.over,over:!!mg.over}})():{stats:[],parts:[]},
-      bri:mg.type==='briscola'?{my:mg.my,opp:mg.op,deckN:mg.deck.length,oppN:mg.opp.length,trump:this.card(mg.trump),table:mg.table.map(t=>({...this.card(t.c),who:t.who==='me'?'Tú':'Don Tito'})),hand:mg.me.map((c,i)=>({...this.card(c),op:mg.turn==='me'&&!mg.over?1:.55,play:()=>this.briPlay(i)})),msg:mg.msg,over:!!mg.over}:{table:[],hand:[],trump:{}},
+      bri:mg.type==='briscola'?{my:mg.my,opp:mg.op,deckN:mg.deck.length,oppN:mg.opp.length,trump:this.card(mg.trump),backs:mg.opp.map(()=>({})),table:mg.table.map(t=>({...this.card(t.c),who:t.who==='me'?'Tú':'Don Tito'})),hand:mg.me.map((c,i)=>({...this.card(c),op:mg.turn==='me'&&!mg.over?1:.55,play:()=>this.briPlay(i)})),msg:mg.msg,over:!!mg.over}:{table:[],hand:[],trump:{}},
       monthName:MONTHS[Math.floor((st.day-1+25)/5)%12],
       pathText:{yupi:'La YUPI',privada:'Sagrada Familia',trabajo:'Trabajo',calle:'La calle'}[st.path]||'Escuela',
       turf:ZONES.map(z=>{const o=st.turf[z.id];return {name:z.name,owner:o==='tu'?'Tuyo':o==='rival'?'Los del 3':'Libre',bg:o==='tu'?'var(--color-accent)':o==='rival'?'var(--ink)':'var(--color-surface)',fg:o==='tu'||o==='rival'?'var(--paper)':'var(--ink)'}}),
